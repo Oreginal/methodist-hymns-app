@@ -1,0 +1,71 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export type BookId = 'xhosa' | 'setswana' | 'sesotho' | 'english';
+
+export interface Book {
+  id: BookId;
+  name: string;
+  nativeName: string;
+  description: string;
+  colorClass: string;
+}
+
+// A single lyric line. `primary` is the native (e.g. Xhosa) text; `translation`
+// is the English gloss and is OMITTED entirely when the hymn has no translation
+// for that line (never an empty string) so the UI renders no empty rows.
+export interface HymnLine {
+  primary: string;
+  translation?: string;
+}
+
+export interface HymnVerse {
+  number: number; // 1-based verse index
+  lines: HymnLine[];
+}
+
+export interface Hymn {
+  bookId: BookId;
+  hymnNumber: number;
+  hymnCode: string; // e.g. "X11", "E1"
+  title: string;
+  lyrics: string; // verses separated by newlines \n\n — kept for backward compat + search/share
+  // Structured representation. Preferred source when present; absent on the
+  // hardcoded fallback hymns (which still render via the `lyrics` string).
+  verses?: HymnVerse[];
+  hasTranslations?: boolean;
+  amen?: boolean;
+  reference?: string; // scripture reference, e.g. "Psalm 118"
+  author?: string;
+  category?: string;
+}
+
+export interface Prayer {
+  id: string;
+  category: 'Opening' | 'Morning' | 'Evening' | 'Thanksgiving' | 'Closing';
+  title: string;
+  content: string;
+}
+
+export interface RecentHymn {
+  bookId: BookId;
+  hymnNumber: number;
+  title: string;
+  viewedAt: string;
+}
+
+export interface Favourites {
+  hymns: { bookId: BookId; hymnNumber: number }[];
+  prayers: string[]; // prayer ids
+}
+
+export interface User {
+  email: string;
+  fullName?: string;
+  isGuest: boolean;
+  tier: 'free' | 'individual-pro' | 'parish-license';
+  createdAt?: string;
+}
+

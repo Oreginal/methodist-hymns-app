@@ -1,0 +1,20 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Local Claude Code settings (machine-specific)
+.claude/
+
+# Regenerable pipeline cache (.pptx produced from import-source/*.ppt)
+import-source-converted/
+
+# Vercel
+.vercel/
+
+# Stray catalogue backup — not for publishing
+public/data/xhosa - backup.json

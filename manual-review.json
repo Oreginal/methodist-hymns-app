@@ -1,0 +1,42 @@
+[
+  {
+    "filename": "X004 Dumisani uYehova.pptx",
+    "hymnCode": "X4",
+    "title": "Dumisani uYehova",
+    "warnings": [
+      "5 line(s) detected as English in the primary (native) position — bilingual pairing may need manual review."
+    ],
+    "partialParsedResult": {
+      "title": "Dumisani uYehova",
+      "scripture": "Psalm 148",
+      "hasAmen": true,
+      "versesSample": "VERSE 1\nDumisani uYehova\nEzulwini lonke;\nDumisani uYehova\nEmhlabeni wonke.\n\nVERSE 2\nNina niziithunywa zaKhe,\nDumisani Yena;\nNani bemikhosi yaKhe,\nDumi..."
+    }
+  },
+  {
+    "filename": "X009 Ma zith iingqondo zethu.pptx",
+    "hymnCode": "X9",
+    "title": "Ma zith iingqondo zethu",
+    "warnings": [
+      "Unable to detect scripture reference pattern."
+    ],
+    "partialParsedResult": {
+      "title": "Ma zith iingqondo zethu",
+      "hasAmen": true,
+      "versesSample": "VERSE 1\nMa zith' iingqondo zethu,\nLet us with a gladsome mind\nZimbonge uYehova;\nPraise the Lord, for He is kind:\nKuba iinceba zaKhe,\nZimi ngonaphakade..."
+    }
+  },
+  {
+    "filename": "X010 Bathandi benKosi, yizani.pptx",
+    "hymnCode": "X10",
+    "title": "Bathandi benKosi, yizani",
+    "warnings": [
+      "Unable to detect scripture reference pattern."
+    ],
+    "partialParsedResult": {
+      "title": "Bathandi benKosi, yizani",
+      "hasAmen": true,
+      "versesSample": "VERSE 1\nBathandi benKosi, yizani,\nNazise olwenu uvuyo,\nNgomanyo lwetsholo vumani,\nEndlwini yenKos’ enikuyo.\nBangaala abangamaziyo\nOwethu uThixo omkhul..."
+    }
+  }
+]
