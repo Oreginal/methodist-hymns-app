@@ -17,10 +17,13 @@ npm run dev          # Vite dev server on port 3000, host 0.0.0.0
 npm run build        # Production build to dist/
 npm run preview      # Preview the production build
 npm run lint         # Type-check only (tsc --noEmit) — there is no ESLint
+npm test             # Importer tests (tsx --test scripts/import_hymns.test.ts)
 npm run import:hymns # Run the PowerPoint -> JSON pipeline (alias for: npx tsx scripts/import_hymns.ts)
 ```
 
-There is **no test runner** configured. `npm run lint` (a `tsc --noEmit` type-check) is the only automated verification gate.
+`npm run lint` (a `tsc --noEmit` type-check) and `npm test` are the automated verification gates. The tests cover the import pipeline only (marker parsing, filename/number identity, end-to-end `parsePptx`); there are no tests for `src/`.
+
+The importer takes two flags: `--merge` (upsert into the existing book JSON instead of overwriting) and `--book=<xhosa|sesotho|setswana|english>` (the book for a batch whose filenames carry no letter code). Import one book per batch, and clear `import-source-converted/` between batches — marked and unmarked decks share filenames, so a stale converted cache would be re-parsed.
 
 The `@/*` path alias resolves to the repo root (see `vite.config.ts` and `tsconfig.json`). Setting `DISABLE_HMR=true` disables HMR and file watching — this is used in the AI Studio hosting environment; do not change that behavior.
 
@@ -35,13 +38,13 @@ The `@/*` path alias resolves to the repo root (see `vite.config.ts` and `tsconf
 
 ## Data layer — important
 
-The app's hymns and prayers come from **hard-coded TypeScript arrays**, not from JSON files or any API:
+Prayers, and the seed/fallback hymns for every book, come from **hard-coded TypeScript arrays**; imported hymn books are then fetched over HTTP (see below):
 - `src/data/hymnsData.ts` — `hymnsDatabase: Hymn[]` and the `hymnBooks` list (xhosa / setswana / sesotho / english).
 - `src/data/prayersData.ts` — `prayersDatabase: Prayer[]`.
 
 The shared shapes (`Hymn`, `Prayer`, `Book`, `User`, `Favourites`, etc.) live in `src/types.ts`. A hymn is identified by the `(bookId, hymnNumber)` pair; `lyrics` is a single string with verses separated by blank lines (`\n\n`) and a trailing `AMEN`.
 
-**The import pipeline is NOT wired into the app.** `npm run import:hymns` writes `public/data/xhosa.json`, but nothing in `src/` reads that file — the running app only reads `src/data/hymnsData.ts`. To get pipeline output into the app you must currently move/transcribe it into `hymnsData.ts` by hand. Keep this disconnect in mind before assuming generated data appears in the UI.
+**The pipeline output IS wired into the app.** `npm run import:hymns` writes `public/data/<bookId>.json`; `AppContext.loadBook(bookId)` fetches `/data/<bookId>.json` when the user opens that book, validates it, caches it in `localStorage` under `mhb_book_cache_<bookId>`, and swaps only that book's slice into state. The hard-coded arrays remain the offline fallback for any book with no imported JSON (currently `english`).
 
 ## PowerPoint import pipeline (`scripts/import_hymns.ts`)
 
@@ -49,11 +52,13 @@ A single-file script that turns hymn slides into the `Hymn` schema. Flow:
 1. Reads raw slides from `import-source/` (`.ppt` legacy binary and/or `.pptx`).
 2. Converts `.ppt` -> `.pptx` via headless **LibreOffice** (`soffice`), auto-detected at standard install paths per OS; output goes to `import-source-converted/`. If LibreOffice is absent it logs manual instructions and flags those files for review instead of failing.
 3. Parses each `.pptx` by unzipping it (`adm-zip`) and regex-scraping `<a:t>` text runs out of `ppt/slides/slideN.xml` — there is no Office XML library; parsing is regex-based.
-4. Heuristics infer structure: the filename pattern `^([A-Za-z]+)(\d+)\s*(.*)$` gives book code + hymn number + title (e.g. `X011 Bulelani kuYehova`); slide 1 is treated as metadata if it matches title/scripture/author signifiers; English translation lines are detected against a hard-coded `ENGLISH_WORD_SET`; scripture is matched against `SCRIPTURE_BOOKS_REGEX`; standalone verse numbers and `AMEN` lines are stripped.
-5. If `import-source/` and `import-source-converted/` are both empty, `generateMockPowerPoints()` writes sample `.pptx` files so the pipeline always has something to process.
+4. **English detection is marker-driven, with a heuristic fallback.** A pre-processing pass (`hymn books/process_hymns.ps1`) analysed run colours and wrapped red English runs in `[ENG]` … `[/ENG]`. `splitEnglishMarkers()` resolves those markers over each slide's whole character stream — NOT line by line, because the markers were inserted per PowerPoint *formatting run* and a closing `[/ENG]` routinely lands at the start of the next paragraph, fused to a native line. A deck with real markers is parsed in **marker mode** (`englishSource: 'markers'`), where `isEnglishLine()` is never consulted. A deck with none falls back to the original `ENGLISH_WORD_SET` heuristic unchanged. A marked region containing no 2+ letter word (a red drop-cap letter, or a Sesotho chant-pointing `|`) is not a translation and is spliced back inline as native text.
+5. Identity comes from the filename in three forms, in order: `X011 Bulelani kuYehova` (letter code + number), `1 Mphe maleme a sekete` (bare number, book from `--book`), or no number at all — in which case the hymn number is harvested from a slide header such as `TSWANA 397`. A deck with no resolvable number is **skipped and flagged**, never given an invented number.
+6. Other heuristics infer structure: slide 1 metadata lines are stripped in place; scripture is matched against `SCRIPTURE_REFERENCE_REGEX`; standalone verse numbers and `AMEN` lines are stripped.
+7. If `import-source/` and `import-source-converted/` are both empty, `generateMockPowerPoints()` writes sample `.pptx` files so the pipeline always has something to process.
 
 Outputs (all at repo root / `public/data`):
-- `public/data/xhosa.json` — only `bookId === 'xhosa'` hymns are exported, mapped to the app's `Hymn` schema.
+- `public/data/<bookId>.json` — one file per book that produced records, mapped to the app's `Hymn` schema. A run only writes the books it actually parsed, so a Sesotho batch cannot truncate `xhosa.json`.
 - `import-report.json` — counts and per-file success/failure details.
 - `manual-review.json` — quality flags (missing AMEN, short lyrics, no scripture match, unconverted legacy `.ppt`).
 

@@ -5,15 +5,22 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import AdmZip from 'adm-zip';
 import { spawnSync } from 'child_process';
 
 // Root-level directory configuration
 const RAW_INPUT_DIR = path.join(process.cwd(), 'import-source');
 const CONVERTED_INPUT_DIR = path.join(process.cwd(), 'import-source-converted');
-const OUTPUT_JSON_PATH = path.join(process.cwd(), 'public', 'data', 'xhosa.json');
+const OUTPUT_DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const REPORT_PATH = path.join(process.cwd(), 'import-report.json');
 const REVIEW_PATH = path.join(process.cwd(), 'manual-review.json');
+
+export type BookId = 'xhosa' | 'english' | 'setswana' | 'sesotho';
+const BOOK_IDS: BookId[] = ['xhosa', 'english', 'setswana', 'sesotho'];
+
+// Per-book output file, e.g. public/data/xhosa.json.
+const outputPathForBook = (bookId: BookId) => path.join(OUTPUT_DATA_DIR, `${bookId}.json`);
 
 // Structured line/verse shapes (mirror HymnLine / HymnVerse in src/types.ts).
 interface ParsedLine {
@@ -27,7 +34,7 @@ interface ParsedVerse {
 
 // Interface for parsed internal structure
 interface ParsedHymn {
-  bookId: 'xhosa' | 'english' | 'setswana' | 'sesotho';
+  bookId: BookId;
   hymnNumber: number;
   hymnCode: string;
   title: string;
@@ -39,6 +46,32 @@ interface ParsedHymn {
   scripture?: string;
   hasAmen: boolean;
   filename: string;
+  // Which mechanism decided what counted as English. 'markers' means the deck
+  // carried explicit [ENG]…[/ENG] wrappers and NO guessing was involved.
+  englishSource: 'markers' | 'heuristic';
+  markerIssues: MarkerIssues;
+  // The leading line dropped as an English title, if any — surfaced so a
+  // destructive rule can be reviewed instead of silently deleting a lyric.
+  droppedEnglishTitle?: string;
+}
+
+// A single visual line of a slide, tagged with whether it sits inside an
+// explicit [ENG]…[/ENG] region.
+export interface SlideLine {
+  text: string;
+  isEnglish: boolean;
+}
+
+export interface MarkerIssues {
+  unterminated: number; // [ENG] never closed before the end of the slide
+  strayClose: number;   // [/ENG] with no open region
+  nestedOpen: number;   // [ENG] encountered while a region was already open
+  degenerate: number;   // marked region holding no actual word (see below)
+}
+
+export interface MarkerScan extends MarkerIssues {
+  lines: SlideLine[];
+  markerCount: number; // total marker tokens seen (0 => unmarked deck)
 }
 
 // Set of common English words for translation identification
@@ -95,7 +128,7 @@ function decodeXmlEntities(str: string): string {
 /**
  * Detects if a paragraph line should be flagged as English translation.
  */
-function isEnglishLine(line: string): boolean {
+export function isEnglishLine(line: string): boolean {
   const clean = line.toLowerCase().replace(/[^a-z\s]/g, '');
   const words = clean.split(/\s+/).filter(w => w.length > 0);
   if (words.length === 0) return false;
@@ -197,7 +230,7 @@ function generateMockPowerPoints() {
 /**
  * Extracts elements from XML ppt/slides/slide*.xml
  */
-function extractTextFromSlideXml(xmlContent: string): string[] {
+export function extractTextFromSlideXml(xmlContent: string): string[] {
   const paragraphs: string[] = [];
   
   // Extract paragraph blocks <a:p>
@@ -231,6 +264,126 @@ function extractTextFromSlideXml(xmlContent: string): string[] {
   return paragraphs;
 }
 
+// Matches an [ENG] / [/ENG] marker token. Tolerant of internal whitespace and
+// case ("[ eng ]", "[/ Eng ]") because the markers were injected into live
+// PowerPoint runs and stray spaces are common around them.
+const ENG_TOKEN = /\[[ \t]*(\/?)[ \t]*ENG[ \t]*\]/gi;
+
+// A balanced marked region and its contents, used to strip degenerate regions
+// before the state machine runs.
+const ENG_PAIR = /\[[ \t]*ENG[ \t]*\]((?:(?!\[[ \t]*\/?[ \t]*ENG[ \t]*\])[\s\S])*)\[[ \t]*\/[ \t]*ENG[ \t]*\]/gi;
+
+// A translation contains at least one word. The colour pass wrapped EVERY red
+// run, and hymn decks use red for non-linguistic marks too: single drop-cap or
+// page-marker letters ("[ENG]T[/ENG]") and Sesotho chant-pointing pipes
+// ("ma [ENG]|[/ENG]holimong,"). Those are not English — and treating them as a
+// region would split a word across two lines — so a region with no 2+ letter
+// word is spliced back inline as native text.
+const REGION_HAS_WORD = /[A-Za-z\u00C0-\u024F]{2,}/;
+
+/**
+ * Split a whole slide's text into native / English segments using the explicit
+ * [ENG]…[/ENG] markers written by the colour-analysis pre-processing pass.
+ *
+ * This deliberately runs over the slide as ONE character stream rather than
+ * line by line. The markers were inserted per PowerPoint formatting *run*, and
+ * a run routinely swallows the trailing paragraph mark, so the real converted
+ * decks contain lines such as:
+ *
+ *   "[ENG]When I’m troubled from within"
+ *   "[/ENG]Ke bitsa ho uena;"
+ *
+ * A line-oriented parser would mark that second (native Sesotho) line as
+ * English. Working on the character stream puts the region boundary exactly
+ * where the marker is, so the native remainder of the line stays native.
+ *
+ * Recovery rules — a malformed deck is flagged, never silently corrupted:
+ *  - an unterminated [ENG] closes at the end of the slide
+ *  - a stray [/ENG] with no open region is dropped
+ *  - a nested [ENG] inside an open region is ignored (the region stays open)
+ */
+export function splitEnglishMarkers(slideText: string): MarkerScan {
+  const lines: SlideLine[] = [];
+  let unterminated = 0;
+  let strayClose = 0;
+  let nestedOpen = 0;
+  let markerCount = 0;
+  let degenerate = 0;
+
+  // Pre-pass: unwrap degenerate regions so their glyph stays inline and the
+  // line it sits in is never torn in two.
+  slideText = slideText.replace(ENG_PAIR, (whole, inner: string) => {
+    if (REGION_HAS_WORD.test(inner)) return whole;
+    degenerate++;
+    markerCount += 2;
+    return inner;
+  });
+
+  // Push a raw segment, re-splitting it on newlines so each visual line becomes
+  // its own entry. Whitespace-only fragments (e.g. the " " run trailing a
+  // "[/ENG]") are dropped so they never become empty lyric lines.
+  const pushSegment = (segment: string, isEnglish: boolean) => {
+    for (const part of segment.split('\n')) {
+      const text = part.trim();
+      if (text.length > 0) lines.push({ text, isEnglish });
+    }
+  };
+
+  // Text accumulated for the segment currently being built. Accumulating (rather
+  // than slicing between marker offsets) is what lets a malformed token simply
+  // be deleted while the surrounding text stays one contiguous line.
+  let buffer = '';
+  let inEnglish = false;
+  let cursor = 0;
+
+  ENG_TOKEN.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = ENG_TOKEN.exec(slideText)) !== null) {
+    markerCount++;
+    const isClosing = match[1] === '/';
+
+    buffer += slideText.slice(cursor, match.index);
+    cursor = ENG_TOKEN.lastIndex;
+
+    if (!isClosing) {
+      if (inEnglish) {
+        // Nested open: drop the token and keep the outer region open.
+        nestedOpen++;
+        continue;
+      }
+      pushSegment(buffer, false);
+      buffer = '';
+      inEnglish = true;
+    } else {
+      if (!inEnglish) {
+        // Stray close: drop the token; the text around it stays native.
+        strayClose++;
+        continue;
+      }
+      pushSegment(buffer, true);
+      buffer = '';
+      inEnglish = false;
+    }
+  }
+
+  // Tail after the last marker. An unterminated region closes at the end of the
+  // slide, which keeps the English text (rather than dropping or misfiling it)
+  // while the warning tells a human to check the deck.
+  buffer += slideText.slice(cursor);
+  if (inEnglish) unterminated++;
+  pushSegment(buffer, inEnglish);
+
+  return { lines, unterminated, strayClose, nestedOpen, degenerate, markerCount };
+}
+
+/**
+ * Turn the raw per-slide paragraph list into marker-resolved slide lines.
+ * Joining with "\n" first is what lets a marker pair span paragraphs.
+ */
+function scanSlide(rawLines: string[]): MarkerScan {
+  return splitEnglishMarkers(rawLines.join('\n'));
+}
+
 /**
  * Compute the manual-review validation warnings for a parsed hymn. Extracted so
  * the SAME logic drives both the per-file manual-review push and the dedup score,
@@ -247,19 +400,115 @@ function computeWarnings(parsed: ParsedHymn): string[] {
   if (!parsed.scripture) {
     warnings.push('Unable to detect scripture reference pattern.');
   }
-  if (parsed.hasTranslations) {
+  // The word-list check below is only meaningful for heuristic decks. In marker
+  // mode the deck states what is English, so re-guessing would only add noise.
+  if (parsed.hasTranslations && parsed.englishSource === 'heuristic') {
     const strayEnglish = parsed.verses.flatMap(v => v.lines).filter(l => isEnglishLine(l.primary)).length;
     if (strayEnglish > 0) {
       warnings.push(`${strayEnglish} line(s) detected as English in the primary (native) position — bilingual pairing may need manual review.`);
     }
   }
+
+  const { unterminated, strayClose, nestedOpen, degenerate } = parsed.markerIssues;
+  if (unterminated > 0) {
+    warnings.push(`${unterminated} unterminated [ENG] marker(s) — the region was closed at the end of its slide; verify where the English actually ends.`);
+  }
+  if (strayClose > 0) {
+    warnings.push(`${strayClose} stray [/ENG] marker(s) with no matching [ENG] — the token was dropped and the text kept as native.`);
+  }
+  if (nestedOpen > 0) {
+    warnings.push(`${nestedOpen} nested [ENG] marker(s) inside an open region — ignored; verify the English boundaries.`);
+  }
+  if (degenerate > 0) {
+    warnings.push(`${degenerate} marked region(s) contained no word (a red glyph or pointing mark, not a translation) — kept inline as native text.`);
+  }
+  if (parsed.englishSource === 'markers' && !parsed.hasTranslations) {
+    warnings.push('Deck carries [ENG] markers but no translation pair was formed — check the slide structure.');
+  }
+  if (parsed.droppedEnglishTitle) {
+    warnings.push(`Dropped a leading line as an English title: ${JSON.stringify(parsed.droppedEnglishTitle)}.`);
+  }
   return warnings;
 }
 
 /**
+ * Resolve the book/number/title identity from a deck's filename.
+ *
+ * Three naming conventions exist across the source corpus, so patterns are
+ * tried in order:
+ *   1. "X011 Bulelani kuYehova"     — letter code + number (Xhosa decks)
+ *   2. "1 Mphe maleme a sekete"     — bare leading number (Sesotho decks)
+ *   3. "Ao! Morena wa kagiso"       — no number at all (most Setswana decks);
+ *                                     the number is harvested from the slide
+ *                                     header instead (see parsePptx).
+ *
+ * `defaultBookId` comes from the --book flag and supplies the book for forms
+ * 2 and 3, which carry no letter code. A letter code always wins over it.
+ */
+export function resolveIdentityFromFilename(
+  fileBasename: string,
+  defaultBookId: BookId
+): { bookId: BookId; bookCode: string; hymnNumber: number | null; title: string } {
+  const cleanTitle = (s: string) =>
+    s.replace(/^[\s.,;:_\-·•]+/, '').replace(/\s+/g, ' ').trim();
+
+  // Form 1: letter code + number.
+  const lettered = fileBasename.match(/^([A-Za-z]+)\s*(\d+)\s*(.*)$/);
+  if (lettered) {
+    const bookCode = lettered[1];
+    const codeLower = bookCode.toLowerCase();
+    // NOTE: 's' is genuinely ambiguous between Setswana and Sesotho. It defers
+    // to --book when that names one of them, else keeps the historical
+    // 'setswana' default. (The previous mapping tested 's' twice, which made
+    // the sesotho branch unreachable dead code.)
+    let bookId: BookId;
+    if (codeLower === 'x') bookId = 'xhosa';
+    else if (codeLower === 'e') bookId = 'english';
+    else if (codeLower === 't') bookId = 'setswana';
+    else if (codeLower === 'so' || codeLower === 'd' || codeLower === 'l') bookId = 'sesotho';
+    else if (codeLower === 's') {
+      bookId = defaultBookId === 'sesotho' || defaultBookId === 'setswana' ? defaultBookId : 'setswana';
+    } else bookId = defaultBookId;
+
+    return { bookId, bookCode, hymnNumber: parseInt(lettered[2], 10), title: cleanTitle(lettered[3]) };
+  }
+
+  // Form 2: bare leading number. Book identity comes from --book / the batch.
+  const numbered = fileBasename.match(/^(\d+)\s+(.*)$/);
+  if (numbered) {
+    return {
+      bookId: defaultBookId,
+      bookCode: bookCodeFor(defaultBookId),
+      hymnNumber: parseInt(numbered[1], 10),
+      title: cleanTitle(numbered[2])
+    };
+  }
+
+  // Form 3: no number in the filename — caller must harvest it from the deck.
+  return {
+    bookId: defaultBookId,
+    bookCode: bookCodeFor(defaultBookId),
+    hymnNumber: null,
+    title: cleanTitle(fileBasename)
+  };
+}
+
+const bookCodeFor = (bookId: BookId): string =>
+  bookId === 'xhosa' ? 'X' : bookId === 'english' ? 'E' : bookId === 'setswana' ? 'T' : 'SO';
+
+// A header line that carries the hymn number, e.g. "TSWANA 397", "XHOSA 11",
+// "HYMN 5". Shared by the metadata stripper and the number harvester so the two
+// can never disagree about what counts as a header.
+const isHeaderLine = (line: string): boolean => {
+  if (/^[A-Za-z]{1,12}\.?\s+\d{1,4}\.?$/.test(line)) return true;
+  if (/^(hymn|amaculo|sefela|difela|methodist)\b/i.test(line) && /\d/.test(line)) return true;
+  return false;
+};
+
+/**
  * The main parser routine for a single PPTX file
  */
-function parsePptx(filePath: string): ParsedHymn {
+function parsePptx(filePath: string, defaultBookId: BookId = 'xhosa'): ParsedHymn {
   const filename = path.basename(filePath);
   const zip = new AdmZip(filePath);
   const zipEntries = zip.getEntries();
@@ -280,56 +529,80 @@ function parsePptx(filePath: string): ParsedHymn {
     throw new Error('No slide elements found in .pptx zip structure');
   }
 
-  // Parse slide text
+  // Parse slide text, then resolve the explicit [ENG] markers over each slide's
+  // full character stream. `slidesText` keeps the raw (still-marked) lines so
+  // the unmarked heuristic path can fall back to exactly its old input.
   const slidesText: string[][] = slideEntries.map(entry => {
     const xmlContent = entry.getData().toString('utf8');
     return extractTextFromSlideXml(xmlContent);
   });
+  const scans: MarkerScan[] = slidesText.map(scanSlide);
+
+  // MARKER MODE: the deck carries explicit [ENG]…[/ENG] wrappers, so English is
+  // known, not guessed. The word-list heuristic is never consulted for pairing.
+  // Decks with no markers keep the original heuristic behaviour untouched.
+  const markerMode = scans.some(s => s.markerCount > 0 && s.lines.some(l => l.isEnglish));
+  const markerIssues: MarkerIssues = {
+    unterminated: scans.reduce((n, s) => n + s.unterminated, 0),
+    strayClose: scans.reduce((n, s) => n + s.strayClose, 0),
+    nestedOpen: scans.reduce((n, s) => n + s.nestedOpen, 0),
+    degenerate: scans.reduce((n, s) => n + s.degenerate, 0)
+  };
+
+  // Slide lines to actually walk. Marker TEXT is always stripped — even for a
+  // deck whose only marked runs were glyphs, which falls back to the heuristic
+  // but must still never carry "[ENG]" into the output. Only the isEnglish
+  // FLAGS are gated on marker mode, so the heuristic path sees the same
+  // all-native input it always did.
+  const slidesLines: SlideLine[][] = scans.map(scan =>
+    scan.lines.map(l => ({ text: l.text, isEnglish: markerMode && l.isEnglish }))
+  );
 
   // Extract Details from filename
-  // Expect pattern e.g., "X011 Bulelani kuYehova" or "E001 O for a thousand tongues"
+  // Expect "X011 Bulelani kuYehova", "1 Mphe maleme a sekete", or an unnumbered
+  // name whose number is harvested from the slide header below.
   const fileBasename = path.basename(filePath, path.extname(filePath));
-  const filenameRegex = /^([A-Za-z]+)(\d+)\s*(.*)$/;
-  const match = fileBasename.match(filenameRegex);
+  const identity = resolveIdentityFromFilename(fileBasename, defaultBookId);
+  const bookId = identity.bookId;
+  const bookCode = identity.bookCode;
+  const cleanedTitle = identity.title;
 
-  let bookCode = 'X';
-  let hymnNum = 1;
-  let cleanedTitle = fileBasename;
-
-  if (match) {
-    bookCode = match[1];
-    hymnNum = parseInt(match[2], 10);
-    // Strip leading punctuation/dots/spaces left after the number (e.g.
-    // "X353.Namhla..." -> match[3] = ".Namhla..." -> "Namhla...") and collapse
-    // internal whitespace. Does NOT strip trailing version-number suffixes.
-    cleanedTitle = match[3].replace(/^[\s.,;:_\-·•]+/, '').replace(/\s+/g, ' ').trim();
+  // No number in the filename (most Setswana decks): harvest it from the deck's
+  // own header line, e.g. slide 1 opening "TSWANA 397". A number is never
+  // invented — an unresolvable deck is rejected so it cannot collide with a
+  // real record, and the caller routes it to manual review.
+  let hymnNum = identity.hymnNumber;
+  if (hymnNum === null) {
+    for (const slideLines of slidesLines) {
+      const header = slideLines.find(l => isHeaderLine(l.text));
+      if (header) {
+        const digits = header.text.match(/\d{1,4}/);
+        if (digits) { hymnNum = parseInt(digits[0], 10); break; }
+      }
+    }
   }
-
-  // Map book code to registered system bookId
-  let bookId: 'xhosa' | 'english' | 'setswana' | 'sesotho' = 'xhosa';
-  const codeLower = bookCode.toLowerCase();
-  if (codeLower === 'x') bookId = 'xhosa';
-  else if (codeLower === 'e') bookId = 'english';
-  else if (codeLower === 's' || codeLower === 't') bookId = 'setswana';
-  else if (codeLower === 's' || codeLower === 'so' || codeLower === 'd' || codeLower === 'l') bookId = 'sesotho';
+  if (hymnNum === null) {
+    throw new Error(
+      'No hymn number in filename or slide header — cannot assign an identity. ' +
+      'Rename the file with a leading number (e.g. "397 Ao! Morena wa kagiso.ppt") ' +
+      'or add a "<BOOK> <number>" header slide.'
+    );
+  }
 
   // State caches for scanning metadata
   let author: string | undefined;
   let scripture: string | undefined;
   let category: string | undefined;
   let hasAmen = false;
+  let droppedEnglishTitle: string | undefined;
 
   // Helpers for classifying individual lines while scanning every slide.
   // Slide 1 in these decks mixes a header + scripture reference with the
   // FIRST verse, so we must NOT discard the whole slide (that caused the
   // off-by-one where verse 1 went missing). Instead we strip metadata lines
   // in place and keep whatever lyric lines remain.
-  const isHeaderLine = (line: string): boolean => {
-    // e.g. "XHOSA 11", "HYMN 11", "E 1" — a short token followed by the hymn number.
-    if (/^[A-Za-z]{1,12}\.?\s+\d{1,4}\.?$/.test(line)) return true;
-    if (/^(hymn|amaculo|sefela|difela|methodist)\b/i.test(line) && /\d/.test(line)) return true;
-    return false;
-  };
+  // (isHeaderLine lives at module scope — it is shared with the hymn-number
+  // harvester above so both agree on what a header line looks like.)
   const isAuthorLine = (line: string): boolean => {
     // Must be a genuine attribution, not a lyric line that merely contains "by"
     // (e.g. "Were crafted by You" must NOT be treated as an author). Accept a
@@ -355,15 +628,16 @@ function parsePptx(filePath: string): ParsedHymn {
   // First pass over slides: keep only surviving lyric lines, grouped per verse.
   // Metadata (headers/scripture/author/verse-numbers/AMEN) is stripped here so
   // it never reaches the pairing stage.
-  const rawVerses: string[][] = [];
+  const rawVerses: SlideLine[][] = [];
   let sawFirstLyric = false; // used to drop a leading English-title line
-  for (let sIdx = 0; sIdx < slidesText.length; sIdx++) {
-    const slideLines = slidesText[sIdx];
+  for (let sIdx = 0; sIdx < slidesLines.length; sIdx++) {
+    const slideLines = slidesLines[sIdx];
     if (slideLines.length === 0) continue;
 
-    const verseLines: string[] = [];
-    for (const rawLine of slideLines) {
-      let line = rawLine.trim();
+    const verseLines: SlideLine[] = [];
+    for (const slideLine of slideLines) {
+      const isEnglish = slideLine.isEnglish;
+      let line = slideLine.text.trim();
       if (line.length === 0) continue;
 
       // Single-character lines are slide footer/control glyphs (e.g. lone "I",
@@ -429,13 +703,18 @@ function parsePptx(filePath: string): ParsedHymn {
 
       // The very first lyric line of the hymn, if English, is the English title
       // shown above the Xhosa (e.g. "Once in Royal David City") — not a lyric.
-      // Xhosa-primary hymns always open on a Xhosa line, so this is safe.
+      // Xhosa-primary hymns always open on a Xhosa line, so this is safe. In
+      // marker mode a flagged-English opening line is the same artefact, and
+      // the markers say so outright.
       if (!sawFirstLyric) {
         sawFirstLyric = true;
-        if (looksLikeEnglishTitle(line)) continue;
+        if (looksLikeEnglishTitle(line) || (markerMode && isEnglish)) {
+          droppedEnglishTitle = line;
+          continue;
+        }
       }
 
-      verseLines.push(line);
+      verseLines.push({ text: line, isEnglish });
     }
 
     if (verseLines.length > 0) rawVerses.push(verseLines);
@@ -446,11 +725,23 @@ function parsePptx(filePath: string): ParsedHymn {
   // detector has some misses, so we use a low absolute threshold: a hymn counts
   // as translated only if it has at least 3 detected English lines. Xhosa-only
   // hymns (0 English lines) therefore stay false and never get forced pairings.
+  //
+  // In MARKER MODE none of that guessing applies: the deck states which lines
+  // are English, so a single marked gloss is enough and the >= 3 gate (which
+  // silently discarded the English of sparsely-glossed decks) is bypassed.
   const allLines = rawVerses.flat();
-  const englishLineCount = allLines.filter(isEnglishLine).length;
+  const englishLineCount = markerMode
+    ? allLines.filter(l => l.isEnglish).length
+    : allLines.filter(l => isEnglishLine(l.text)).length;
   // Whether to ATTEMPT pairing. The final hasTranslations flag is reconciled
   // below against whether any pair was actually formed, so it never lies.
-  const attemptTranslations = englishLineCount >= 3;
+  const attemptTranslations = markerMode ? englishLineCount >= 1 : englishLineCount >= 3;
+
+  // The single predicate that decides "is this line English?". Marker mode is
+  // authoritative and deterministic; the word-list heuristic is only consulted
+  // for decks that carry no markers at all.
+  const lineIsEnglish = (line: SlideLine): boolean =>
+    markerMode ? line.isEnglish : isEnglishLine(line.text);
 
   // Strip wrapping () or [] some decks use around translation lines.
   const unwrap = (s: string): string => {
@@ -464,18 +755,26 @@ function parsePptx(filePath: string): ParsedHymn {
   // Pair lines within a verse. An English line translates the GROUP of preceding
   // primary lines; we attach it to the last of that group and emit any earlier
   // primaries untranslated. Without translations, every line is primary-only.
-  const buildVerseLines = (verseLines: string[]): ParsedLine[] => {
+  // Tracks lines whose `primary` is itself English text (an English-only refrain
+  // with no native anchor). In marker mode this replaces re-running the word
+  // list over an emitted primary, which would reintroduce exactly the guessing
+  // the markers exist to remove.
+  const englishPrimaries = new WeakSet<ParsedLine>();
+
+  const buildVerseLines = (verseLines: SlideLine[]): ParsedLine[] => {
     if (!attemptTranslations) {
-      return verseLines.map(primary => ({ primary }));
+      return verseLines.map(l => ({ primary: l.text }));
     }
     const lines: ParsedLine[] = [];
-    let pending: string[] = [];
+    // Native lines awaiting a gloss, kept alongside their flag so the backfill
+    // below can tell a real native line from an English one.
+    let pending: SlideLine[] = [];
     for (const line of verseLines) {
-      if (isEnglishLine(line)) {
-        const translation = unwrap(line);
+      if (lineIsEnglish(line)) {
+        const translation = unwrap(line.text);
         if (pending.length > 0) {
-          for (let i = 0; i < pending.length - 1; i++) lines.push({ primary: pending[i] });
-          lines.push({ primary: pending[pending.length - 1], translation });
+          for (let i = 0; i < pending.length - 1; i++) lines.push({ primary: pending[i].text });
+          lines.push({ primary: pending[pending.length - 1].text, translation });
           pending = [];
         } else {
           // Consecutive English line (buffer already drained). Prefer to backfill
@@ -483,18 +782,22 @@ function parsePptx(filePath: string): ParsedHymn {
           // this recovers block-style "XH XH / EN EN" layouts. If there is no such
           // primary, this is a genuine English-only line (e.g. a refrain) and we
           // keep its text as `primary` rather than dropping it.
-          const target = [...lines].reverse().find(l => l.translation === undefined && !isEnglishLine(l.primary));
+          const isEnglishPrimary = (l: ParsedLine) =>
+            englishPrimaries.has(l) || (!markerMode && isEnglishLine(l.primary));
+          const target = [...lines].reverse().find(l => l.translation === undefined && !isEnglishPrimary(l));
           if (target) {
             target.translation = translation;
           } else {
-            lines.push({ primary: translation });
+            const emitted: ParsedLine = { primary: translation };
+            englishPrimaries.add(emitted);
+            lines.push(emitted);
           }
         }
       } else {
         pending.push(line);
       }
     }
-    for (const p of pending) lines.push({ primary: p });
+    for (const p of pending) lines.push({ primary: p.text });
     return lines;
   };
 
@@ -520,6 +823,18 @@ function parsePptx(filePath: string): ParsedHymn {
     })
     .join('\n\n');
 
+  // Backstop: no marker token may ever reach the exported data. If the
+  // segmentation missed one, fail loudly here rather than shipping "[ENG]" into
+  // a hymn a congregation will read off a projector.
+  const leak = verses
+    .flatMap(v => v.lines)
+    .flatMap(l => [l.primary, l.translation ?? ''])
+    .concat(finalLyrics, cleanedTitle)
+    .find(text => /\[[ \t]*\/?[ \t]*ENG[ \t]*\]/i.test(text));
+  if (leak) {
+    throw new Error(`Marker text leaked into parsed output (not exported): ${JSON.stringify(leak)}`);
+  }
+
   return {
     bookId,
     hymnNumber: hymnNum,
@@ -532,7 +847,10 @@ function parsePptx(filePath: string): ParsedHymn {
     category: category || 'General Worship',
     scripture,
     hasAmen,
-    filename
+    filename,
+    englishSource: markerMode ? 'markers' : 'heuristic',
+    markerIssues,
+    droppedEnglishTitle
   };
 }
 
@@ -607,6 +925,17 @@ async function main() {
   // (bookId, hymnNumber), instead of overwriting the whole file. Default (no
   // flag) keeps the original wholesale-overwrite behavior unchanged.
   const MERGE_MODE = process.argv.includes('--merge');
+
+  // --book=<xhosa|sesotho|setswana|english> names the book for a batch whose
+  // filenames carry no letter code (the Sesotho "1 Mphe maleme…" form and the
+  // unnumbered Setswana decks). A filename that DOES carry a letter code still
+  // wins per file, so mixed folders stay correct.
+  const bookArg = process.argv.find(a => a.startsWith('--book='));
+  const DEFAULT_BOOK_ID = (bookArg ? bookArg.slice('--book='.length).toLowerCase() : 'xhosa') as BookId;
+  if (!BOOK_IDS.includes(DEFAULT_BOOK_ID)) {
+    throw new Error(`Unknown --book value "${DEFAULT_BOOK_ID}". Expected one of: ${BOOK_IDS.join(', ')}.`);
+  }
+  console.log(`[BOOK] Default book for files without a letter code: ${DEFAULT_BOOK_ID}`);
   console.log(MERGE_MODE
     ? '[MODE] MERGE — upserting parsed hymns into the existing xhosa.json.'
     : '[MODE] OVERWRITE — regenerating xhosa.json from all converted inputs.');
@@ -740,7 +1069,14 @@ async function main() {
     existingCount: 0,
     added: 0,
     replaced: 0,
-    finalExportedCount: 0
+    finalExportedCount: 0,
+    exportedByBook: {} as Record<string, number>,
+    defaultBookId: DEFAULT_BOOK_ID,
+    // How many decks stated their English via [ENG] markers vs. fell back to
+    // the word-list heuristic. The headline number for judging an import.
+    markerSourced: 0,
+    heuristicSourced: 0,
+    skippedNoHymnNumber: 0
   };
 
   const manualReviews: any[] = [];
@@ -768,12 +1104,13 @@ async function main() {
     // Process .pptx Office XML format
     try {
       console.log(`[PROCESS] Parsing: "${file}"`);
-      const parsed = parsePptx(fullPath);
+      const parsed = parsePptx(fullPath, DEFAULT_BOOK_ID);
       importedList.push(parsed);
 
       console.log(` [SUCCESS] Imported Hymn ${parsed.hymnCode}: "${parsed.title}" (${parsed.lyrics.split('\n\n').length} verses, hasAmen: ${parsed.hasAmen})`);
       
       report.successfulImports++;
+      if (parsed.englishSource === 'markers') report.markerSourced++; else report.heuristicSourced++;
       report.successfulDetails.push({
         code: parsed.hymnCode,
         number: parsed.hymnNumber,
@@ -781,7 +1118,8 @@ async function main() {
         versesCount: parsed.lyrics.split('\n\n').filter(l => l.startsWith('VERSE')).length,
         hasAmen: parsed.hasAmen,
         scripture: parsed.scripture,
-        hasTranslations: parsed.hasTranslations
+        hasTranslations: parsed.hasTranslations,
+        englishSource: parsed.englishSource
       });
 
       // Standard validation flags showing items that might need some spot checks.
@@ -804,12 +1142,16 @@ async function main() {
       }
 
     } catch (err: any) {
+      const noNumber = /No hymn number in filename or slide header/.test(err.message);
       console.error(` [FAIL] Unable to parse file "${file}":`, err.message);
       report.failedImports++;
+      if (noNumber) report.skippedNoHymnNumber++;
       report.failedDetails.push({ filename: file, error: err.message });
       manualReviews.push({
         filename: file,
-        reason: 'Parsing exception failed',
+        reason: noNumber
+          ? 'No hymn number in filename or slide header — skipped rather than assigned a guessed number'
+          : 'Parsing exception failed',
         errorDetails: err.message
       });
     }
@@ -817,14 +1159,17 @@ async function main() {
 
   // --- DEDUP: collapse multiple source decks that share a (bookId, hymnNumber)
   // identity down to the single cleanest record. Winner = highest tuple of
-  // [verseCount, pairedTranslationCount, hasAmen?1:0, -warningCount]; ties broken
-  // by filename ascending (deterministic). Rejected records are routed to
-  // manual-review with full provenance.
+  // [markerMode?1:0, verseCount, pairedTranslationCount, hasAmen?1:0, -warningCount];
+  // ties broken by filename ascending (deterministic). A marked deck always
+  // supersedes an unmarked copy of the same hymn, because its English is stated
+  // rather than guessed. Rejected records are routed to manual-review with full
+  // provenance.
   const pairedTranslationCount = (p: ParsedHymn): number =>
     p.verses.reduce((acc, v) => acc + v.lines.filter(l => l.translation !== undefined).length, 0);
 
-  type DedupScore = [number, number, number, number];
+  type DedupScore = [number, number, number, number, number];
   const scoreOf = (p: ParsedHymn): DedupScore => [
+    p.englishSource === 'markers' ? 1 : 0,
     p.verses.length,
     pairedTranslationCount(p),
     p.hasAmen ? 1 : 0,
@@ -890,83 +1235,108 @@ async function main() {
     }
   }
 
-  // 3. Write outputs to targeted locations
-  fs.mkdirSync(path.dirname(OUTPUT_JSON_PATH), { recursive: true });
+  // 3. Write outputs — one file per book, e.g. public/data/xhosa.json.
+  fs.mkdirSync(OUTPUT_DATA_DIR, { recursive: true });
 
   // Format the output exactly like standard React component schema: An array of Hymns
-  const finalAmaculoXhosaSchema = dedupedList
-    .filter(h => h.bookId === 'xhosa')
-    .map(h => ({
-      bookId: h.bookId,
-      hymnNumber: h.hymnNumber,
-      hymnCode: h.hymnCode,
-      title: h.title,
-      reference: h.scripture, // scripture reference kept separate from category (omitted by JSON when undefined)
-      hasTranslations: h.hasTranslations,
-      verses: h.verses, // structured primary source: [{ number, lines: [{ primary, translation? }] }]
-      lyrics: h.lyrics, // backward-compatible flat string (kept in sync with verses)
-      amen: h.hasAmen,
-      author: h.author,
-      category: h.category
-    }));
+  const toRecord = (h: ParsedHymn) => ({
+    bookId: h.bookId,
+    hymnNumber: h.hymnNumber,
+    hymnCode: h.hymnCode,
+    title: h.title,
+    reference: h.scripture, // scripture reference kept separate from category (omitted by JSON when undefined)
+    hasTranslations: h.hasTranslations,
+    verses: h.verses, // structured primary source: [{ number, lines: [{ primary, translation? }] }]
+    lyrics: h.lyrics, // backward-compatible flat string (kept in sync with verses)
+    amen: h.hasAmen,
+    author: h.author,
+    category: h.category
+  });
+  type HymnRecord = ReturnType<typeof toRecord>;
 
   // Sort helper: ascending by hymnNumber with a stable bookId tiebreak. Applied
-  // in BOTH modes so xhosa.json is always emitted in numeric order.
+  // in BOTH modes so every book file is always emitted in numeric order.
   const byHymnNumber = (a: { hymnNumber: number; bookId: string }, b: { hymnNumber: number; bookId: string }) =>
     a.hymnNumber - b.hymnNumber || String(a.bookId).localeCompare(String(b.bookId));
 
-  let outputArray: typeof finalAmaculoXhosaSchema;
-
-  if (MERGE_MODE) {
-    // Guard 1: never shrink the existing catalogue on a bad/partial run.
-    if (report.failedImports > 0 || finalAmaculoXhosaSchema.length !== targetFiles.length) {
-      throw new Error(
-        `MERGE aborted: expected ${targetFiles.length} clean Xhosa parse(s) but got ` +
-        `${finalAmaculoXhosaSchema.length} (failedImports=${report.failedImports}). ` +
-        `Existing xhosa.json left untouched.`
-      );
-    }
-
-    // Guard 2: load the existing file. If it exists but cannot be read/parsed as
-    // an array, ABORT — never treat a corrupt read as empty (that path would
-    // replace the whole catalogue with only the merged few).
-    let existing: typeof finalAmaculoXhosaSchema = [];
-    if (fs.existsSync(OUTPUT_JSON_PATH)) {
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(fs.readFileSync(OUTPUT_JSON_PATH, 'utf8'));
-      } catch (e: any) {
-        throw new Error(`MERGE aborted: existing "${OUTPUT_JSON_PATH}" is unreadable/corrupt (${e.message}). Left untouched.`);
-      }
-      if (!Array.isArray(parsed)) {
-        throw new Error(`MERGE aborted: existing "${OUTPUT_JSON_PATH}" is not a JSON array. Left untouched.`);
-      }
-      existing = parsed as typeof finalAmaculoXhosaSchema;
-    }
-
-    // Upsert by (bookId, hymnNumber): replace on key match, else add.
-    const mergeMap = new Map<string, typeof finalAmaculoXhosaSchema[number]>();
-    for (const rec of existing) mergeMap.set(`${rec.bookId}::${rec.hymnNumber}`, rec);
-    report.existingCount = mergeMap.size;
-    for (const rec of finalAmaculoXhosaSchema) {
-      const key = `${rec.bookId}::${rec.hymnNumber}`;
-      if (mergeMap.has(key)) report.replaced++; else report.added++;
-      mergeMap.set(key, rec);
-    }
-    outputArray = [...mergeMap.values()].sort(byHymnNumber);
-    report.finalExportedCount = outputArray.length;
-    console.log(`[MERGE] existing=${report.existingCount}, added=${report.added}, replaced=${report.replaced}, final=${report.finalExportedCount}`);
-  } else {
-    outputArray = [...finalAmaculoXhosaSchema].sort(byHymnNumber);
-    report.finalExportedCount = outputArray.length;
+  // Group the deduped hymns by book. Only books that actually produced records
+  // are written, so a Sesotho batch can never truncate xhosa.json.
+  const byBook = new Map<BookId, HymnRecord[]>();
+  for (const h of dedupedList) {
+    const arr = byBook.get(h.bookId);
+    if (arr) arr.push(toRecord(h));
+    else byBook.set(h.bookId, [toRecord(h)]);
   }
 
-  // Atomic write (tmp + rename) so an interrupted write can never leave a torn
-  // or truncated xhosa.json.
-  const tmpPath = OUTPUT_JSON_PATH + '.tmp';
-  fs.writeFileSync(tmpPath, JSON.stringify(outputArray, null, 2), 'utf8');
-  fs.renameSync(tmpPath, OUTPUT_JSON_PATH);
-  console.log(`\nSuccessfully exported ${outputArray.length} Xhosa hymns to: "${OUTPUT_JSON_PATH}"`);
+  const totalParsedRecords = dedupedList.length;
+
+  // Guard 1: never shrink a catalogue on a bad/partial run. A deck skipped for
+  // having no resolvable hymn number is a deliberate, reported outcome (it is
+  // in manual-review.json), so it is subtracted from the expectation rather
+  // than treated as a fault. Any OTHER failure, or an unexplained shortfall,
+  // aborts the merge with every book file left untouched.
+  const unexpectedFailures = report.failedImports - report.skippedNoHymnNumber;
+  const expectedRecords = targetFiles.length - report.skippedNoHymnNumber - report.duplicatesRejected;
+  if (MERGE_MODE && (unexpectedFailures > 0 || totalParsedRecords !== expectedRecords)) {
+    throw new Error(
+      `MERGE aborted: expected ${expectedRecords} record(s) but got ${totalParsedRecords} ` +
+      `(files=${targetFiles.length}, skippedNoHymnNumber=${report.skippedNoHymnNumber}, ` +
+      `deduped=${report.duplicatesRejected}, otherFailures=${unexpectedFailures}). ` +
+      `Existing book files left untouched.`
+    );
+  }
+
+  for (const [bookId, records] of byBook) {
+    const outPath = outputPathForBook(bookId);
+    let outputArray: HymnRecord[];
+
+    if (MERGE_MODE) {
+      // Guard 2: load the existing file. If it exists but cannot be read/parsed
+      // as an array, ABORT — never treat a corrupt read as empty (that path
+      // would replace the whole catalogue with only the merged few).
+      let existing: HymnRecord[] = [];
+      if (fs.existsSync(outPath)) {
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+        } catch (e: any) {
+          throw new Error(`MERGE aborted: existing "${outPath}" is unreadable/corrupt (${e.message}). Left untouched.`);
+        }
+        if (!Array.isArray(parsed)) {
+          throw new Error(`MERGE aborted: existing "${outPath}" is not a JSON array. Left untouched.`);
+        }
+        existing = parsed as HymnRecord[];
+      }
+
+      // Upsert by (bookId, hymnNumber): replace on key match, else add.
+      const mergeMap = new Map<string, HymnRecord>();
+      for (const rec of existing) mergeMap.set(`${rec.bookId}::${rec.hymnNumber}`, rec);
+      report.existingCount += mergeMap.size;
+      for (const rec of records) {
+        const key = `${rec.bookId}::${rec.hymnNumber}`;
+        if (mergeMap.has(key)) report.replaced++; else report.added++;
+        mergeMap.set(key, rec);
+      }
+      outputArray = [...mergeMap.values()].sort(byHymnNumber);
+      console.log(`[MERGE] ${bookId}: existing=${existing.length}, final=${outputArray.length}`);
+    } else {
+      outputArray = [...records].sort(byHymnNumber);
+    }
+
+    report.finalExportedCount += outputArray.length;
+    report.exportedByBook[bookId] = outputArray.length;
+
+    // Atomic write (tmp + rename) so an interrupted write can never leave a torn
+    // or truncated book file.
+    const tmpPath = outPath + '.tmp';
+    fs.writeFileSync(tmpPath, JSON.stringify(outputArray, null, 2), 'utf8');
+    fs.renameSync(tmpPath, outPath);
+    console.log(`\nSuccessfully exported ${outputArray.length} ${bookId} hymns to: "${outPath}"`);
+  }
+
+  if (byBook.size === 0) {
+    console.log('\nNo hymns were exported — nothing parsed successfully.');
+  }
 
   // Export report
   fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2), 'utf8');
@@ -981,6 +1351,16 @@ async function main() {
   console.log('----------------------------------------------------');
 }
 
-main().catch(err => {
-  console.error('Fatal execution crashed in PowerPoint pipeline engine:', err);
-});
+// Only run the pipeline when this file is executed directly. Importing it (the
+// test suite does) must not touch the filesystem.
+const isDirectRun = Boolean(
+  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))
+);
+if (isDirectRun) {
+  main().catch(err => {
+    console.error('Fatal execution crashed in PowerPoint pipeline engine:', err);
+    process.exitCode = 1;
+  });
+}
+
+export { parsePptx, computeWarnings, main };

@@ -11,8 +11,8 @@ import { Search, Heart, ArrowLeft, SlidersHorizontal, List, FolderHeart, History
 export const BookScreen: React.FC = () => {
   const {
     hymns,
-    xhosaStatus,
-    loadXhosaBook,
+    bookStatus,
+    loadBook,
     selectedBookId,
     setSelectedBookId,
     openHymn,
@@ -29,14 +29,15 @@ export const BookScreen: React.FC = () => {
 
   const [activeFilter, setActiveFilter] = useState<'all' | 'favourites' | 'recent'>('all');
 
-  // Dynamically load the Xhosa hymn book (public/data/xhosa.json) on open.
-  // The loader is self-guarding, so it only fetches once per session.
+  // Dynamically load the selected hymn book (public/data/<bookId>.json) on open.
+  // The loader is self-guarding, so it only fetches once per book per session,
+  // and a book with no imported JSON falls back to the bundled hymns.
   useEffect(() => {
-    if (selectedBookId === 'xhosa') {
-      loadXhosaBook();
+    if (selectedBookId) {
+      loadBook(selectedBookId);
     }
-    // loadXhosaBook is intentionally omitted: it is stable enough via its
-    // internal guards and depending on it would re-run on every render.
+    // loadBook is intentionally omitted: it is stable enough via its internal
+    // guards and depending on it would re-run on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBookId]);
 
@@ -109,8 +110,10 @@ export const BookScreen: React.FC = () => {
   const bookHymns = hymns
     .filter((h) => h.bookId === selectedBookId)
     .sort((a, b) => a.hymnNumber - b.hymnNumber);
-  const isXhosaLoading = selectedBookId === 'xhosa' && xhosaStatus === 'loading';
-  const isXhosaError = selectedBookId === 'xhosa' && xhosaStatus === 'error';
+  const selectedBookName =
+    hymnBooks.find((b) => b.id === selectedBookId)?.name ?? 'hymn book';
+  const isBookLoading = selectedBookId ? bookStatus[selectedBookId] === 'loading' : false;
+  const isBookError = selectedBookId ? bookStatus[selectedBookId] === 'error' : false;
 
   // Search logic. High accuracy queries supporting: X11, 11, Bulelani, Bulelani kuYeho inside current book
   const filteredHymns = bookHymns.filter((h) => {
@@ -169,16 +172,16 @@ export const BookScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Xhosa dynamic-load status */}
-      {isXhosaLoading && (
+      {/* Selected book dynamic-load status */}
+      {isBookLoading && (
         <div className="flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800/80 text-sm text-[#757575] dark:text-zinc-400">
           <span className="w-4 h-4 border-2 border-[#E53935] border-t-transparent rounded-full animate-spin shrink-0" />
-          Loading the latest Xhosa hymns…
+          Loading the latest {selectedBookName} hymns…
         </div>
       )}
-      {isXhosaError && (
+      {isBookError && (
         <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 text-sm text-amber-800 dark:text-amber-300">
-          Couldn’t fetch the latest Xhosa hymns — showing the bundled offline copy.
+          Couldn’t fetch the latest {selectedBookName} hymns — showing the bundled offline copy.
         </div>
       )}
 
@@ -250,7 +253,7 @@ export const BookScreen: React.FC = () => {
 
       {/* Structured List of Hymns */}
       <div className="space-y-2.5">
-        {isXhosaLoading ? null : displayHymns.length > 0 ? (
+        {isBookLoading ? null : displayHymns.length > 0 ? (
           displayHymns.map((hymn) => {
             const isFav = isHymnFavourite(hymn.bookId, hymn.hymnNumber);
             const labelCode = selectedBookId === 'english' ? 'MHB' : hymn.hymnCode.replace(/[0-9]/g, '');

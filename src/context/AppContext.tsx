@@ -17,11 +17,11 @@ interface AppContextType {
 
   // Hymn data source. `hymns` is the single source of truth consumed across
   // the app. It is seeded from the bundled hardcoded database (fallback) and
-  // the Xhosa slice is replaced at runtime from public/data/xhosa.json.
+  // each book's slice is replaced at runtime from public/data/<bookId>.json.
   hymns: Hymn[];
-  xhosaStatus: BookLoadStatus;
-  xhosaError: string | null;
-  loadXhosaBook: () => void;
+  bookStatus: Record<BookId, BookLoadStatus>;
+  bookError: Record<BookId, string | null>;
+  loadBook: (bookId: BookId) => void;
   selectedBookId: BookId | null;
   setSelectedBookId: (bookId: BookId | null) => void;
   activeHymn: Hymn | null;
@@ -78,21 +78,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // ---- Hymn data source -------------------------------------------------
   // Seeded from the bundled hardcoded database so every book has a working
-  // fallback. The Xhosa book is replaced with public/data/xhosa.json once the
-  // user opens it (see loadXhosaBook). Other books remain hardcoded for now.
-  const XHOSA_CACHE_KEY = 'mhb_xhosa_cache';
-  const [hymns, setHymns] = useState<Hymn[]>(hymnsDatabase);
-  const [xhosaStatus, setXhosaStatus] = useState<BookLoadStatus>('idle');
-  const [xhosaError, setXhosaError] = useState<string | null>(null);
-  const xhosaLoadingRef = useRef(false);
+  // fallback. Each book is replaced with public/data/<bookId>.json once the
+  // user opens it (see loadBook); a book with no imported JSON yet simply keeps
+  // its bundled hymns.
+  const bookCacheKey = (bookId: BookId) => `mhb_book_cache_${bookId}`;
+  const emptyBookRecord = <T,>(value: T): Record<BookId, T> =>
+    ({ xhosa: value, setswana: value, sesotho: value, english: value });
 
-  // Verify a payload really is an array of Xhosa hymns before trusting it.
-  const validateXhosa = (data: unknown): Hymn[] | null => {
+  const [hymns, setHymns] = useState<Hymn[]>(hymnsDatabase);
+  const [bookStatus, setBookStatus] = useState<Record<BookId, BookLoadStatus>>(
+    emptyBookRecord<BookLoadStatus>('idle')
+  );
+  const [bookError, setBookError] = useState<Record<BookId, string | null>>(
+    emptyBookRecord<string | null>(null)
+  );
+  // Books with a fetch in flight, so React StrictMode's double-invoked effects
+  // cannot fire two requests for the same book.
+  const loadingBooksRef = useRef<Set<BookId>>(new Set());
+
+  // Verify a payload really is an array of hymns for the requested book.
+  const validateBook = (data: unknown, bookId: BookId): Hymn[] | null => {
     if (!Array.isArray(data) || data.length === 0) return null;
     const allValid = data.every(
       (h: any) =>
         h &&
-        h.bookId === 'xhosa' &&
+        h.bookId === bookId &&
         typeof h.hymnNumber === 'number' &&
         typeof h.hymnCode === 'string' &&
         typeof h.title === 'string' &&
@@ -101,48 +111,48 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return allValid ? (data as Hymn[]) : null;
   };
 
-  // Swap only the Xhosa slice; other books (from the fallback) stay intact.
-  const applyXhosaHymns = (xhosaHymns: Hymn[]) => {
-    setHymns(prev => [...prev.filter(h => h.bookId !== 'xhosa'), ...xhosaHymns]);
+  // Swap only this book's slice; other books (from the fallback) stay intact.
+  const applyBookHymns = (bookId: BookId, bookHymns: Hymn[]) => {
+    setHymns(prev => [...prev.filter(h => h.bookId !== bookId), ...bookHymns]);
   };
 
-  const loadXhosaBook = async () => {
-    // Skip if already loaded, or a load is already in flight (guards against
-    // React StrictMode's double-invoked effects firing two fetches).
-    if (xhosaStatus === 'loaded' || xhosaLoadingRef.current) return;
-    xhosaLoadingRef.current = true;
-    setXhosaStatus('loading');
-    setXhosaError(null);
+  const loadBook = async (bookId: BookId) => {
+    // Skip if already loaded, or a load is already in flight for this book.
+    if (bookStatus[bookId] === 'loaded' || loadingBooksRef.current.has(bookId)) return;
+    loadingBooksRef.current.add(bookId);
+    setBookStatus(prev => ({ ...prev, [bookId]: 'loading' }));
+    setBookError(prev => ({ ...prev, [bookId]: null }));
 
     try {
-      const res = await fetch('/data/xhosa.json', { cache: 'no-cache' });
+      const res = await fetch(`/data/${bookId}.json`, { cache: 'no-cache' });
       if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
-      const valid = validateXhosa(await res.json());
-      if (!valid) throw new Error('xhosa.json is empty or malformed');
+      const valid = validateBook(await res.json(), bookId);
+      if (!valid) throw new Error(`${bookId}.json is empty or malformed`);
 
       // Cache so the book stays available offline on later visits.
-      try { localStorage.setItem(XHOSA_CACHE_KEY, JSON.stringify(valid)); } catch {}
+      try { localStorage.setItem(bookCacheKey(bookId), JSON.stringify(valid)); } catch {}
 
-      applyXhosaHymns(valid);
-      setXhosaStatus('loaded');
+      applyBookHymns(bookId, valid);
+      setBookStatus(prev => ({ ...prev, [bookId]: 'loaded' }));
     } catch (err: any) {
-      // Network/fetch failure (e.g. offline): prefer a previously cached copy.
-      const cached = localStorage.getItem(XHOSA_CACHE_KEY);
+      // Network/fetch failure (e.g. offline), or a book that has not been
+      // imported yet and so has no JSON: prefer a previously cached copy.
+      const cached = localStorage.getItem(bookCacheKey(bookId));
       if (cached) {
         try {
-          const valid = validateXhosa(JSON.parse(cached));
+          const valid = validateBook(JSON.parse(cached), bookId);
           if (valid) {
-            applyXhosaHymns(valid);
-            setXhosaStatus('loaded');
+            applyBookHymns(bookId, valid);
+            setBookStatus(prev => ({ ...prev, [bookId]: 'loaded' }));
             return;
           }
         } catch { /* fall through to hardcoded fallback */ }
       }
-      // Final fallback: keep the bundled hardcoded Xhosa hymns already in state.
-      setXhosaError(err?.message ?? 'Unable to load Xhosa hymn data');
-      setXhosaStatus('error');
+      // Final fallback: keep the bundled hardcoded hymns already in state.
+      setBookError(prev => ({ ...prev, [bookId]: err?.message ?? `Unable to load ${bookId} hymn data` }));
+      setBookStatus(prev => ({ ...prev, [bookId]: 'error' }));
     } finally {
-      xhosaLoadingRef.current = false;
+      loadingBooksRef.current.delete(bookId);
     }
   };
 
@@ -380,9 +390,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       activeTab,
       setActiveTab,
       hymns,
-      xhosaStatus,
-      xhosaError,
-      loadXhosaBook,
+      bookStatus,
+      bookError,
+      loadBook,
       selectedBookId,
       setSelectedBookId,
       activeHymn,

@@ -1,0 +1,463 @@
+[
+  {
+    "bookId": "setswana",
+    "hymnNumber": 3,
+    "hymnCode": "T3",
+    "title": "bogolo jwa bomodimo",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Bogolo jwa Bomodimo",
+            "translation": "The Greatness of God"
+          },
+          {
+            "primary": "Bo ka angwa ke mang?",
+            "translation": "Who can match it?"
+          },
+          {
+            "primary": "Ke kgosi ya magodimo,",
+            "translation": "He is the Lord of heavens"
+          },
+          {
+            "primary": "Kgosi e’ boitshegang.",
+            "translation": "The awesome Lord"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Fa o rata o ka betsa",
+            "translation": "If you like, you can punish"
+          },
+          {
+            "primary": "Mme o ka fodisa;",
+            "translation": "Or you can heal"
+          },
+          {
+            "primary": "O thata go re timetsa",
+            "translation": "You are capable of destroying us"
+          },
+          {
+            "primary": "Le gore tshedisa.",
+            "translation": "And saving us"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Mo obameleng gararo,",
+            "translation": "Worship the Triune God"
+          },
+          {
+            "primary": "Mmakeng ka tlhalefo;",
+            "translation": "Praise Him for His wisdom"
+          },
+          {
+            "primary": "Oa ikapetsa ka maru,",
+            "translation": "He clothes Himself with the clouds"
+          },
+          {
+            "primary": "O palama phefo.",
+            "translation": "He rides the wind"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Motlhang go o galefelang,",
+            "translation": "The day He gets angry"
+          },
+          {
+            "primary": "Ditlolo tsa rona;",
+            "translation": "With our trespasses"
+          },
+          {
+            "primary": "Kemang yo ‘tla arabelang",
+            "translation": "Who can account,"
+          },
+          {
+            "primary": "Dipotso tsa ona?",
+            "translation": "Against His accusations?"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "O mogolo ka mafoko",
+            "translation": "He is the God Almighty, (words can’t describe Him)"
+          },
+          {
+            "primary": "Go ba ba dumelang;",
+            "translation": "To those who believe"
+          },
+          {
+            "primary": "O tla utlwela botlhoko",
+            "translation": "He will be merciful,"
+          },
+          {
+            "primary": "Ba ba mo rapelang.",
+            "translation": "To those worship Him"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "lines": [
+          {
+            "primary": "A re godiseng Morena",
+            "translation": "Lets us exalt the Lord"
+          },
+          {
+            "primary": "Ka pelo e’ utlwang;",
+            "translation": "With a willing heart"
+          },
+          {
+            "primary": "Re dire ka go akofa",
+            "translation": "Let us be swift,"
+          },
+          {
+            "primary": "Tse re di laolelwang.",
+            "translation": "In what we are commanded"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nBogolo jwa Bomodimo\nThe Greatness of God\nBo ka angwa ke mang?\nWho can match it?\nKe kgosi ya magodimo,\nHe is the Lord of heavens\nKgosi e’ boitshegang.\nThe awesome Lord\n\nVERSE 2\nFa o rata o ka betsa\nIf you like, you can punish\nMme o ka fodisa;\nOr you can heal\nO thata go re timetsa\nYou are capable of destroying us\nLe gore tshedisa.\nAnd saving us\n\nVERSE 3\nMo obameleng gararo,\nWorship the Triune God\nMmakeng ka tlhalefo;\nPraise Him for His wisdom\nOa ikapetsa ka maru,\nHe clothes Himself with the clouds\nO palama phefo.\nHe rides the wind\n\nVERSE 4\nMotlhang go o galefelang,\nThe day He gets angry\nDitlolo tsa rona;\nWith our trespasses\nKemang yo ‘tla arabelang\nWho can account,\nDipotso tsa ona?\nAgainst His accusations?\n\nVERSE 5\nO mogolo ka mafoko\nHe is the God Almighty, (words can’t describe Him)\nGo ba ba dumelang;\nTo those who believe\nO tla utlwela botlhoko\nHe will be merciful,\nBa ba mo rapelang.\nTo those worship Him\n\nVERSE 6\nA re godiseng Morena\nLets us exalt the Lord\nKa pelo e’ utlwang;\nWith a willing heart\nRe dire ka go akofa\nLet us be swift,\nTse re di laolelwang.\nIn what we are commanded",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "setswana",
+    "hymnNumber": 13,
+    "hymnCode": "T13",
+    "title": "modimo wa boikanyo",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Modimo wa boikanyo,",
+            "translation": "Faithful God"
+          },
+          {
+            "primary": "Re ikanya mo go Wena;",
+            "translation": "Our faith is in you"
+          },
+          {
+            "primary": "O gogile borraetsho,",
+            "translation": "You led our forebears"
+          },
+          {
+            "primary": "Mo dinageng tsa lenyora.",
+            "translation": "From arid desolate places"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Mme re lopa ka tlhoafalo",
+            "translation": "We earnestly pray"
+          },
+          {
+            "primary": "Matshego a ba a bonyeng;",
+            "translation": "For true blessings"
+          },
+          {
+            "primary": "O nne Modimo wa rona,",
+            "translation": "Be our God"
+          },
+          {
+            "primary": "Mothusi mo tshikatshikeng.",
+            "translation": "Our comforter in times of tribulations"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Mo ditseleng tsa botshelo,",
+            "translation": "In the unpredictable ways of life"
+          },
+          {
+            "primary": "Goga dikgato tsa rona;",
+            "translation": "Lead us"
+          },
+          {
+            "primary": "Re tle re fitlhe kwa O teng,",
+            "translation": "So that we may be with you"
+          },
+          {
+            "primary": "Legaeng je re le batlang.",
+            "translation": "In a home which we yearn for."
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Re femele mo diphatseng,",
+            "translation": "Keep us in times of trouble"
+          },
+          {
+            "primary": "Re se digelwe ke sepe;",
+            "translation": "So that we can be protected from harm"
+          },
+          {
+            "primary": "Re nee se re se tlhokang",
+            "translation": "May you meet our needs"
+          },
+          {
+            "primary": "Dijo le tse di aparwang.",
+            "translation": "Of food and clothing"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Thuso e re a e lopa",
+            "translation": "We plead for this help"
+          },
+          {
+            "primary": "Mo botlalong jwa gago Rra;",
+            "translation": "In all your might"
+          },
+          {
+            "primary": "Mme re tla go itshenkela,",
+            "translation": "We dedicate ourselves,"
+          },
+          {
+            "primary": "Re go direle ka metlha.",
+            "translation": "To always remain in your service"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nModimo wa boikanyo,\nFaithful God\nRe ikanya mo go Wena;\nOur faith is in you\nO gogile borraetsho,\nYou led our forebears\nMo dinageng tsa lenyora.\nFrom arid desolate places\n\nVERSE 2\nMme re lopa ka tlhoafalo\nWe earnestly pray\nMatshego a ba a bonyeng;\nFor true blessings\nO nne Modimo wa rona,\nBe our God\nMothusi mo tshikatshikeng.\nOur comforter in times of tribulations\n\nVERSE 3\nMo ditseleng tsa botshelo,\nIn the unpredictable ways of life\nGoga dikgato tsa rona;\nLead us\nRe tle re fitlhe kwa O teng,\nSo that we may be with you\nLegaeng je re le batlang.\nIn a home which we yearn for.\n\nVERSE 4\nRe femele mo diphatseng,\nKeep us in times of trouble\nRe se digelwe ke sepe;\nSo that we can be protected from harm\nRe nee se re se tlhokang\nMay you meet our needs\nDijo le tse di aparwang.\nOf food and clothing\n\nVERSE 5\nThuso e re a e lopa\nWe plead for this help\nMo botlalong jwa gago Rra;\nIn all your might\nMme re tla go itshenkela,\nWe dedicate ourselves,\nRe go direle ka metlha.\nTo always remain in your service",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "setswana",
+    "hymnNumber": 62,
+    "hymnCode": "T62",
+    "title": "Tswana",
+    "hasTranslations": false,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Fika ja bosakhutleng"
+          },
+          {
+            "primary": "Fika je le fatotsweng"
+          },
+          {
+            "primary": "Botshabelo theregong"
+          },
+          {
+            "primary": "Le kgololo tatlhegong"
+          },
+          {
+            "primary": "Fika ja bosakhutleng"
+          },
+          {
+            "primary": "Ke tle ke iphitlhe teng"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Tiro tse ke di dirang"
+          },
+          {
+            "primary": "Telo tse ke di lelang"
+          },
+          {
+            "primary": "Puo tse ke di buang"
+          },
+          {
+            "primary": "Tsone di ka thusa jang"
+          },
+          {
+            "primary": "Gore ke tswe mo dibeng"
+          },
+          {
+            "primary": "Ke ye kwa polokegong"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Metsi a a elelang"
+          },
+          {
+            "primary": "Madi a a fodisang"
+          },
+          {
+            "primary": "A tswang mo lotlhakoreng"
+          },
+          {
+            "primary": "Dinaong, le diatleng"
+          },
+          {
+            "primary": "A mphodise botlhokung"
+          },
+          {
+            "primary": "A ntlhapise boleung"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "A ke inwe mo mading"
+          },
+          {
+            "primary": "A ke a tshololetsweng"
+          },
+          {
+            "primary": "Ke tshabele mokgorong"
+          },
+          {
+            "primary": "Ke fitlhe legodimong"
+          },
+          {
+            "primary": "Kwa Mmoloki a leng teng"
+          },
+          {
+            "primary": "Fika ja bosakhutleng"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Ka ke sa le botshelong"
+          },
+          {
+            "primary": "Fa ke tla ya bobipong"
+          },
+          {
+            "primary": "Fa ke rula mo losung"
+          },
+          {
+            "primary": "Fa ke ema katlholong"
+          },
+          {
+            "primary": "Fika ja bosakhutleng"
+          },
+          {
+            "primary": "Ke tle ke iphitlhe teng"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nFika ja bosakhutleng\nFika je le fatotsweng\nBotshabelo theregong\nLe kgololo tatlhegong\nFika ja bosakhutleng\nKe tle ke iphitlhe teng\n\nVERSE 2\nTiro tse ke di dirang\nTelo tse ke di lelang\nPuo tse ke di buang\nTsone di ka thusa jang\nGore ke tswe mo dibeng\nKe ye kwa polokegong\n\nVERSE 3\nMetsi a a elelang\nMadi a a fodisang\nA tswang mo lotlhakoreng\nDinaong, le diatleng\nA mphodise botlhokung\nA ntlhapise boleung\n\nVERSE 4\nA ke inwe mo mading\nA ke a tshololetsweng\nKe tshabele mokgorong\nKe fitlhe legodimong\nKwa Mmoloki a leng teng\nFika ja bosakhutleng\n\nVERSE 5\nKa ke sa le botshelong\nFa ke tla ya bobipong\nFa ke rula mo losung\nFa ke ema katlholong\nFika ja bosakhutleng\nKe tle ke iphitlhe teng",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "setswana",
+    "hymnNumber": 397,
+    "hymnCode": "T397",
+    "title": "Ao! Morena wa kagiso",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Ao! Morena wa kagiso,",
+            "translation": "O! Lord of Peace"
+          },
+          {
+            "primary": "Senya bogale jwa baba;",
+            "translation": "Defeat the power of the enemy"
+          },
+          {
+            "primary": "Dintwa ka gotlhe di fele,",
+            "translation": "The wars all over the world, must end"
+          },
+          {
+            "primary": "Kagiso, go nee kagiso.",
+            "translation": "Peace, let there be peace"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Modimo, Rara, re utlwe",
+            "translation": "God, Father, hear us"
+          },
+          {
+            "primary": "Ka nako ye re laolele",
+            "translation": "At this time, direct us"
+          },
+          {
+            "primary": "Botshelo jwa phuthologo,",
+            "translation": "To a life of freedom"
+          },
+          {
+            "primary": "Kagiso, go nee kagiso.",
+            "translation": "Peace, let there be peace"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Re nee ba kwa legodimong,",
+            "translation": "Let us live as heavenly citizens"
+          },
+          {
+            "primary": "‘Pelo di tlale lorato;",
+            "translation": "Our hearts filled with love"
+          },
+          {
+            "primary": "Re tshwaragane phuthegong,",
+            "translation": "Be united as one congregation"
+          },
+          {
+            "primary": "Kagiso, go nee kagiso.",
+            "translation": "Peace, let there be peace"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nAo! Morena wa kagiso,\nO! Lord of Peace\nSenya bogale jwa baba;\nDefeat the power of the enemy\nDintwa ka gotlhe di fele,\nThe wars all over the world, must end\nKagiso, go nee kagiso.\nPeace, let there be peace\n\nVERSE 2\nModimo, Rara, re utlwe\nGod, Father, hear us\nKa nako ye re laolele\nAt this time, direct us\nBotshelo jwa phuthologo,\nTo a life of freedom\nKagiso, go nee kagiso.\nPeace, let there be peace\n\nVERSE 3\nRe nee ba kwa legodimong,\nLet us live as heavenly citizens\n‘Pelo di tlale lorato;\nOur hearts filled with love\nRe tshwaragane phuthegong,\nBe united as one congregation\nKagiso, go nee kagiso.\nPeace, let there be peace",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  }
+]
