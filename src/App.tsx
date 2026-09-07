@@ -14,6 +14,7 @@ import { SettingsScreen } from './components/SettingsScreen';
 import { HymnDetailScreen } from './components/HymnDetailScreen';
 import { SaaSGatewayScreen } from './components/SaaSGatewayScreen';
 import { LOGO_BASE64 } from './data/logo';
+import { ReportIssueSheet } from './components/ReportIssueSheet';
 
 const MainLayout: React.FC = () => {
   const { activeTab, activeHymn, currentUser } = useApp();
@@ -41,19 +42,31 @@ const MainLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#111111] flex flex-col transition-colors duration-300">
-      {/* Top Sanctuary Safety Header (only shown if not in projection mode of active reading) */}
-      <header className="sticky top-0 z-30 w-full bg-white dark:bg-[#111111] border-b border-gray-100 dark:border-zinc-800/80 px-5 h-16 flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#111111] dark:text-white uppercase tracking-tight font-sans flex items-center gap-2">
-          <img 
-            src={LOGO_BASE64} 
-            alt="Methodist Hymn Book Logo" 
-            className="w-8 h-8 object-contain" 
+      {/* Top app header */}
+      <header className="sticky top-0 z-30 w-full bg-white dark:bg-[#111111] border-b border-gray-100 dark:border-zinc-800/80 px-4 sm:px-5 h-16 flex items-center justify-between gap-3">
+        {/* min-w-0 + nowrap keeps the wordmark on one line; without it the title
+            wrapped and collided with the badge on a 390px screen. */}
+        <h1 className="min-w-0 text-base sm:text-lg font-bold text-[#111111] dark:text-white uppercase tracking-tight font-sans flex items-center gap-2 whitespace-nowrap">
+          <img
+            src={LOGO_BASE64}
+            alt=""
+            aria-hidden="true"
+            className="w-8 h-8 shrink-0 object-contain"
             referrerPolicy="no-referrer"
           />
-          Methodist <span className="text-[#E53935] font-extrabold">Hymn Book</span>
+          <span className="truncate">
+            <span className="text-[#E53935] font-extrabold">Hymn Book</span>
+          </span>
         </h1>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#757575] dark:text-zinc-400 bg-[#FAFAFA] dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 px-3 py-1 rounded-full uppercase tracking-wider">
-          Offline Caching Active
+        {/* Full pill needs room the narrowest phones don't have, so below `sm`
+            it collapses to a dot + short label. */}
+        <div
+          title="Offline caching active"
+          className="shrink-0 flex items-center gap-1.5 text-[10px] font-bold text-[#757575] dark:text-zinc-400 bg-[#FAFAFA] dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 px-2.5 sm:px-3 py-1 rounded-full uppercase tracking-wider"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
+          <span className="hidden sm:inline">Offline Caching Active</span>
+          <span className="sm:hidden">Offline</span>
         </div>
       </header>
 
@@ -67,6 +80,9 @@ const MainLayout: React.FC = () => {
 
       {/* E-Reader Hymn Sheet Overlay */}
       {activeHymn && <HymnDetailScreen />}
+
+      {/* Global report sheet — opened from any screen via openReport(). */}
+      <ReportIssueSheet />
     </div>
   );
 };

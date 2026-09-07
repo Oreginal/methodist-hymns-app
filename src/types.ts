@@ -69,3 +69,37 @@ export interface User {
   createdAt?: string;
 }
 
+
+// ---- Issue reporting ------------------------------------------------------
+// Members can flag a hymn that is missing or wrong. Kinds are a closed set so
+// the API can validate them and the email can be filed by type.
+export type ReportKind =
+  | 'missing-hymn'
+  | 'wrong-lyrics'
+  | 'wrong-translation'
+  | 'wrong-details'
+  | 'other';
+
+// What the user was looking at when they tapped Report. `hymn` pre-fills the
+// identity and is read-only in the form; `book` and `general` ask for it.
+export interface ReportTarget {
+  scope: 'hymn' | 'book' | 'general';
+  bookId?: BookId;
+  hymnNumber?: number;
+  hymnTitle?: string;
+  // Pre-selects a kind, e.g. opening the form from an empty search result
+  // defaults to "missing hymn".
+  suggestedKind?: ReportKind;
+}
+
+export interface IssueReport {
+  kind: ReportKind;
+  details: string;
+  bookId?: string;
+  hymnNumber?: number;
+  hymnTitle?: string;
+  reporterEmail?: string;
+  appVersion?: string;
+}
+
+export type ReportSubmitState = 'idle' | 'sending' | 'sent' | 'queued' | 'error';

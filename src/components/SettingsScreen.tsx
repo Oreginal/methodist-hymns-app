@@ -8,9 +8,9 @@ import { useApp } from '../context/AppContext';
 import { hymnBooks } from '../data/hymnsData';
 import { BookId } from '../types';
 import { 
-  Download, CheckCircle2, Moon, Sun, Monitor, 
+  Download, CheckCircle2, Moon, Sun,
   Tv, Book, Flame, MessageSquare, CreditCard, Sparkles, Smartphone, Landmark,
-  LogOut, User as UserIcon
+  LogOut, User as UserIcon, Flag, Clock
 } from 'lucide-react';
 
 export const SettingsScreen: React.FC = () => {
@@ -20,12 +20,12 @@ export const SettingsScreen: React.FC = () => {
     downloadProgress,
     darkMode,
     setDarkMode,
-    projectionMode,
-    setProjectionMode,
     fontSize,
     setFontSize,
     currentUser,
-    logout
+    logout,
+    openReport,
+    pendingReportCount
   } = useApp();
 
   return (
@@ -164,24 +164,6 @@ export const SettingsScreen: React.FC = () => {
             </button>
           </div>
 
-          {/* Default Projection Mode Setting */}
-          <div className="flex items-center justify-between py-3.5">
-            <div>
-              <h4 className="font-bold text-[#111111] dark:text-white text-sm">Projection Contrast Mode</h4>
-              <p className="text-xs text-[#757575] dark:text-zinc-400 mt-0.5">Engage ultra high-contrast reader specs (true black-white) for projections.</p>
-            </div>
-            <button
-              onClick={() => setProjectionMode(!projectionMode)}
-              className={`px-4.5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                projectionMode
-                  ? 'bg-[#E53935] text-white'
-                  : 'border border-gray-100 dark:border-zinc-800 text-[#757575] dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800'
-              }`}
-            >
-              {projectionMode ? 'Active' : 'Enable'}
-            </button>
-          </div>
-
           {/* Base Font Zoom */}
           <div className="flex items-center justify-between py-3.5 last:pb-0">
             <div>
@@ -205,6 +187,36 @@ export const SettingsScreen: React.FC = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Report a problem — the always-available route, for members who are not
+          currently looking at the hymn in question. */}
+      <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 p-5 space-y-4">
+        <div className="space-y-1">
+          <h3 className="text-lg font-bold text-[#111111] dark:text-white flex items-center gap-2">
+            <Flag size={18} className="text-[#E53935]" />
+            Found a problem?
+          </h3>
+          <p className="text-xs text-[#757575] dark:text-zinc-400 leading-relaxed">
+            If a hymn is missing, or the words or translation are wrong, tell us and we’ll correct the hymn book.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => openReport({ scope: 'general' })}
+          className="w-full min-h-[48px] flex items-center justify-center gap-2 bg-[#E53935] hover:bg-[#c62828] text-white font-bold text-xs uppercase tracking-wider rounded-xl active:scale-[0.99] transition cursor-pointer"
+        >
+          <Flag size={15} />
+          Report a missing or incorrect hymn
+        </button>
+
+        {pendingReportCount > 0 && (
+          <p className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
+            <Clock size={13} className="shrink-0" />
+            {pendingReportCount} report{pendingReportCount === 1 ? '' : 's'} waiting to send — they’ll go automatically once you’re online.
+          </p>
+        )}
       </section>
 
       {/* Future Ready Enterprise Architecture Demos */}
@@ -262,10 +274,21 @@ export const SettingsScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* App Version Info */}
-      <div className="text-center text-xs text-[#757575] pt-4">
-        <p className="font-semibold">Methodist Hymn Book App • PWA Edition</p>
-        <p className="mt-0.5 opacity-75">v1.2.0 • Offline Local Database Active</p>
+      {/* App Version Info & attribution */}
+      <div className="text-center text-xs text-[#757575] pt-4 space-y-1">
+        <p className="font-semibold">Hymn Book App • PWA Edition</p>
+        <p className="opacity-75">v1.2.0 • Offline Local Database Active</p>
+        <p className="pt-1">
+          Built by{' '}
+          <a
+            href="https://katoresolutions.co.za"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[#E53935] hover:underline"
+          >
+            KatOre Solutions
+          </a>
+        </p>
       </div>
     </div>
   );

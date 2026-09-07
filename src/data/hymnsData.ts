@@ -9,29 +9,29 @@ export const hymnBooks = [
   {
     id: 'english',
     name: 'English Hymnal',
-    nativeName: 'Methodist Hymn Book',
-    description: 'The standard English Methodist Hymn Book as used in sanctuary worship services.',
+    nativeName: 'Hymn Book',
+    description: 'The standard English hymn book as used in sanctuary worship services.',
     colorClass: 'border-red-500 bg-red-50/50 dark:bg-red-950/20 text-red-600'
   },
   {
     id: 'xhosa',
     name: 'Xhosa Hymnal',
-    nativeName: 'Amaculo Ase-Methodist',
-    description: 'Amaculo ama-Methodist asetyenziswa kwiinkonzo zesiXhosa zolunqulo.',
+    nativeName: 'Amaculo',
+    description: 'Amaculo asetyenziswa kwiinkonzo zesiXhosa zolunqulo.',
     colorClass: 'border-yellow-600 bg-yellow-50/50 dark:bg-yellow-950/20 text-yellow-700'
   },
   {
     id: 'setswana',
     name: 'Setswana Hymnal',
-    nativeName: 'Sefela Sa-Methodist',
-    description: 'Difela le diko tsa thuto ya Methodist mo baporofetinye botlhe.',
+    nativeName: 'Sefela',
+    description: 'Difela le diko tsa thuto mo baporofetinye botlhe.',
     colorClass: 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600'
   },
   {
     id: 'sesotho',
     name: 'Sesotho Hymnal',
-    nativeName: 'Difela Tsa-Methodist',
-    description: 'Buka ea rona ea difela tsa Kereke ea Methodist Lesotho le Afrika Borwa.',
+    nativeName: 'Difela',
+    description: 'Buka ea rona ea difela tsa Kereke Lesotho le Afrika Borwa.',
     colorClass: 'border-green-600 bg-green-50/50 dark:bg-green-950/20 text-green-700'
   }
 ] as const;

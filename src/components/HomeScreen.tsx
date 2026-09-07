@@ -7,12 +7,13 @@ import React from 'react';
 import { useApp } from '../context/AppContext';
 import { LOGO_BASE64 } from '../data/logo';
 import { hymnBooks } from '../data/hymnsData';
-import { Search, BookOpen, Clock, Heart, BookOpenCheck } from 'lucide-react';
+import { Search, BookOpen, Clock, Heart, BookOpenCheck, ChevronRight } from 'lucide-react';
 import { BookId } from '../types';
 
 export const HomeScreen: React.FC = () => {
   const {
     hymns,
+    bookStatus,
     setActiveTab,
     setSelectedBookId,
     openHymn,
@@ -24,9 +25,12 @@ export const HomeScreen: React.FC = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      setActiveTab('hymns');
-    }
+    if (!searchQuery.trim()) return;
+    // Clear any previously selected book so the hymns tab runs the query as a
+    // GLOBAL search. Leaving a book selected would silently scope the search to
+    // that one book; leaving this out entirely dropped the query altogether.
+    setSelectedBookId(null);
+    setActiveTab('hymns');
   };
 
   const handleBookClick = (bookId: BookId) => {
@@ -60,14 +64,14 @@ export const HomeScreen: React.FC = () => {
         <div className="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm max-w-[240px] sm:max-w-[280px] hover:shadow-md transition-all duration-300">
           <img
             src={LOGO_BASE64}
-            alt="Methodist Hymn Book App Logo"
+            alt="Hymn Book app logo"
             className="w-full h-auto object-contain"
             referrerPolicy="no-referrer"
           />
         </div>
         <div className="mt-6">
           <h1 className="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-[#111111] dark:text-white">
-            Methodist Hymn Book
+            Hymn Book
           </h1>
           <p className="mt-2 text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-[#757575] dark:text-gray-400">
             Worship. Hymns. Prayers.
@@ -125,38 +129,52 @@ export const HomeScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* Available Hymn Books (Asymmetric Grid) */}
+      {/* Available Hymn Books.
+          A uniform vertical list, not a grid: the four books have names of very
+          different lengths, so a 2-up grid left a ragged hole and wrapped some
+          titles onto two lines. A list keeps every row identical, scales to any
+          number of books, and gives each a full-width tap target. */}
       <section className="space-y-3">
         <h3 className="text-xs font-bold uppercase tracking-widest text-[#757575]">Books</h3>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 divide-y divide-gray-100/70 dark:divide-zinc-800/70 overflow-hidden">
           {hymnBooks.map((book) => {
-            const isEnglish = book.id === 'english';
-            const gridSpan = isEnglish ? 'col-span-2' : '';
+            const accent =
+              book.id === 'sesotho' ? 'bg-green-600'
+              : book.id === 'setswana' ? 'bg-orange-500'
+              : 'bg-[#E53935]';
+            // A book's real contents only arrive when it is opened, so until
+            // then `hymns` holds just the small bundled fallback. Showing that
+            // count would advertise "3 hymns" for a book of 134 — so the count
+            // appears only once the book has actually loaded.
+            const count = bookStatus[book.id] === 'loaded'
+              ? hymns.filter((h) => h.bookId === book.id).length
+              : null;
+
             return (
-              <div
+              <button
                 key={book.id}
+                type="button"
                 onClick={() => handleBookClick(book.id)}
-                className={`${gridSpan} relative overflow-hidden rounded-2xl bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 p-5 flex flex-col justify-between h-36 cursor-pointer hover:border-[#E53935] hover:shadow-sm transition-all active:scale-[0.98] group`}
+                className="w-full flex items-center gap-4 px-4 py-4 text-left hover:bg-red-50/30 dark:hover:bg-red-950/10 active:bg-red-50/60 dark:active:bg-red-950/20 transition-colors cursor-pointer group"
               >
-                <div className="flex items-start justify-between">
-                  <div className={`w-8 h-1 ${
-                    book.id === 'english' ? 'bg-[#E53935]' :
-                    book.id === 'xhosa' ? 'bg-[#E53935]' :
-                    book.id === 'sesotho' ? 'bg-green-600' : 'bg-orange-600'
-                  }`}></div>
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold text-[#757575] tracking-widest uppercase block mb-0.5">
-                    {book.id}
-                  </span>
-                  <h4 className="text-base font-bold text-[#111111] dark:text-white group-hover:text-[#E53935] transition-colors leading-tight">
+                {/* Spine — the colour that identifies the book at a glance */}
+                <span className={`w-1 h-11 rounded-full shrink-0 ${accent}`} />
+
+                <span className="flex-1 min-w-0">
+                  <span className="block font-bold text-[#111111] dark:text-white text-[15px] leading-tight truncate group-hover:text-[#E53935] transition-colors">
                     {book.name}
-                  </h4>
-                  <p className="text-[#757575] dark:text-zinc-400 text-xs italic tracking-wide mt-0.5">
+                  </span>
+                  <span className="block text-[#757575] dark:text-zinc-400 text-xs mt-0.5 truncate">
                     {book.nativeName}
-                  </p>
-                </div>
-              </div>
+                    {count !== null && count > 0 && <span className="tabular-nums"> · {count} hymns</span>}
+                  </span>
+                </span>
+
+                <ChevronRight
+                  size={18}
+                  className="shrink-0 text-gray-300 dark:text-zinc-600 group-hover:text-[#E53935] transition-colors"
+                />
+              </button>
             );
           })}
         </div>

@@ -84,7 +84,7 @@ export const SaaSGatewayScreen: React.FC = () => {
               className="w-9 h-9 object-contain"
             />
             <span className="font-bold tracking-tight text-base sm:text-lg hidden sm:inline-block">
-              Methodist <span className="text-[#E53935]">Hymn Book</span>
+              <span className="text-[#E53935]">Hymn Book</span>
             </span>
           </div>
 
@@ -125,14 +125,14 @@ export const SaaSGatewayScreen: React.FC = () => {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-[#111111] dark:text-white max-w-4xl mx-auto leading-tight">
-          The Sacred Methodist Hymnal. <br />
+          The Sacred Hymnal. <br />
           <span className="bg-gradient-to-r from-[#E53935] via-red-500 to-amber-500 bg-clip-text text-transparent">
             Reimagined for the Digital Era.
           </span>
         </h1>
 
         <p className="text-[#757575] dark:text-zinc-400 text-sm md:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
-          Elevate church worship and daily prayers with offline-ready access to MHB, Xhosa, Setswana, and Sesotho books. Equipped with High-Contrast Projection Mode and secure device synchronization.
+          Read hymns on your phone whenever you don’t have a hymn book to hand. Offline-ready access to the English, Xhosa, Setswana and Sesotho books, with secure device synchronization.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -200,9 +200,9 @@ export const SaaSGatewayScreen: React.FC = () => {
                 <div className="w-9 h-9 rounded-xl bg-red-50/50 dark:bg-red-950/20 text-[#E53935] flex items-center justify-center mb-4">
                   <Monitor size={16} />
                 </div>
-                <h3 className="font-bold text-sm text-[#111111] dark:text-white uppercase mb-1.5 tracking-wider">Projection mode</h3>
+                <h3 className="font-bold text-sm text-[#111111] dark:text-white uppercase mb-1.5 tracking-wider">Comfortable reading</h3>
                 <p className="text-xs text-[#757575] dark:text-zinc-400 leading-normal">
-                  Activate high-contrast visual display. Designed to project hymn texts onto walls or ceiling screens effortlessly.
+                  Adjustable text size and a dark mode built for reading hymns off a phone, in a pew or in low light.
                 </p>
               </div>
             </div>
@@ -231,9 +231,9 @@ export const SaaSGatewayScreen: React.FC = () => {
                 <Tv size={20} />
               </div>
               <div className="space-y-1">
-                <h3 className="font-bold text-base text-[#111111] dark:text-white">Sanctuary Projection Sync</h3>
+                <h3 className="font-bold text-base text-[#111111] dark:text-white">Service Hymn Lists</h3>
                 <p className="text-xs text-[#757575] dark:text-zinc-400 leading-relaxed">
-                  Connect multiple devices to a master projector. As the lead liturgist turns the hymn page, congregation projection screens trigger instantaneous updates.
+                  Share the hymns chosen for a service ahead of time, so every member can follow along on their own phone.
                 </p>
               </div>
             </div>
@@ -386,7 +386,7 @@ export const SaaSGatewayScreen: React.FC = () => {
               </span>
               <h3 className="text-lg font-bold">Parish / Church</h3>
               <p className="text-xs text-[#757575] dark:text-zinc-400">
-                Fully licenses any congregation size for digital board projection and unified bulletins.
+                Fully licenses any congregation size, with shared service hymn lists and unified bulletins.
               </p>
               <div className="pt-2">
                 <span className="text-3xl font-extrabold">R299</span>
@@ -396,7 +396,7 @@ export const SaaSGatewayScreen: React.FC = () => {
               <ul className="space-y-3 text-xs">
                 <li className="flex items-center gap-2">
                   <Check size={14} className="text-[#E53935] shrink-0" />
-                  <span className="font-semibold">Sanctuary Projection Sync Support</span>
+                  <span className="font-semibold">Shared Service Hymn Lists</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check size={14} className="text-[#E53935] shrink-0" />
@@ -440,11 +440,11 @@ export const SaaSGatewayScreen: React.FC = () => {
                 {[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-current" />)}
               </div>
               <p className="text-xs text-[#757575] dark:text-zinc-300 italic leading-relaxed">
-                "Finding Setswana and English MHB verses synchronized instantly inside the same interface is an absolute gift. The projection contrast is marvelous for evening church services."
+                "Finding Setswana and English MHB verses synchronized instantly inside the same interface is an absolute gift. Being able to read the hymns straight off my phone has been a gift on Sunday mornings."
               </p>
               <div>
                 <h4 className="font-bold text-xs">Rev. S. Baloyi</h4>
-                <p className="text-[10px] text-[#757575]">Methodist Church of Southern Africa</p>
+                <p className="text-[10px] text-[#757575]">Parish Music Director, Southern Africa</p>
               </div>
             </div>
 
@@ -470,7 +470,7 @@ export const SaaSGatewayScreen: React.FC = () => {
               </p>
               <div>
                 <h4 className="font-bold text-xs">Pastor Timothy W.</h4>
-                <p className="text-[10px] text-[#757575]">Wesley Methodist Parish Supervisor</p>
+                <p className="text-[10px] text-[#757575]">Parish Supervisor</p>
               </div>
             </div>
           </div>
@@ -498,7 +498,7 @@ export const SaaSGatewayScreen: React.FC = () => {
               <p className="text-xs text-[#757575] dark:text-zinc-400">
                 {authMode === 'login' 
                   ? 'Access your saved favorites and synchronized offline settings.' 
-                  : 'Get standard access to Methodist hymnals instantly.'}
+                  : 'Get standard access to the hymnals instantly.'}
               </p>
             </div>
 
@@ -527,7 +527,7 @@ export const SaaSGatewayScreen: React.FC = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="e.g. pastor@methodist.org"
+                      placeholder="e.g. pastor@yourparish.org"
                       className="w-full h-11 pl-10 pr-4 bg-gray-50 dark:bg-zinc-800/50 border border-gray-100 dark:border-zinc-800 rounded-xl text-xs focus:ring-2 focus:ring-[#E53935] outline-none"
                     />
                     <Mail size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -586,7 +586,7 @@ export const SaaSGatewayScreen: React.FC = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="e.g. pastor@methodist.org"
+                      placeholder="e.g. pastor@yourparish.org"
                       className="w-full h-11 pl-10 pr-4 bg-gray-50 dark:bg-zinc-800/50 border border-gray-100 dark:border-zinc-800 rounded-xl text-xs focus:ring-2 focus:ring-[#E53935] outline-none"
                     />
                     <Mail size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -682,14 +682,25 @@ export const SaaSGatewayScreen: React.FC = () => {
         <div className="flex items-center justify-center gap-3">
           <img src={LOGO_BASE64} alt="Hymn Book Logo" className="w-8 h-8 object-contain" />
           <span className="font-extrabold tracking-tight text-sm uppercase">
-            Methodist <span className="text-[#E53935]">Hymn Book</span> App
+            <span className="text-[#E53935]">Hymn Book</span> App
           </span>
         </div>
         <p className="text-xs text-[#757575] max-w-md mx-auto leading-normal px-5">
-          Dedicated to the glory of God and the preservation of Wesleyan liturgical music. Available as a cross-platform progressive web application.
+          Dedicated to the glory of God and to keeping the hymns within reach, on any phone, whether or not a hymn book is to hand.
         </p>
-        <div className="text-[10px] text-[#757575] dark:text-zinc-500">
-          © {new Date().getFullYear()} Methodist Hymn Book App • Built for offline sanctuary services • PWA Enterprise edition.
+        <div className="text-[10px] text-[#757575] dark:text-zinc-500 space-y-1">
+          <p>© {new Date().getFullYear()} Hymn Book App • Progressive web application.</p>
+          <p>
+            Built by{' '}
+            <a
+              href="https://katoresolutions.co.za"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#E53935] hover:underline"
+            >
+              KatOre Solutions
+            </a>
+          </p>
         </div>
       </footer>
     </div>

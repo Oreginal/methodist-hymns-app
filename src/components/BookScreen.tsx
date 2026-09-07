@@ -6,13 +6,15 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { hymnBooks } from '../data/hymnsData';
-import { Search, Heart, ArrowLeft, SlidersHorizontal, List, FolderHeart, History, Calendar, Download } from 'lucide-react';
+import { Search, Heart, ArrowLeft, SlidersHorizontal, List, FolderHeart, History, Calendar, Download, Flag } from 'lucide-react';
 
 export const BookScreen: React.FC = () => {
   const {
     hymns,
     bookStatus,
     loadBook,
+    loadAllBooks,
+    openReport,
     selectedBookId,
     setSelectedBookId,
     openHymn,
@@ -40,6 +42,104 @@ export const BookScreen: React.FC = () => {
     // guards and depending on it would re-run on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBookId]);
+
+  // A search typed on the home screen arrives here with no book selected. It is
+  // a GLOBAL search, so it must look across every book rather than falling
+  // through to the book picker (which silently dropped the query).
+  const globalQuery = !selectedBookId ? searchQuery.trim().toLowerCase() : '';
+
+  useEffect(() => {
+    // A book can only be searched once it has been fetched.
+    if (globalQuery) loadAllBooks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalQuery.length > 0]);
+
+  if (globalQuery) {
+    const matches = hymns
+      .filter((h) =>
+        h.hymnCode.toLowerCase() === globalQuery ||
+        String(h.hymnNumber) === globalQuery ||
+        h.title.toLowerCase().includes(globalQuery) ||
+        h.lyrics.toLowerCase().includes(globalQuery) ||
+        (h.verses?.some((v) =>
+          v.lines.some(
+            (l) =>
+              l.primary.toLowerCase().includes(globalQuery) ||
+              (l.translation?.toLowerCase().includes(globalQuery) ?? false)
+          )
+        ) ?? false)
+      )
+      .sort((a, b) => a.bookId.localeCompare(b.bookId) || a.hymnNumber - b.hymnNumber);
+
+    const stillLoading = hymnBooks.some((b) => bookStatus[b.id] === 'loading');
+
+    return (
+      <div className="space-y-4 animate-fade-in">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setSearchQuery('')}
+            aria-label="Clear search"
+            className="shrink-0 h-10 w-10 flex items-center justify-center rounded-full border border-gray-100 dark:border-zinc-800 text-[#757575] dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800 active:scale-95 transition cursor-pointer"
+          >
+            <ArrowLeft size={16} />
+          </button>
+          <div className="min-w-0">
+            <h2 className="text-xl font-bold tracking-tight text-[#111111] dark:text-white truncate">
+              Results for “{searchQuery.trim()}”
+            </h2>
+            <p className="text-xs text-[#757575] dark:text-zinc-400 mt-0.5">
+              {stillLoading ? 'Searching all books…' : `${matches.length} hymn${matches.length === 1 ? '' : 's'} across all books`}
+            </p>
+          </div>
+        </div>
+
+        {matches.length > 0 ? (
+          <div className="space-y-2.5">
+            {matches.map((hymn) => (
+              <div
+                key={`${hymn.bookId}-${hymn.hymnNumber}`}
+                onClick={() => openHymn(hymn.bookId, hymn.hymnNumber)}
+                className="flex items-center bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800/70 p-4 rounded-xl cursor-pointer hover:border-red-500/30 transition-all active:scale-[0.98]"
+              >
+                <div className="w-16 flex flex-col items-center justify-center border-r border-gray-100 dark:border-zinc-800/80 mr-4 shrink-0">
+                  <span className="font-sans font-bold text-[9px] text-[#E53935] tracking-widest uppercase">
+                    {hymn.bookId.slice(0, 3)}
+                  </span>
+                  <span className="text-xl font-bold text-[#111111] dark:text-white leading-tight mt-0.5">
+                    {hymn.hymnNumber}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-[#111111] dark:text-white text-base leading-snug truncate">
+                    {hymn.title}
+                  </h3>
+                  <p className="text-[#757575] dark:text-zinc-500 text-[10px] mt-0.5 truncate uppercase tracking-widest">
+                    {hymnBooks.find((b) => b.id === hymn.bookId)?.name}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : !stillLoading && (
+          <div className="text-center py-10 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-850 p-6 space-y-2">
+            <h4 className="text-base font-bold text-[#111111] dark:text-white">No hymns found</h4>
+            <p className="text-xs text-gray-500 dark:text-zinc-400">
+              Try searching by hymn code (e.g. “X11”), hymn number, or keywords.
+            </p>
+            <button
+              type="button"
+              onClick={() => openReport({ scope: 'general', suggestedKind: 'missing-hymn' })}
+              className="inline-flex items-center gap-2 mt-3 min-h-[44px] px-4 rounded-xl border border-gray-200 dark:border-zinc-800 text-[#E53935] hover:bg-red-50 dark:hover:bg-red-950/20 text-xs font-bold uppercase tracking-wider active:scale-95 transition cursor-pointer"
+            >
+              <Flag size={14} />
+              Report a missing hymn
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   // Handle book selection fallback
   if (!selectedBookId) {
@@ -305,11 +405,29 @@ export const BookScreen: React.FC = () => {
             );
           })
         ) : (
-          <div className="text-center py-12 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-850 p-6 space-y-2">
+          <div className="text-center py-10 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-850 p-6 space-y-2">
             <h4 className="text-base font-bold text-[#111111] dark:text-white">No hymns found</h4>
             <p className="text-xs text-gray-500 dark:text-zinc-400">
-              Try searching by hymn number (e.g. '11'), short code, or keywords.
+              Try searching by hymn code (e.g. “X11”), hymn number, or keywords.
             </p>
+            {/* Highest-intent moment to report a gap: the member looked and it
+                wasn't there. Pre-fills the book and whatever they searched. */}
+            <button
+              type="button"
+              onClick={() =>
+                openReport({
+                  scope: 'book',
+                  bookId: selectedBookId ?? undefined,
+                  hymnNumber: /^\d+$/.test(searchQuery.trim()) ? Number(searchQuery.trim()) : undefined,
+                  hymnTitle: /^\d+$/.test(searchQuery.trim()) ? undefined : searchQuery.trim() || undefined,
+                  suggestedKind: 'missing-hymn'
+                })
+              }
+              className="inline-flex items-center gap-2 mt-3 min-h-[44px] px-4 rounded-xl border border-gray-200 dark:border-zinc-800 text-[#E53935] hover:bg-red-50 dark:hover:bg-red-950/20 text-xs font-bold uppercase tracking-wider active:scale-95 transition cursor-pointer"
+            >
+              <Flag size={14} />
+              Report a missing hymn
+            </button>
           </div>
         )}
 

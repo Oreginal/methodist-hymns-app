@@ -75,3 +75,21 @@ html.dark body {
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 16px);
 }
+
+/* Bottom-sheet entrance (mobile report sheet). Respects reduced-motion. */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-up,
+  .animate-scale-up,
+  .animate-fade-in {
+    animation: none;
+  }
+}

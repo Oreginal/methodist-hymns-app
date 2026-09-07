@@ -2,12 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Hymn Book</title>
+
+    <meta
+      name="description"
+      content="Read hymns on your phone whenever you don't have a hymn book to hand. English, Xhosa, Setswana and Sesotho hymns with English translations, available offline."
+    />
+    <meta name="author" content="KatOre Solutions" />
+    <!-- Matches the red used throughout the UI, so the mobile browser chrome
+         and PWA splash stay consistent with the app. -->
+    <meta name="theme-color" content="#E53935" />
+
+    <!-- Icons. /logo.png is the same artwork the app renders in-product
+         (src/assets/logo-v4.png), so the tab, home-screen icon and share
+         previews all show one logo. -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <meta name="apple-mobile-web-app-title" content="Hymn Book" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Share previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hymn Book" />
+    <meta property="og:title" content="Hymn Book" />
+    <meta
+      property="og:description"
+      content="Read hymns on your phone whenever you don't have a hymn book to hand. English, Xhosa, Setswana and Sesotho hymns with English translations, available offline."
+    />
+    <meta property="og:image" content="/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Hymn Book" />
+    <meta
+      name="twitter:description"
+      content="Read hymns on your phone whenever you don't have a hymn book to hand."
+    />
+    <meta name="twitter:image" content="/logo.png" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

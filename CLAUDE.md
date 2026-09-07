@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-A Progressive Web App for Methodist Church members to read hymn books and prayers, with offline caching and a projection (presentation) mode for sanctuary use. It ships with a separate offline pipeline that parses Methodist hymns out of PowerPoint slides into structured JSON.
+A Progressive Web App for church members to read hymn books and prayers on their phone when they don't have a physical hymn book, with offline caching. It ships with a separate offline pipeline that parses hymns out of PowerPoint slides into structured JSON.
+
+The app is denomination-neutral in its UI copy: it is called "Hymn Book" and is credited to KatOre Solutions (katoresolutions.co.za). Hymn `author` metadata (e.g. "Traditional Methodist") is source data and is deliberately left as-is.
 
 The project has two largely independent halves:
 1. **The React PWA** (`src/`) — the user-facing app, built with Vite.
@@ -33,7 +35,7 @@ The `@/*` path alias resolves to the repo root (see `vite.config.ts` and `tsconf
 - **"Routing" is a tab switch.** `src/App.tsx` renders one of the screen components based on `activeTab` (`home | hymns | prayers | saved | settings`). The active hymn renders as an overlay (`HymnDetailScreen`) on top of whatever tab is active. `BottomNavigation` sets `activeTab`.
 - **Auth gate**: if `currentUser` is null, `App.tsx` short-circuits to `SaaSGatewayScreen` before any tab renders. "Auth" is entirely client-side and simulated — users and the current session are stored in `localStorage` (`mhb_registered_users`, `mhb_current_user`); there is no backend, no password, and login only checks that an email was previously registered. Tiers (`free | individual-pro | parish-license`) are cosmetic.
 - **Persistence is localStorage**, keyed with the `mhb_` prefix (recents, continue-reading, favourites, downloaded books, users, session). Each piece of state has its own `useEffect` sync. Book "downloads" are a simulated progress timer, not real caching.
-- **Display modes are driven by classes on `document.documentElement`**: `setDarkMode` toggles `.dark` (Tailwind dark variant) and `setProjectionMode` toggles `.projection`. Font size is clamped to 14–36.
+- **Dark mode is driven by a class on `document.documentElement`**: `setDarkMode` toggles `.dark` (Tailwind dark variant). Font size is clamped to 14–36. (A projection/presentation mode existed previously and was removed — the app targets phone reading, not sanctuary projection.)
 - **Styling** is Tailwind CSS v4 via the `@tailwindcss/vite` plugin (no `tailwind.config.js`; configured in `src/index.css`). Components use inline utility classes with hard-coded brand colors (e.g. `#E53935` red, `#FAFAFA`/`#111111` backgrounds).
 
 ## Data layer — important

@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Share, Heart, ArrowLeft, ZoomIn, ZoomOut, Monitor, Moon, Sun, Copy, Check } from 'lucide-react';
+import { Share, Heart, ArrowLeft, ZoomIn, ZoomOut, Moon, Sun, Copy, Check, Flag } from 'lucide-react';
 
 export const HymnDetailScreen: React.FC = () => {
   const {
@@ -15,10 +15,9 @@ export const HymnDetailScreen: React.FC = () => {
     toggleHymnFavourite,
     fontSize,
     setFontSize,
-    projectionMode,
-    setProjectionMode,
     darkMode,
     setDarkMode,
+    openReport,
   } = useApp();
 
   const [copied, setCopied] = useState(false);
@@ -54,14 +53,9 @@ export const HymnDetailScreen: React.FC = () => {
   return (
     <div 
       id="hymn-detail-screen-wrapper"
-      className={`fixed inset-0 z-[100] overflow-y-auto transition-colors duration-300 ${
-        projectionMode 
-          ? 'bg-black text-white' 
-          : 'bg-[#FAFAFA] dark:bg-[#121212] text-gray-900 dark:text-zinc-150'
-      }`}
+      className="fixed inset-0 z-[100] overflow-y-auto transition-colors duration-300 bg-[#FAFAFA] dark:bg-[#121212] text-gray-900 dark:text-zinc-150"
     >
-      {/* Dynamic Top App Bar (fades out in Projection Mode for absolute reading focus) */}
-      {!projectionMode && (
+      {/* Top app bar */}
         <header className="sticky top-0 z-50 flex justify-between items-center w-full px-4 h-16 bg-white dark:bg-[#111111] border-b border-gray-100 dark:border-zinc-800/80 transition-colors duration-300">
           <div className="flex items-center gap-3">
             <button
@@ -93,29 +87,41 @@ export const HymnDetailScreen: React.FC = () => {
             </button>
             <button
               onClick={handleShare}
+              aria-label="Share this hymn"
               className="p-2.5 rounded-full border border-gray-100 dark:border-zinc-800 text-[#757575] hover:text-[#111111] dark:text-zinc-400 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-zinc-800 active:scale-90 transition-all cursor-pointer"
             >
               <Share size={18} />
             </button>
+            <button
+              onClick={() =>
+                openReport({
+                  scope: 'hymn',
+                  bookId: activeHymn.bookId,
+                  hymnNumber: activeHymn.hymnNumber,
+                  hymnTitle: activeHymn.title,
+                  suggestedKind: 'wrong-lyrics'
+                })
+              }
+              aria-label="Report a problem with this hymn"
+              title="Report a problem"
+              className="p-2.5 rounded-full border border-gray-100 dark:border-zinc-800 text-[#757575] hover:text-[#E53935] dark:text-zinc-400 dark:hover:text-[#E53935] hover:bg-gray-50 dark:hover:bg-zinc-800 active:scale-90 transition-all cursor-pointer"
+            >
+              <Flag size={18} />
+            </button>
           </div>
         </header>
-      )}
 
       {/* Main Reading area */}
-      <main className={`max-w-2xl mx-auto px-6 ${projectionMode ? 'py-12' : 'py-8'} space-y-8 pb-36`}>
+      <main className="max-w-2xl mx-auto px-6 py-8 space-y-8 pb-36">
         {/* Title & Author */}
         <div className="text-center space-y-2">
-          {!projectionMode && (
-            <p className="text-[#E53935] uppercase tracking-widest text-xs font-bold leading-normal">
-              Methodist Hymnal
-            </p>
-          )}
-          <h1 className={`font-headline-xl text-3xl md:text-4xl font-extrabold tracking-tight ${
-            projectionMode ? 'text-white' : 'text-gray-900 dark:text-white'
-          }`}>
+          <p className="text-[#E53935] uppercase tracking-widest text-xs font-bold leading-normal">
+            Hymnal
+          </p>
+          <h1 className="font-headline-xl text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
             {activeHymn.title}
           </h1>
-          {activeHymn.author && !projectionMode && (
+          {activeHymn.author && (
             <p className="text-gray-400 dark:text-zinc-500 font-medium text-sm uppercase tracking-wide">
               {activeHymn.author}
             </p>
@@ -123,7 +129,7 @@ export const HymnDetailScreen: React.FC = () => {
         </div>
 
         {/* Quick Verse Anchors (only shown in regular reading mode) */}
-        {!projectionMode && structuredVerses && structuredVerses.length > 1 && (
+        {structuredVerses && structuredVerses.length > 1 && (
           <div className="flex justify-center flex-wrap gap-2 py-2">
             {structuredVerses.map((verse) => (
               <a
@@ -140,7 +146,7 @@ export const HymnDetailScreen: React.FC = () => {
             ))}
           </div>
         )}
-        {!projectionMode && !structuredVerses && verses.length > 1 && (
+        {!structuredVerses && verses.length > 1 && (
           <div className="flex justify-center flex-wrap gap-2 py-2">
             {verses.map((_, idx) => (
               <a
@@ -167,11 +173,7 @@ export const HymnDetailScreen: React.FC = () => {
             <section
               key={verse.number}
               id={`verse-${verse.number}`}
-              className={`py-4 rounded-xl transition-all ${
-                projectionMode
-                  ? 'border-b border-zinc-900/30'
-                  : 'border-b border-gray-100/50 dark:border-zinc-900/50'
-              }`}
+              className="py-4 rounded-xl transition-all border-b border-gray-100/50 dark:border-zinc-900/50"
             >
               {/* Liturgical Tag */}
               <p className="text-xs uppercase font-extrabold tracking-widest text-[#E53935] dark:text-red-400 opacity-60 mb-2">
@@ -179,16 +181,12 @@ export const HymnDetailScreen: React.FC = () => {
               </p>
 
               {/* Bilingual Lyric Lines */}
-              <div className={`font-serif leading-relaxed ${
-                projectionMode ? 'text-white font-medium text-2xl' : 'text-gray-700 dark:text-zinc-300'
-              }`}>
+              <div className="font-serif leading-relaxed text-gray-700 dark:text-zinc-300">
                 {verse.lines.map((line, lineIdx) => (
                   <div key={lineIdx} className={line.translation ? 'mb-2' : ''}>
                     <p>{line.primary}</p>
                     {line.translation && (
-                      <p className={`italic text-[#E53935] dark:text-red-400 ${
-                        projectionMode ? 'text-lg' : 'text-[0.85em]'
-                      }`}>
+                      <p className="italic text-[#E53935] dark:text-red-400 text-[0.85em]">
                         {line.translation}
                       </p>
                     )}
@@ -206,11 +204,7 @@ export const HymnDetailScreen: React.FC = () => {
               <section 
                 key={index} 
                 id={`verse-${index + 1}`}
-                className={`py-4 rounded-xl transition-all ${
-                  projectionMode 
-                    ? 'border-b border-zinc-900/30' 
-                    : 'border-b border-gray-100/50 dark:border-zinc-900/50'
-                }`}
+                className="py-4 rounded-xl transition-all border-b border-gray-100/50 dark:border-zinc-900/50"
               >
                 {/* Liturgical Tag */}
                 <p className="text-xs uppercase font-extrabold tracking-widest text-[#E53935] dark:text-red-400 opacity-60 mb-2">
@@ -218,9 +212,7 @@ export const HymnDetailScreen: React.FC = () => {
                 </p>
                 
                 {/* Lyric Verses */}
-                <p className={`font-serif whitespace-pre-line leading-relaxed ${
-                  projectionMode ? 'text-white font-medium text-2xl' : 'text-gray-700 dark:text-zinc-300'
-                }`}>
+                <p className="font-serif whitespace-pre-line leading-relaxed text-gray-700 dark:text-zinc-300">
                   {remainingLines.join('\n')}
                 </p>
               </section>
@@ -231,9 +223,7 @@ export const HymnDetailScreen: React.FC = () => {
         {/* Amen Liturgical Closing (shown unless explicitly disabled) */}
         {activeHymn.amen !== false && (
           <div className="text-center pt-8">
-            <p className={`font-serif italic font-bold text-xl ${
-              projectionMode ? 'text-white' : 'text-gray-550 dark:text-zinc-400'
-            }`}>
+            <p className="font-serif italic font-bold text-xl text-gray-550 dark:text-zinc-400">
               Amen.
             </p>
           </div>
@@ -279,31 +269,37 @@ export const HymnDetailScreen: React.FC = () => {
             {darkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          <div className="h-6 w-[1px] bg-gray-100 dark:bg-zinc-800"></div>
-
-          {/* Projection Indicator mode toggle */}
-          <button
-            onClick={() => setProjectionMode(!projectionMode)}
-            className={`flex-1 h-11 flex items-center justify-center gap-1.5 rounded-xl font-bold text-xs uppercase tracking-widest transition-all active:scale-95 cursor-pointer ${
-              projectionMode
-                ? 'bg-[#E53935] text-white'
-                : 'bg-[#111111] dark:bg-zinc-805 text-white hover:bg-black'
-            }`}
-          >
-            <Monitor size={15} />
-            {projectionMode ? 'Exit Projection' : 'Projection Mode'}
-          </button>
         </div>
       </div>
 
       {/* Share Modal Dialog Overlay */}
+      {/* Inline report link, below the lyrics where a reader notices a mistake */}
+        <div className="max-w-2xl mx-auto px-6 pb-32 -mt-24">
+          <button
+            type="button"
+            onClick={() =>
+              openReport({
+                scope: 'hymn',
+                bookId: activeHymn.bookId,
+                hymnNumber: activeHymn.hymnNumber,
+                hymnTitle: activeHymn.title,
+                suggestedKind: 'wrong-lyrics'
+              })
+            }
+            className="w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl border border-dashed border-gray-200 dark:border-zinc-800 text-[#757575] dark:text-zinc-400 hover:text-[#E53935] hover:border-[#E53935]/40 text-xs font-bold uppercase tracking-wider active:scale-[0.99] transition cursor-pointer"
+          >
+            <Flag size={14} />
+            Something wrong with this hymn?
+          </button>
+        </div>
+
       {showShareModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-4">
           <div className="bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl w-full max-w-sm p-6 space-y-4 shadow-2xl animate-scale-up">
             <div className="space-y-1">
               <h4 className="text-lg font-bold text-gray-900 dark:text-white">Share Sanctuary Verse</h4>
               <p className="text-gray-500 dark:text-zinc-400 text-xs leading-normal">
-                Share this hymn with congregation members, prayer networks, or projection coordinators.
+                Share this hymn with congregation members and prayer groups.
               </p>
             </div>
 

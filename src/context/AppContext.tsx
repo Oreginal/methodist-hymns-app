@@ -4,7 +4,10 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { BookId, Book, Hymn, Prayer, RecentHymn, Favourites, User } from '../types';
+import {
+  BookId, Book, Hymn, Prayer, RecentHymn, Favourites, User,
+  IssueReport, ReportTarget, ReportSubmitState
+} from '../types';
 import { hymnsDatabase, hymnBooks } from '../data/hymnsData';
 import { prayersDatabase } from '../data/prayersData';
 
@@ -22,6 +25,9 @@ interface AppContextType {
   bookStatus: Record<BookId, BookLoadStatus>;
   bookError: Record<BookId, string | null>;
   loadBook: (bookId: BookId) => void;
+  // Loads every book at once — used by the global search on the home screen,
+  // which can only find a hymn in a book that has actually been fetched.
+  loadAllBooks: () => void;
   selectedBookId: BookId | null;
   setSelectedBookId: (bookId: BookId | null) => void;
   activeHymn: Hymn | null;
@@ -54,12 +60,19 @@ interface AppContextType {
   // Display settings
   fontSize: number;
   setFontSize: (size: number) => void;
-  projectionMode: boolean;
-  setProjectionMode: (mode: boolean) => void;
   darkMode: boolean;
   setDarkMode: (dark: boolean) => void;
 
   // Session Authentication state & utilities
+  // Issue reporting. `reportTarget` non-null means the report sheet is open.
+  reportTarget: ReportTarget | null;
+  openReport: (target: ReportTarget) => void;
+  closeReport: () => void;
+  submitReport: (report: IssueReport) => Promise<ReportSubmitState>;
+  reportState: ReportSubmitState;
+  reportError: string | null;
+  pendingReportCount: number;
+
   currentUser: User | null;
   login: (email: string) => boolean;
   signUp: (email: string, fullName: string, tier: 'free' | 'individual-pro' | 'parish-license') => boolean;
@@ -158,7 +171,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Settings
   const [fontSize, setFontSizeState] = useState<number>(18);
-  const [projectionMode, setProjectionModeState] = useState<boolean>(false);
   const [darkMode, setDarkModeState] = useState<boolean>(false);
 
   // Initialize from LocalStorage
@@ -189,15 +201,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     // clamp between 14 and 36
     const clamped = Math.max(14, Math.min(36, size));
     setFontSizeState(clamped);
-  };
-
-  const setProjectionMode = (mode: boolean) => {
-    setProjectionModeState(mode);
-    if (mode) {
-      document.documentElement.classList.add('projection');
-    } else {
-      document.documentElement.classList.remove('projection');
-    }
   };
 
   const setDarkMode = (dark: boolean) => {
@@ -371,7 +374,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const loginAsGuest = () => {
     const guestUser: User = {
-      email: 'guest@methodisthymnal.org',
+      email: 'guest@hymnbook.app',
       fullName: 'Sanctuary Visitor',
       isGuest: true,
       tier: 'free'
@@ -379,6 +382,125 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentUser(guestUser);
     localStorage.setItem('mhb_current_user', JSON.stringify(guestUser));
   };
+
+  // ---- Issue reporting --------------------------------------------------
+  // Reports POST to /api/report, which emails them. The app is offline-first,
+  // so a report that cannot be sent right now is queued in localStorage and
+  // retried on the next load rather than being lost with an error toast.
+  const PENDING_REPORTS_KEY = 'mhb_pending_reports';
+  const [reportTarget, setReportTarget] = useState<ReportTarget | null>(null);
+  const [reportState, setReportState] = useState<ReportSubmitState>('idle');
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [pendingReportCount, setPendingReportCount] = useState(0);
+
+  const readPendingReports = (): IssueReport[] => {
+    try {
+      const raw = localStorage.getItem(PENDING_REPORTS_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const writePendingReports = (reports: IssueReport[]) => {
+    try {
+      localStorage.setItem(PENDING_REPORTS_KEY, JSON.stringify(reports));
+    } catch { /* storage full or blocked — the report is still in flight state */ }
+    setPendingReportCount(reports.length);
+  };
+
+  // POST one report. Returns true only on a 2xx. A 4xx is the caller's fault
+  // and must NOT be queued for retry — it would retry forever.
+  const postReport = async (report: IssueReport): Promise<{ ok: boolean; retryable: boolean; error?: string }> => {
+    try {
+      const res = await fetch('/api/report', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(report)
+      });
+      // A 200 alone is not proof of delivery: a dev server or an SPA fallback
+      // will happily answer /api/report with index.html. Only a real JSON
+      // acknowledgement from the function counts as sent.
+      let payload: any;
+      try { payload = await res.json(); } catch { payload = undefined; }
+
+      if (res.ok) {
+        if (payload?.ok === true) return { ok: true, retryable: false };
+        // Reached something that isn't our API — treat as transient so the
+        // report is queued rather than silently discarded.
+        return { ok: false, retryable: true };
+      }
+      // Only a genuine rejection of THIS payload is unrecoverable — retrying it
+      // would fail forever and the user must edit it. Everything else (404 from
+      // a misrouted or not-yet-deployed function, 5xx, a gateway error) is not
+      // the reporter's fault, so their text is queued rather than discarded.
+      const payloadRejected = res.status === 400 || res.status === 413 || res.status === 422;
+      return { ok: false, retryable: !payloadRejected, error: payload?.error };
+    } catch {
+      // Network failure (offline, DNS, blocked) — always worth retrying.
+      return { ok: false, retryable: true };
+    }
+  };
+
+  const submitReport = async (report: IssueReport): Promise<ReportSubmitState> => {
+    setReportState('sending');
+    setReportError(null);
+
+    const result = await postReport(report);
+    if (result.ok) {
+      setReportState('sent');
+      return 'sent';
+    }
+    if (result.retryable) {
+      writePendingReports([...readPendingReports(), report]);
+      setReportState('queued');
+      return 'queued';
+    }
+    setReportError(result.error ?? 'That report could not be sent.');
+    setReportState('error');
+    return 'error';
+  };
+
+  const openReport = (target: ReportTarget) => {
+    setReportState('idle');
+    setReportError(null);
+    setReportTarget(target);
+  };
+  const closeReport = () => setReportTarget(null);
+
+  const loadAllBooks = () => {
+    for (const id of ['xhosa', 'setswana', 'sesotho', 'english'] as BookId[]) loadBook(id);
+  };
+
+  // Flush anything queued from a previous offline session, once, on mount and
+  // whenever the browser regains connectivity.
+  useEffect(() => {
+    let cancelled = false;
+
+    const flush = async () => {
+      const queue = readPendingReports();
+      if (queue.length === 0) {
+        setPendingReportCount(0);
+        return;
+      }
+      const remaining: IssueReport[] = [];
+      for (const report of queue) {
+        const result = await postReport(report);
+        // Keep only what is still worth retrying; drop permanently-rejected
+        // reports so a bad payload cannot wedge the queue forever.
+        if (!result.ok && result.retryable) remaining.push(report);
+      }
+      if (!cancelled) writePendingReports(remaining);
+    };
+
+    flush();
+    window.addEventListener('online', flush);
+    return () => {
+      cancelled = true;
+      window.removeEventListener('online', flush);
+    };
+  }, []);
 
   const logout = () => {
     setCurrentUser(null);
@@ -393,6 +515,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       bookStatus,
       bookError,
       loadBook,
+      loadAllBooks,
       selectedBookId,
       setSelectedBookId,
       activeHymn,
@@ -415,10 +538,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       downloadProgress,
       fontSize,
       setFontSize,
-      projectionMode,
-      setProjectionMode,
       darkMode,
       setDarkMode,
+      reportTarget,
+      openReport,
+      closeReport,
+      submitReport,
+      reportState,
+      reportError,
+      pendingReportCount,
       currentUser,
       login,
       signUp,

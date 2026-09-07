@@ -39,7 +39,7 @@ export const PrayersScreen: React.FC = () => {
       <div className="section-header space-y-2">
         <div className="w-12 h-1 bg-[#E53935] mb-2"></div>
         <h2 className="text-3xl font-bold tracking-tight text-[#111111] dark:text-white">Church Prayers</h2>
-        <p className="text-[#757575] dark:text-zinc-400 text-sm mt-1">Sacred and historic Methodist prayers curated for devotionals and services.</p>
+        <p className="text-[#757575] dark:text-zinc-400 text-sm mt-1">Sacred and historic prayers curated for devotionals and services.</p>
       </div>
 
       {/* Prayer Search Bar */}
@@ -144,7 +144,7 @@ export const PrayersScreen: React.FC = () => {
                     {activePrayer.category} Liturgy
                   </span>
                   <h4 className="text-sm font-semibold text-gray-400 mt-1 uppercase tracking-wider block leading-none">
-                    Methodist Prayers
+                    Prayers
                   </h4>
                 </div>
               </div>
