@@ -27,6 +27,10 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Hymn Book" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- iOS ignores theme-color for the status bar. "default" keeps a solid
+         bar rather than letting content slide under the notch, which would
+         collide with the sticky header. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
     <!-- Share previews -->
     <meta property="og:type" content="website" />
