@@ -18,3 +18,5 @@ import-source-converted/
 
 # Stray catalogue backup — not for publishing
 public/data/xhosa - backup.json
+
+.vercel
