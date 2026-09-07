@@ -1,64 +1,42 @@
 [
   {
-    "filename": "62  Tswana.pptx",
-    "hymnCode": "T62",
-    "title": "Tswana",
+    "filename": "X004 Dumisani uYehova.pptx",
+    "hymnCode": "X4",
+    "title": "Dumisani uYehova",
+    "warnings": [
+      "5 line(s) detected as English in the primary (native) position — bilingual pairing may need manual review."
+    ],
+    "partialParsedResult": {
+      "title": "Dumisani uYehova",
+      "scripture": "Psalm 148",
+      "hasAmen": true,
+      "versesSample": "VERSE 1\nDumisani uYehova\nEzulwini lonke;\nDumisani uYehova\nEmhlabeni wonke.\n\nVERSE 2\nNina niziithunywa zaKhe,\nDumisani Yena;\nNani bemikhosi yaKhe,\nDumi..."
+    }
+  },
+  {
+    "filename": "X009 Ma zith iingqondo zethu.pptx",
+    "hymnCode": "X9",
+    "title": "Ma zith iingqondo zethu",
     "warnings": [
       "Unable to detect scripture reference pattern."
     ],
     "partialParsedResult": {
-      "title": "Tswana",
+      "title": "Ma zith iingqondo zethu",
       "hasAmen": true,
-      "versesSample": "VERSE 1\nFika ja bosakhutleng\nFika je le fatotsweng\nBotshabelo theregong\nLe kgololo tatlhegong\nFika ja bosakhutleng\nKe tle ke iphitlhe teng\n\nVERSE 2\nTi..."
+      "versesSample": "VERSE 1\nMa zith' iingqondo zethu,\nLet us with a gladsome mind\nZimbonge uYehova;\nPraise the Lord, for He is kind:\nKuba iinceba zaKhe,\nZimi ngonaphakade..."
     }
   },
   {
-    "filename": "Ao! Molimo o tletseng tshwaro.pptx",
-    "reason": "No hymn number in filename or slide header — skipped rather than assigned a guessed number",
-    "errorDetails": "No hymn number in filename or slide header — cannot assign an identity. Rename the file with a leading number (e.g. \"397 Ao! Morena wa kagiso.ppt\") or add a \"<BOOK> <number>\" header slide."
-  },
-  {
-    "filename": "Ao! Morena wa kagiso.pptx",
-    "hymnCode": "T397",
-    "title": "Ao! Morena wa kagiso",
+    "filename": "X010 Bathandi benKosi, yizani.pptx",
+    "hymnCode": "X10",
+    "title": "Bathandi benKosi, yizani",
     "warnings": [
       "Unable to detect scripture reference pattern."
     ],
     "partialParsedResult": {
-      "title": "Ao! Morena wa kagiso",
+      "title": "Bathandi benKosi, yizani",
       "hasAmen": true,
-      "versesSample": "VERSE 1\nAo! Morena wa kagiso,\nO! Lord of Peace\nSenya bogale jwa baba;\nDefeat the power of the enemy\nDintwa ka gotlhe di fele,\nThe wars all over the wo..."
+      "versesSample": "VERSE 1\nBathandi benKosi, yizani,\nNazise olwenu uvuyo,\nNgomanyo lwetsholo vumani,\nEndlwini yenKos’ enikuyo.\nBangaala abangamaziyo\nOwethu uThixo omkhul..."
     }
-  },
-  {
-    "filename": "bogolo jwa bomodimo.pptx",
-    "hymnCode": "T3",
-    "title": "bogolo jwa bomodimo",
-    "warnings": [
-      "Unable to detect scripture reference pattern."
-    ],
-    "partialParsedResult": {
-      "title": "bogolo jwa bomodimo",
-      "hasAmen": true,
-      "versesSample": "VERSE 1\nBogolo jwa Bomodimo\nThe Greatness of God\nBo ka angwa ke mang?\nWho can match it?\nKe kgosi ya magodimo,\nHe is the Lord of heavens\nKgosi e’ boits..."
-    }
-  },
-  {
-    "filename": "modimo wa boikanyo.pptx",
-    "hymnCode": "T13",
-    "title": "modimo wa boikanyo",
-    "warnings": [
-      "Unable to detect scripture reference pattern."
-    ],
-    "partialParsedResult": {
-      "title": "modimo wa boikanyo",
-      "hasAmen": true,
-      "versesSample": "VERSE 1\nModimo wa boikanyo,\nFaithful God\nRe ikanya mo go Wena;\nOur faith is in you\nO gogile borraetsho,\nYou led our forebears\nMo dinageng tsa lenyora...."
-    }
-  },
-  {
-    "filename": "Nkaela Wena Jehova.pptx",
-    "reason": "No hymn number in filename or slide header — skipped rather than assigned a guessed number",
-    "errorDetails": "No hymn number in filename or slide header — cannot assign an identity. Rename the file with a leading number (e.g. \"397 Ao! Morena wa kagiso.ppt\") or add a \"<BOOK> <number>\" header slide."
   }
 ]

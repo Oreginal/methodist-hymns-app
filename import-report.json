@@ -1,71 +1,64 @@
 {
-  "executedAt": "2026-09-07T18:17:49.894Z",
-  "totalFilesScanned": 6,
-  "legacyConverted": 5,
+  "executedAt": "2026-09-07T19:17:58.075Z",
+  "totalFilesScanned": 4,
+  "legacyConverted": 4,
   "successfulImports": 4,
-  "failedImports": 2,
+  "failedImports": 0,
   "successfulDetails": [
     {
-      "code": "T62",
-      "number": 62,
-      "title": "Tswana",
-      "versesCount": 5,
+      "code": "X4",
+      "number": 4,
+      "title": "Dumisani uYehova",
+      "versesCount": 13,
+      "hasAmen": true,
+      "scripture": "Psalm 148",
+      "hasTranslations": true,
+      "englishSource": "heuristic"
+    },
+    {
+      "code": "X9",
+      "number": 9,
+      "title": "Ma zith iingqondo zethu",
+      "versesCount": 6,
+      "hasAmen": true,
+      "hasTranslations": true,
+      "englishSource": "heuristic"
+    },
+    {
+      "code": "X10",
+      "number": 10,
+      "title": "Bathandi benKosi, yizani",
+      "versesCount": 4,
       "hasAmen": true,
       "hasTranslations": false,
       "englishSource": "heuristic"
     },
     {
-      "code": "T397",
-      "number": 397,
-      "title": "Ao! Morena wa kagiso",
-      "versesCount": 3,
+      "code": "X11",
+      "number": 11,
+      "title": "Bulelani kuYehova",
+      "versesCount": 7,
       "hasAmen": true,
+      "scripture": "Psalm 118",
       "hasTranslations": true,
-      "englishSource": "markers"
-    },
-    {
-      "code": "T3",
-      "number": 3,
-      "title": "bogolo jwa bomodimo",
-      "versesCount": 6,
-      "hasAmen": true,
-      "hasTranslations": true,
-      "englishSource": "markers"
-    },
-    {
-      "code": "T13",
-      "number": 13,
-      "title": "modimo wa boikanyo",
-      "versesCount": 5,
-      "hasAmen": true,
-      "hasTranslations": true,
-      "englishSource": "markers"
+      "englishSource": "heuristic"
     }
   ],
-  "failedDetails": [
-    {
-      "filename": "Ao! Molimo o tletseng tshwaro.pptx",
-      "error": "No hymn number in filename or slide header — cannot assign an identity. Rename the file with a leading number (e.g. \"397 Ao! Morena wa kagiso.ppt\") or add a \"<BOOK> <number>\" header slide."
-    },
-    {
-      "filename": "Nkaela Wena Jehova.pptx",
-      "error": "No hymn number in filename or slide header — cannot assign an identity. Rename the file with a leading number (e.g. \"397 Ao! Morena wa kagiso.ppt\") or add a \"<BOOK> <number>\" header slide."
-    }
-  ],
+  "failedDetails": [],
   "duplicateGroups": 0,
   "duplicateRecords": 0,
   "duplicatesKept": 0,
   "duplicatesRejected": 0,
   "mode": "merge",
-  "existingCount": 0,
+  "existingCount": 134,
   "added": 4,
   "replaced": 0,
-  "finalExportedCount": 4,
+  "finalExportedCount": 138,
   "exportedByBook": {
-    "setswana": 4
+    "xhosa": 138
   },
-  "defaultBookId": "setswana",
-  "markerSourced": 3,
-  "heuristicSourced": 1,
-  "skippedNoHymnNumber": 2
+  "defaultBookId": "xhosa",
+  "markerSourced": 0,
+  "heuristicSourced": 4,
+  "skippedNoHymnNumber": 0
 }

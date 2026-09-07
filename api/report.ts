@@ -165,11 +165,28 @@ function buildEmail(report: ReportPayload) {
   return { subject, html, text };
 }
 
+/**
+ * Read an env var defensively. A value pasted through a dashboard or piped by a
+ * shell can pick up a BOM (U+FEFF), a stray newline or surrounding quotes — and
+ * any of those in an API key blows up header construction with an opaque
+ * "Cannot convert argument to a ByteString" TypeError.
+ */
+function readEnv(name: string): string | undefined {
+  const raw = process.env[name];
+  if (typeof raw !== 'string') return undefined;
+  const cleaned = raw
+    .replace(/^﻿/, '')
+    .trim()
+    .replace(/^["']|["']$/g, '')
+    .trim();
+  return cleaned.length > 0 ? cleaned : undefined;
+}
+
 export async function POST(request: Request): Promise<Response> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.REPORT_TO_EMAIL;
+  const apiKey = readEnv('RESEND_API_KEY');
+  const to = readEnv('REPORT_TO_EMAIL');
   // Resend's shared onboarding sender works before a custom domain is verified.
-  const from = process.env.REPORT_FROM_EMAIL ?? 'Hymn Reports <onboarding@resend.dev>';
+  const from = readEnv('REPORT_FROM_EMAIL') ?? 'Hymn Reports <onboarding@resend.dev>';
 
   if (!apiKey || !to) {
     console.error('Report endpoint is not configured (RESEND_API_KEY / REPORT_TO_EMAIL missing).');
@@ -228,6 +245,6 @@ export async function POST(request: Request): Promise<Response> {
 
 // A GET is only ever a health/config probe — it must never send mail.
 export async function GET(): Promise<Response> {
-  const configured = Boolean(process.env.RESEND_API_KEY && process.env.REPORT_TO_EMAIL);
+  const configured = Boolean(readEnv('RESEND_API_KEY') && readEnv('REPORT_TO_EMAIL'));
   return json(200, { ok: true, configured });
 }

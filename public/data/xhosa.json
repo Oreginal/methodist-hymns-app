@@ -92,6 +92,647 @@
   },
   {
     "bookId": "xhosa",
+    "hymnNumber": 4,
+    "hymnCode": "X4",
+    "title": "Dumisani uYehova",
+    "reference": "Psalm 148",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Dumisani uYehova"
+          },
+          {
+            "primary": "Ezulwini lonke;"
+          },
+          {
+            "primary": "Dumisani uYehova"
+          },
+          {
+            "primary": "Emhlabeni wonke."
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Nina niziithunywa zaKhe,"
+          },
+          {
+            "primary": "Dumisani Yena;"
+          },
+          {
+            "primary": "Nani bemikhosi yaKhe,"
+          },
+          {
+            "primary": "Dumisani Yena."
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Wena langa, nawe nyanga,"
+          },
+          {
+            "primary": "Dumisani Yena;"
+          },
+          {
+            "primary": "Nani nina zinkwenkwezi,"
+          },
+          {
+            "primary": "Dumisani Yena."
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Wena mlilo, nawe ngqele,"
+          },
+          {
+            "primary": "Dumisani Yena;"
+          },
+          {
+            "primary": "Wena ngqweqwe, nawe nkungu,"
+          },
+          {
+            "primary": "Dumisani Yena."
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Wena moya ogqumayo,"
+          },
+          {
+            "primary": "Mudumise Yena;"
+          },
+          {
+            "primary": "Nawe yenz’ imvumo yaKhe"
+          },
+          {
+            "primary": "Aph’ uviwa khona."
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "lines": [
+          {
+            "primary": "Nina niziinkosi nonke,"
+          },
+          {
+            "primary": "Dumisani Yena;"
+          },
+          {
+            "primary": "Nani nina bantu nonke,"
+          },
+          {
+            "primary": "Dumisani Yena."
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "lines": [
+          {
+            "primary": "Nina nonke madodana,"
+          },
+          {
+            "primary": "Dumisani Yena;"
+          },
+          {
+            "primary": "Nani niziintombazana,"
+          },
+          {
+            "primary": "Dumisani Yena."
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "lines": [
+          {
+            "primary": "Nani bantu abadala,"
+          },
+          {
+            "primary": "Dumisani Yena;"
+          },
+          {
+            "primary": "Nani niziintsapho, nonke,"
+          },
+          {
+            "primary": "Dumisani Yena."
+          }
+        ]
+      },
+      {
+        "number": 9,
+        "lines": [
+          {
+            "primary": "Cast Your care on Jesus Today"
+          },
+          {
+            "primary": "Leave Your worry and fear,"
+          },
+          {
+            "primary": "Burdens are lifted at calvary",
+            "translation": "Jesus is very near"
+          }
+        ]
+      },
+      {
+        "number": 10,
+        "lines": [
+          {
+            "primary": "Burdens are lifted at (Calvary X3)"
+          },
+          {
+            "primary": "Burdens are lifted at Calvary",
+            "translation": "Jesus is very near"
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "lines": [
+          {
+            "primary": "Ndiza kudumisa X3"
+          },
+          {
+            "primary": "Eyesu umsidinsi wam"
+          },
+          {
+            "primary": "Ndiza kudumisa X3"
+          },
+          {
+            "primary": "Ngoba ulungile"
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "lines": [
+          {
+            "primary": "Sithi helele X3"
+          },
+          {
+            "primary": "Ngenxa yobubele"
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "lines": [
+          {
+            "primary": "He is Lord x2"
+          },
+          {
+            "primary": "He has risen from the dead"
+          },
+          {
+            "primary": "And He is Lord"
+          },
+          {
+            "primary": "Every knee shall bow",
+            "translation": "He is Lord"
+          },
+          {
+            "primary": "Every tongue confess",
+            "translation": "That Jesus Christ"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nDumisani uYehova\nEzulwini lonke;\nDumisani uYehova\nEmhlabeni wonke.\n\nVERSE 2\nNina niziithunywa zaKhe,\nDumisani Yena;\nNani bemikhosi yaKhe,\nDumisani Yena.\n\nVERSE 3\nWena langa, nawe nyanga,\nDumisani Yena;\nNani nina zinkwenkwezi,\nDumisani Yena.\n\nVERSE 4\nWena mlilo, nawe ngqele,\nDumisani Yena;\nWena ngqweqwe, nawe nkungu,\nDumisani Yena.\n\nVERSE 5\nWena moya ogqumayo,\nMudumise Yena;\nNawe yenz’ imvumo yaKhe\nAph’ uviwa khona.\n\nVERSE 6\nNina niziinkosi nonke,\nDumisani Yena;\nNani nina bantu nonke,\nDumisani Yena.\n\nVERSE 7\nNina nonke madodana,\nDumisani Yena;\nNani niziintombazana,\nDumisani Yena.\n\nVERSE 8\nNani bantu abadala,\nDumisani Yena;\nNani niziintsapho, nonke,\nDumisani Yena.\n\nVERSE 9\nCast Your care on Jesus Today\nLeave Your worry and fear,\nBurdens are lifted at calvary\nJesus is very near\n\nVERSE 10\nBurdens are lifted at (Calvary X3)\nBurdens are lifted at Calvary\nJesus is very near\n\nVERSE 11\nNdiza kudumisa X3\nEyesu umsidinsi wam\nNdiza kudumisa X3\nNgoba ulungile\n\nVERSE 12\nSithi helele X3\nNgenxa yobubele\n\nVERSE 13\nHe is Lord x2\nHe has risen from the dead\nAnd He is Lord\nEvery knee shall bow\nHe is Lord\nEvery tongue confess\nThat Jesus Christ",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
+    "hymnNumber": 9,
+    "hymnCode": "X9",
+    "title": "Ma zith iingqondo zethu",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Ma zith' iingqondo zethu,",
+            "translation": "Let us with a gladsome mind"
+          },
+          {
+            "primary": "Zimbonge uYehova;",
+            "translation": "Praise the Lord, for He is kind:"
+          },
+          {
+            "primary": "Kuba iinceba zaKhe,"
+          },
+          {
+            "primary": "Zimi ngonaphakade.",
+            "translation": "For his mercies endure forever"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Ma sithi kulo lonke,"
+          },
+          {
+            "primary": "Sazis' igama laKhe;",
+            "translation": "Let us blaze His name abroad"
+          },
+          {
+            "primary": "Kuba iinceba zaKhe,"
+          },
+          {
+            "primary": "Zimi ngonaphakade.",
+            "translation": "For his mercies endure forever"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Ngawo amandla aKhe,",
+            "translation": "He, with all-commanding Might,"
+          },
+          {
+            "primary": "Ukhanyisel' ilizwe;",
+            "translation": "Filled the new-made world with light:"
+          },
+          {
+            "primary": "Kuba iinceba Khe,"
+          },
+          {
+            "primary": "Zimi ngonaphakade.",
+            "translation": "For his mercies endure forever"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Wondla izinto zonke,",
+            "translation": "He feeds all things,"
+          },
+          {
+            "primary": "Ngaso isandla saKhe;",
+            "translation": "His full hand supplies all needs:"
+          },
+          {
+            "primary": "Kuba iinceba zaKhe,"
+          },
+          {
+            "primary": "Zimi ngonaphakade.",
+            "translation": "For his mercies endure forever"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Ezintsizini zethu,",
+            "translation": "Even in times of pain"
+          },
+          {
+            "primary": "Iliso liya bona;",
+            "translation": "His eye watches over us"
+          },
+          {
+            "primary": "Kuba iinceba zaKhe,"
+          },
+          {
+            "primary": "Zimi ngonaphakade.",
+            "translation": "For his mercies endure forever"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "lines": [
+          {
+            "primary": "Kubo bonke oothixo,",
+            "translation": "Among all other gods"
+          },
+          {
+            "primary": "Akukho onje ngaYe;",
+            "translation": "There is none like Him"
+          },
+          {
+            "primary": "Kuba iinceba zaKhe,"
+          },
+          {
+            "primary": "Zimi ngonaphakade.",
+            "translation": "For his mercies endure forever"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nMa zith' iingqondo zethu,\nLet us with a gladsome mind\nZimbonge uYehova;\nPraise the Lord, for He is kind:\nKuba iinceba zaKhe,\nZimi ngonaphakade.\nFor his mercies endure forever\n\nVERSE 2\nMa sithi kulo lonke,\nSazis' igama laKhe;\nLet us blaze His name abroad\nKuba iinceba zaKhe,\nZimi ngonaphakade.\nFor his mercies endure forever\n\nVERSE 3\nNgawo amandla aKhe,\nHe, with all-commanding Might,\nUkhanyisel' ilizwe;\nFilled the new-made world with light:\nKuba iinceba Khe,\nZimi ngonaphakade.\nFor his mercies endure forever\n\nVERSE 4\nWondla izinto zonke,\nHe feeds all things,\nNgaso isandla saKhe;\nHis full hand supplies all needs:\nKuba iinceba zaKhe,\nZimi ngonaphakade.\nFor his mercies endure forever\n\nVERSE 5\nEzintsizini zethu,\nEven in times of pain\nIliso liya bona;\nHis eye watches over us\nKuba iinceba zaKhe,\nZimi ngonaphakade.\nFor his mercies endure forever\n\nVERSE 6\nKubo bonke oothixo,\nAmong all other gods\nAkukho onje ngaYe;\nThere is none like Him\nKuba iinceba zaKhe,\nZimi ngonaphakade.\nFor his mercies endure forever",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
+    "hymnNumber": 10,
+    "hymnCode": "X10",
+    "title": "Bathandi benKosi, yizani",
+    "hasTranslations": false,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Bathandi benKosi, yizani,"
+          },
+          {
+            "primary": "Nazise olwenu uvuyo,"
+          },
+          {
+            "primary": "Ngomanyo lwetsholo vumani,"
+          },
+          {
+            "primary": "Endlwini yenKos’ enikuyo."
+          },
+          {
+            "primary": "Bangaala abangamaziyo"
+          },
+          {
+            "primary": "Owethu uThixo omkhulu;"
+          },
+          {
+            "primary": "Vumani ngelingapheliyo,"
+          },
+          {
+            "primary": "Lusapho lwenKosi yezulu."
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "UThixo ohleli phezulu,"
+          },
+          {
+            "primary": "Epheth’ ubukhos’ emhlabeni,"
+          },
+          {
+            "primary": "Ethetha nolwandl’ olukhulu,"
+          },
+          {
+            "primary": "Esithi kumaza “Zolani.”"
+          },
+          {
+            "primary": "Ngowethu loo Thixo unjalo,"
+          },
+          {
+            "primary": "UBawo othando lukhulu;"
+          },
+          {
+            "primary": "Wothum’ izithunywa kwa ngalo,"
+          },
+          {
+            "primary": "Ukuza kusisa phezulu."
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Sobonana naYe ngobuso,"
+          },
+          {
+            "primary": "Kwelo zwe lingenas’ isoono,"
+          },
+          {
+            "primary": "Sosela kungekho ivuso,"
+          },
+          {
+            "primary": "Sisele umthombo wobomi."
+          },
+          {
+            "primary": "Naxa singekayi phezulu,"
+          },
+          {
+            "primary": "Singe sinovuyo kwa futhi,"
+          },
+          {
+            "primary": "Kwa ngenxa yenyhweba enkulu"
+          },
+          {
+            "primary": "Eyoda ifike nakuthi."
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Usapho lofefe kwa lapha,"
+          },
+          {
+            "primary": "Luse lufumen’ ingcwaliso;"
+          },
+          {
+            "primary": "Umfuno wezulu ulapha,"
+          },
+          {
+            "primary": "Uzuz’ emhlaben’ intlumiso."
+          },
+          {
+            "primary": "Ma zom’ iinyembezi kwa ngawo,"
+          },
+          {
+            "primary": "Sicande ilizwe loBawo,"
+          },
+          {
+            "primary": "Sisiya kwelihle phezulu."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nBathandi benKosi, yizani,\nNazise olwenu uvuyo,\nNgomanyo lwetsholo vumani,\nEndlwini yenKos’ enikuyo.\nBangaala abangamaziyo\nOwethu uThixo omkhulu;\nVumani ngelingapheliyo,\nLusapho lwenKosi yezulu.\n\nVERSE 2\nUThixo ohleli phezulu,\nEpheth’ ubukhos’ emhlabeni,\nEthetha nolwandl’ olukhulu,\nEsithi kumaza “Zolani.”\nNgowethu loo Thixo unjalo,\nUBawo othando lukhulu;\nWothum’ izithunywa kwa ngalo,\nUkuza kusisa phezulu.\n\nVERSE 3\nSobonana naYe ngobuso,\nKwelo zwe lingenas’ isoono,\nSosela kungekho ivuso,\nSisele umthombo wobomi.\nNaxa singekayi phezulu,\nSinge sinovuyo kwa futhi,\nKwa ngenxa yenyhweba enkulu\nEyoda ifike nakuthi.\n\nVERSE 4\nUsapho lofefe kwa lapha,\nLuse lufumen’ ingcwaliso;\nUmfuno wezulu ulapha,\nUzuz’ emhlaben’ intlumiso.\nMa zom’ iinyembezi kwa ngawo,\nSicande ilizwe loBawo,\nSisiya kwelihle phezulu.",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
+    "hymnNumber": 11,
+    "hymnCode": "X11",
+    "title": "Bulelani kuYehova",
+    "reference": "Psalm 118",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Bulelani kuYehova,",
+            "translation": "Give thanks to the Lord"
+          },
+          {
+            "primary": "Kuba elungile;",
+            "translation": "For He is good"
+          },
+          {
+            "primary": "Kuba ububele baKhe,",
+            "translation": "For His mercy"
+          },
+          {
+            "primary": "Bubobaphakade.",
+            "translation": "Endures forever"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "M’ atsho amaSirayeli,"
+          },
+          {
+            "primary": "Iindlu zawo zonke,",
+            "translation": "Let all the congregation of Israel say"
+          },
+          {
+            "primary": "Athi ububele baKhe"
+          },
+          {
+            "primary": "Bubobaphakade",
+            "translation": "His mercy endures forever"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Ndamemeza kuYehova,",
+            "translation": "I prayed to the Lord"
+          },
+          {
+            "primary": "Ndandisengxingweni",
+            "translation": "I was in distress"
+          },
+          {
+            "primary": "Wandinceda wandibeka"
+          },
+          {
+            "primary": "Endawen’ ebanzi",
+            "translation": "The Lord answered and rescued me"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Ingecala lam iNkosi,",
+            "translation": "The Lord is for me"
+          },
+          {
+            "primary": "Andisokoyika",
+            "translation": "I shall not fear"
+          },
+          {
+            "primary": "Ingasuka ithi ni na"
+          },
+          {
+            "primary": "Lento umntu kumi?",
+            "translation": "What can mere mortals do to me?"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Ingecala lam iNkosi,",
+            "translation": "The Lord is for me"
+          },
+          {
+            "primary": "Iyakundinceda",
+            "translation": "He will help me"
+          },
+          {
+            "primary": "Indincede ngokumnandi"
+          },
+          {
+            "primary": "Kwabandithiyayo",
+            "translation": "I will triumph over those who hate me"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "lines": [
+          {
+            "primary": "Ukuthemba uYehova,",
+            "translation": "To trust in the Lord"
+          },
+          {
+            "primary": "Nokuphepha ngaYe",
+            "translation": "And find refuge in Him"
+          },
+          {
+            "primary": "Kuko okulungileyo",
+            "translation": "Is the right thing to do"
+          },
+          {
+            "primary": "Kungathenjwa bantu",
+            "translation": "Than to trust humankind"
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "lines": [
+          {
+            "primary": "Ma ndisinde ngaWe Nkosi,",
+            "translation": "My salvation is in You Lord"
+          },
+          {
+            "primary": "Undisikelele;",
+            "translation": "Bless me"
+          },
+          {
+            "primary": "Mandiphumle ngaWe Nkosi:",
+            "translation": "My rest is in You Lord"
+          },
+          {
+            "primary": "Undithamsanqele.",
+            "translation": "Bless me kindly."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nBulelani kuYehova,\nGive thanks to the Lord\nKuba elungile;\nFor He is good\nKuba ububele baKhe,\nFor His mercy\nBubobaphakade.\nEndures forever\n\nVERSE 2\nM’ atsho amaSirayeli,\nIindlu zawo zonke,\nLet all the congregation of Israel say\nAthi ububele baKhe\nBubobaphakade\nHis mercy endures forever\n\nVERSE 3\nNdamemeza kuYehova,\nI prayed to the Lord\nNdandisengxingweni\nI was in distress\nWandinceda wandibeka\nEndawen’ ebanzi\nThe Lord answered and rescued me\n\nVERSE 4\nIngecala lam iNkosi,\nThe Lord is for me\nAndisokoyika\nI shall not fear\nIngasuka ithi ni na\nLento umntu kumi?\nWhat can mere mortals do to me?\n\nVERSE 5\nIngecala lam iNkosi,\nThe Lord is for me\nIyakundinceda\nHe will help me\nIndincede ngokumnandi\nKwabandithiyayo\nI will triumph over those who hate me\n\nVERSE 6\nUkuthemba uYehova,\nTo trust in the Lord\nNokuphepha ngaYe\nAnd find refuge in Him\nKuko okulungileyo\nIs the right thing to do\nKungathenjwa bantu\nThan to trust humankind\n\nVERSE 7\nMa ndisinde ngaWe Nkosi,\nMy salvation is in You Lord\nUndisikelele;\nBless me\nMandiphumle ngaWe Nkosi:\nMy rest is in You Lord\nUndithamsanqele.\nBless me kindly.",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
     "hymnNumber": 13,
     "hymnCode": "X13",
     "title": "Ngcwele, ngcwele, ngcwele, unamandla onke",

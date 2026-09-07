@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertCircle, Check, ChevronDown, Send, WifiOff, X } from 'lucide-react';
+import { AlertCircle, Check, ChevronDown, Clock, Send, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { hymnBooks } from '../data/hymnsData';
 import { BookId, ReportKind } from '../types';
@@ -177,7 +177,7 @@ export const ReportIssueSheet: React.FC = () => {
               {reportState === 'sent' ? (
                 <Check size={18} className="shrink-0 mt-0.5" />
               ) : (
-                <WifiOff size={18} className="shrink-0 mt-0.5" />
+                <Clock size={18} className="shrink-0 mt-0.5" />
               )}
               <p className="text-sm leading-relaxed">
                 {reportState === 'sent'
