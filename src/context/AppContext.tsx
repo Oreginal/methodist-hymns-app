@@ -166,7 +166,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Settings
   const [fontSize, setFontSizeState] = useState<number>(18);
-  const [darkMode, setDarkModeState] = useState<boolean>(false);
+  // Seed from the user's saved choice; fall back to the OS preference so the
+  // app still opens dark for someone whose phone is dark. Previously this was
+  // hardcoded false and never persisted, so the setting reset every load.
+  const DARK_MODE_KEY = 'mhb_dark_mode';
+  const [darkMode, setDarkModeState] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(DARK_MODE_KEY);
+      if (saved !== null) return saved === 'true';
+    } catch { /* storage blocked — fall through to the OS preference */ }
+    return typeof window !== 'undefined'
+      && window.matchMedia?.('(prefers-color-scheme: dark)').matches === true;
+  });
 
   // Initialize from LocalStorage
   const [recentHymns, setRecentHymns] = useState<RecentHymn[]>(() => {
@@ -200,12 +211,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setDarkMode = (dark: boolean) => {
     setDarkModeState(dark);
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    try { localStorage.setItem(DARK_MODE_KEY, String(dark)); } catch { /* non-fatal */ }
   };
+
+  // Keep the class in sync with state, including on first render — the inline
+  // script in index.html sets it pre-paint, this keeps it correct afterwards.
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+  }, [darkMode]);
 
   // Sync to localStorage
   useEffect(() => {

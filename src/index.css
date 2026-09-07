@@ -7,6 +7,12 @@
 
 @import "tailwindcss";
 
+/* Tailwind v4 resolves `dark:` against prefers-color-scheme by default, which
+   made the in-app dark-mode toggle a no-op — every `dark:` class followed the
+   OS instead. Bind the variant to the .dark class that AppContext toggles; the
+   OS preference is still honoured, by seeding that class on first load. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Dynamic CSS Theme Variable Customizations */
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;

@@ -46,6 +46,19 @@
     <meta name="twitter:image" content="/icon-512.png" />
   </head>
   <body>
+    <script>
+      // Applies the theme before first paint, so a dark-mode user never sees a
+      // white flash. Mirrors the seeding logic in AppContext.
+      (function () {
+        try {
+          var saved = localStorage.getItem('mhb_dark_mode');
+          var dark = saved !== null
+            ? saved === 'true'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (e) { /* storage blocked — default to light */ }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

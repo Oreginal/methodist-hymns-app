@@ -42,13 +42,19 @@ const MainLayout: React.FC = () => {
         {/* min-w-0 + nowrap keeps the wordmark on one line; without it the title
             wrapped and collided with the badge on a 390px screen. */}
         <h1 className="min-w-0 text-base sm:text-lg font-bold text-[#111111] dark:text-white uppercase tracking-tight font-sans flex items-center gap-2 whitespace-nowrap">
-          <img
-            src={LOGO_BASE64}
-            alt=""
-            aria-hidden="true"
-            className="w-8 h-8 shrink-0 object-contain"
-            referrerPolicy="no-referrer"
-          />
+          {/* The logo art is transparent and almost entirely near-black, so it
+              vanishes against the dark header. Sit it on a light chip — the
+              same treatment the home-screen hero already uses. In light mode
+              the chip matches the header, so nothing changes there. */}
+          <span className="shrink-0 w-8 h-8 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+            <img
+              src={LOGO_BASE64}
+              alt=""
+              aria-hidden="true"
+              className="w-7 h-7 object-contain"
+              referrerPolicy="no-referrer"
+            />
+          </span>
           <span className="truncate">
             <span className="text-[#E53935] font-extrabold">Hymn Book</span>
           </span>
