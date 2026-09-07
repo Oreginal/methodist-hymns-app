@@ -29,8 +29,7 @@ export const ReportIssueSheet: React.FC = () => {
     closeReport,
     submitReport,
     reportState,
-    reportError,
-    currentUser
+    reportError
   } = useApp();
 
   const [kind, setKind] = useState<ReportKind>('wrong-lyrics');
@@ -57,9 +56,8 @@ export const ReportIssueSheet: React.FC = () => {
     setBookId(reportTarget.bookId ?? 'xhosa');
     setHymnNumber(reportTarget.hymnNumber !== undefined ? String(reportTarget.hymnNumber) : '');
     setHymnTitle(reportTarget.hymnTitle ?? '');
-    // Signed-in members get their address pre-filled so a reply is possible.
-    setReporterEmail(currentUser && !currentUser.isGuest ? currentUser.email : '');
-  }, [reportTarget, currentUser]);
+    setReporterEmail('');
+  }, [reportTarget]);
 
   // Close on Escape, and keep focus inside the sheet while it is open.
   useEffect(() => {

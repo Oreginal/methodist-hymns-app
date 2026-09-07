@@ -61,13 +61,6 @@ export interface Favourites {
   prayers: string[]; // prayer ids
 }
 
-export interface User {
-  email: string;
-  fullName?: string;
-  isGuest: boolean;
-  tier: 'free' | 'individual-pro' | 'parish-license';
-  createdAt?: string;
-}
 
 
 // ---- Issue reporting ------------------------------------------------------

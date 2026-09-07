@@ -10,7 +10,7 @@ import { BookId } from '../types';
 import { 
   Download, CheckCircle2, Moon, Sun,
   Tv, Book, Flame, MessageSquare, CreditCard, Sparkles, Smartphone, Landmark,
-  LogOut, User as UserIcon, Flag, Clock
+  Flag, Clock
 } from 'lucide-react';
 
 export const SettingsScreen: React.FC = () => {
@@ -22,8 +22,6 @@ export const SettingsScreen: React.FC = () => {
     setDarkMode,
     fontSize,
     setFontSize,
-    currentUser,
-    logout,
     openReport,
     pendingReportCount
   } = useApp();
@@ -38,46 +36,6 @@ export const SettingsScreen: React.FC = () => {
           Customize your reading experience, adjust contrast levels, and download hymnals for entire offline use.
         </p>
       </div>
-
-      {/* SaaS User Profile Card */}
-      {currentUser && (
-        <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 p-5 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/20 text-[#E53935] flex items-center justify-center shrink-0">
-                <UserIcon size={22} />
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="font-extrabold text-sm text-[#111111] dark:text-white">
-                    {currentUser.fullName || "Sanctuary Visitor"}
-                  </h4>
-                  <span className={`text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
-                    currentUser.tier === 'parish-license' 
-                      ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/30 dark:text-amber-400'
-                      : currentUser.tier === 'individual-pro'
-                      ? 'bg-red-100 text-[#E53935] dark:bg-red-950/30 dark:text-red-400'
-                      : 'bg-gray-100 text-[#757575] dark:bg-zinc-800 dark:text-zinc-400'
-                  }`}>
-                    {currentUser.isGuest ? 'Guest Access' : currentUser.tier === 'parish-license' ? 'Parish Corporate License' : currentUser.tier === 'individual-pro' ? 'Devotional Pro Plan' : 'Free Plan'}
-                  </span>
-                </div>
-                <p className="text-xs text-[#757575] dark:text-zinc-400">
-                  {currentUser.email}
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={logout}
-              className="flex items-center justify-center gap-1.5 border border-dashed border-gray-200 dark:border-zinc-800 hover:border-[#E53935] hover:text-[#E53935] px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 transition-all cursor-pointer"
-            >
-              <LogOut size={14} />
-              Sign Out
-            </button>
-          </div>
-        </section>
-      )}
 
       {/* Offline Book Downloads Section */}
       <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 p-5 space-y-4">

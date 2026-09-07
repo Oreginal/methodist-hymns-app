@@ -14,11 +14,17 @@
          and PWA splash stay consistent with the app. -->
     <meta name="theme-color" content="#E53935" />
 
-    <!-- Icons. /logo.png is the same artwork the app renders in-product
-         (src/assets/logo-v4.png), so the tab, home-screen icon and share
-         previews all show one logo. -->
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <link rel="apple-touch-icon" href="/logo.png" />
+    <!-- Icons. All generated from the same artwork the app renders in-product
+         (src/assets/logo-v4.png), so tab, home-screen icon and share previews
+         show one logo. The source is 376x308, so the square sizes below are
+         letterboxed onto a white ground rather than stretched. -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Without this, "Add to Home Screen" has no icon to use and Chrome falls
+         back to a generic one. -->
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Hymn Book" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
 
@@ -30,14 +36,14 @@
       property="og:description"
       content="Read hymns on your phone whenever you don't have a hymn book to hand. English, Xhosa, Setswana and Sesotho hymns with English translations, available offline."
     />
-    <meta property="og:image" content="/logo.png" />
+    <meta property="og:image" content="/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Hymn Book" />
     <meta
       name="twitter:description"
       content="Read hymns on your phone whenever you don't have a hymn book to hand."
     />
-    <meta name="twitter:image" content="/logo.png" />
+    <meta name="twitter:image" content="/icon-512.png" />
   </head>
   <body>
     <div id="root"></div>

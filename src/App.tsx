@@ -12,16 +12,11 @@ import { PrayersScreen } from './components/PrayersScreen';
 import { SavedScreen } from './components/SavedScreen';
 import { SettingsScreen } from './components/SettingsScreen';
 import { HymnDetailScreen } from './components/HymnDetailScreen';
-import { SaaSGatewayScreen } from './components/SaaSGatewayScreen';
 import { LOGO_BASE64 } from './data/logo';
 import { ReportIssueSheet } from './components/ReportIssueSheet';
 
 const MainLayout: React.FC = () => {
-  const { activeTab, activeHymn, currentUser } = useApp();
-
-  if (!currentUser) {
-    return <SaaSGatewayScreen />;
-  }
+  const { activeTab, activeHymn } = useApp();
 
   const renderActiveScreen = () => {
     switch (activeTab) {

@@ -5,7 +5,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import {
-  BookId, Book, Hymn, Prayer, RecentHymn, Favourites, User,
+  BookId, Book, Hymn, Prayer, RecentHymn, Favourites,
   IssueReport, ReportTarget, ReportSubmitState
 } from '../types';
 import { hymnsDatabase, hymnBooks } from '../data/hymnsData';
@@ -73,11 +73,6 @@ interface AppContextType {
   reportError: string | null;
   pendingReportCount: number;
 
-  currentUser: User | null;
-  login: (email: string) => boolean;
-  signUp: (email: string, fullName: string, tier: 'free' | 'individual-pro' | 'parish-license') => boolean;
-  loginAsGuest: () => void;
-  logout: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -329,60 +324,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }, 300);
   };
 
-  // User authentication hooks and states
-  const [currentUser, setCurrentUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem('mhb_current_user');
-    return saved ? JSON.parse(saved) : null;
-  });
-
-  const login = (email: string): boolean => {
-    const storedUsersJson = localStorage.getItem('mhb_registered_users');
-    const registeredUsers: User[] = storedUsersJson ? JSON.parse(storedUsersJson) : [];
-    const found = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
-    
-    if (found) {
-      const userObj: User = { ...found, isGuest: false };
-      setCurrentUser(userObj);
-      localStorage.setItem('mhb_current_user', JSON.stringify(userObj));
-      return true;
-    }
-    return false;
-  };
-
-  const signUp = (email: string, fullName: string, tier: 'free' | 'individual-pro' | 'parish-license'): boolean => {
-    const storedUsersJson = localStorage.getItem('mhb_registered_users');
-    const registeredUsers: User[] = storedUsersJson ? JSON.parse(storedUsersJson) : [];
-    
-    if (registeredUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-      return false;
-    }
-
-    const newUser: User = {
-      email: email.toLowerCase(),
-      fullName,
-      tier,
-      isGuest: false,
-      createdAt: new Date().toISOString()
-    };
-
-    const updated = [...registeredUsers, newUser];
-    localStorage.setItem('mhb_registered_users', JSON.stringify(updated));
-    setCurrentUser(newUser);
-    localStorage.setItem('mhb_current_user', JSON.stringify(newUser));
-    return true;
-  };
-
-  const loginAsGuest = () => {
-    const guestUser: User = {
-      email: 'guest@hymnbook.app',
-      fullName: 'Sanctuary Visitor',
-      isGuest: true,
-      tier: 'free'
-    };
-    setCurrentUser(guestUser);
-    localStorage.setItem('mhb_current_user', JSON.stringify(guestUser));
-  };
-
   // ---- Issue reporting --------------------------------------------------
   // Reports POST to /api/report, which emails them. The app is offline-first,
   // so a report that cannot be sent right now is queued in localStorage and
@@ -502,11 +443,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
   }, []);
 
-  const logout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('mhb_current_user');
-  };
-
   return (
     <AppContext.Provider value={{
       activeTab,
@@ -547,11 +483,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       reportState,
       reportError,
       pendingReportCount,
-      currentUser,
-      login,
-      signUp,
-      loginAsGuest,
-      logout
     }}>
       {children}
     </AppContext.Provider>
