@@ -386,6 +386,134 @@
   },
   {
     "bookId": "setswana",
+    "hymnNumber": 239,
+    "hymnCode": "T239",
+    "title": "Ao! Molimo o tletseng tshwaro",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Ao! Molimo o’ tletseng tshwaro",
+            "translation": "O! Merciful God"
+          },
+          {
+            "primary": "Ke tsile go go rapela ;",
+            "translation": "I’ve come to pray to you ;"
+          },
+          {
+            "primary": "Mme ke simolola ka go re,",
+            "translation": "And I begin by saying,"
+          },
+          {
+            "primary": "Thapelo ga ke e itse;",
+            "translation": "I do not know how to pray,"
+          },
+          {
+            "primary": "Ao! Morena wa me, O nthute",
+            "translation": "O! My God, teach me"
+          },
+          {
+            "primary": "Go go rapela ka nnete.",
+            "translation": "To sincerely pray to You"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Go fitlhela motlha wa jana",
+            "translation": "Until now,"
+          },
+          {
+            "primary": "Ke atisitse go baya",
+            "translation": "I have been uttering ;"
+          },
+          {
+            "primary": "Merapelo e’ senang sepe,",
+            "translation": "Meaningless prayers,"
+          },
+          {
+            "primary": "Ya molomo, le ya mokgwa ;",
+            "translation": "In word, and in deed ;"
+          },
+          {
+            "primary": "Ao! Morena wa me, O nthute",
+            "translation": "O! My God, teach me"
+          },
+          {
+            "primary": "Go go rapela ka nnete.",
+            "translation": "To sincerely pray to You"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Ke simolotse go rapela"
+          },
+          {
+            "primary": "Ka se baka se ‘telele;",
+            "translation": "I began praying a long time ago,"
+          },
+          {
+            "primary": "Mme merapelo ya me jana",
+            "translation": "And my prayers now,"
+          },
+          {
+            "primary": "E mentsintsi fa e balwa",
+            "translation": "Are countless,"
+          },
+          {
+            "primary": "Ao! Morena wa me, O nthute",
+            "translation": "O! My God, teach me"
+          },
+          {
+            "primary": "Go go rapela ka nnete.",
+            "translation": "To sincerely pray to You"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Mme pelo ya me ea tlhomoga",
+            "translation": "And my heart bled"
+          },
+          {
+            "primary": "Fa ke sa le yo mmotlana ;",
+            "translation": "When I was still young ;"
+          },
+          {
+            "primary": "Yo’ sekeng Wa fitlhela sepe,",
+            "translation": "The one that never received anything"
+          },
+          {
+            "primary": "Merapelong yotlhe ya me,",
+            "translation": "From all my prayers,"
+          },
+          {
+            "primary": "Ao! Morena wa me, O nthute",
+            "translation": "O! My God, teach me"
+          },
+          {
+            "primary": "Go go rapela ka nnete.",
+            "translation": "To sincerely pray to You"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nAo! Molimo o’ tletseng tshwaro\nO! Merciful God\nKe tsile go go rapela ;\nI’ve come to pray to you ;\nMme ke simolola ka go re,\nAnd I begin by saying,\nThapelo ga ke e itse;\nI do not know how to pray,\nAo! Morena wa me, O nthute\nO! My God, teach me\nGo go rapela ka nnete.\nTo sincerely pray to You\n\nVERSE 2\nGo fitlhela motlha wa jana\nUntil now,\nKe atisitse go baya\nI have been uttering ;\nMerapelo e’ senang sepe,\nMeaningless prayers,\nYa molomo, le ya mokgwa ;\nIn word, and in deed ;\nAo! Morena wa me, O nthute\nO! My God, teach me\nGo go rapela ka nnete.\nTo sincerely pray to You\n\nVERSE 3\nKe simolotse go rapela\nKa se baka se ‘telele;\nI began praying a long time ago,\nMme merapelo ya me jana\nAnd my prayers now,\nE mentsintsi fa e balwa\nAre countless,\nAo! Morena wa me, O nthute\nO! My God, teach me\nGo go rapela ka nnete.\nTo sincerely pray to You\n\nVERSE 4\nMme pelo ya me ea tlhomoga\nAnd my heart bled\nFa ke sa le yo mmotlana ;\nWhen I was still young ;\nYo’ sekeng Wa fitlhela sepe,\nThe one that never received anything\nMerapelong yotlhe ya me,\nFrom all my prayers,\nAo! Morena wa me, O nthute\nO! My God, teach me\nGo go rapela ka nnete.\nTo sincerely pray to You",
+    "amen": true,
+    "author": "Sefela sa Setso",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "setswana",
     "hymnNumber": 397,
     "hymnCode": "T397",
     "title": "Ao! Morena wa kagiso",

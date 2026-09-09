@@ -1,5 +1,18 @@
 [
   {
+    "filename": "T239 Ao! Molimo o tletseng tshwaro.pptx",
+    "hymnCode": "T239",
+    "title": "Ao! Molimo o tletseng tshwaro",
+    "warnings": [
+      "Unable to detect scripture reference pattern."
+    ],
+    "partialParsedResult": {
+      "title": "Ao! Molimo o tletseng tshwaro",
+      "hasAmen": true,
+      "versesSample": "VERSE 1\nAo! Molimo o’ tletseng tshwaro\nO! Merciful God\nKe tsile go go rapela ;\nI’ve come to pray to you ;\nMme ke simolola ka go re,\nAnd I begin by say..."
+    }
+  },
+  {
     "filename": "X004 Dumisani uYehova.pptx",
     "hymnCode": "X4",
     "title": "Dumisani uYehova",
