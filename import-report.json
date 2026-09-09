@@ -1,10 +1,19 @@
 {
-  "executedAt": "2026-09-09T13:47:59.668Z",
-  "totalFilesScanned": 5,
-  "legacyConverted": 5,
-  "successfulImports": 5,
+  "executedAt": "2026-09-09T14:27:24.523Z",
+  "totalFilesScanned": 6,
+  "legacyConverted": 6,
+  "successfulImports": 6,
   "failedImports": 0,
   "successfulDetails": [
+    {
+      "code": "T239",
+      "number": 239,
+      "title": "Ao! Molimo o tletseng tshwaro",
+      "versesCount": 4,
+      "hasAmen": true,
+      "hasTranslations": true,
+      "englishSource": "markers"
+    },
     {
       "code": "X4",
       "number": 4,
@@ -59,15 +68,16 @@
   "duplicatesKept": 0,
   "duplicatesRejected": 0,
   "mode": "merge",
-  "existingCount": 138,
-  "added": 0,
+  "existingCount": 142,
+  "added": 1,
   "replaced": 5,
-  "finalExportedCount": 138,
+  "finalExportedCount": 143,
   "exportedByBook": {
+    "setswana": 5,
     "xhosa": 138
   },
-  "defaultBookId": "xhosa",
-  "markerSourced": 1,
+  "defaultBookId": "setswana",
+  "markerSourced": 2,
   "heuristicSourced": 4,
   "skippedNoHymnNumber": 0
 }
