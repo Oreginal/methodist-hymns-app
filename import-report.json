@@ -1,8 +1,8 @@
 {
-  "executedAt": "2026-09-07T19:17:58.075Z",
-  "totalFilesScanned": 4,
-  "legacyConverted": 4,
-  "successfulImports": 4,
+  "executedAt": "2026-09-09T13:47:59.668Z",
+  "totalFilesScanned": 5,
+  "legacyConverted": 5,
+  "successfulImports": 5,
   "failedImports": 0,
   "successfulDetails": [
     {
@@ -42,6 +42,15 @@
       "scripture": "Psalm 118",
       "hasTranslations": true,
       "englishSource": "heuristic"
+    },
+    {
+      "code": "X313",
+      "number": 313,
+      "title": "Thetha, Nkosi, ndilindele, Oko kuthethwayo kum.",
+      "versesCount": 4,
+      "hasAmen": true,
+      "hasTranslations": true,
+      "englishSource": "markers"
     }
   ],
   "failedDetails": [],
@@ -50,15 +59,15 @@
   "duplicatesKept": 0,
   "duplicatesRejected": 0,
   "mode": "merge",
-  "existingCount": 134,
-  "added": 4,
-  "replaced": 0,
+  "existingCount": 138,
+  "added": 0,
+  "replaced": 5,
   "finalExportedCount": 138,
   "exportedByBook": {
     "xhosa": 138
   },
   "defaultBookId": "xhosa",
-  "markerSourced": 0,
+  "markerSourced": 1,
   "heuristicSourced": 4,
   "skippedNoHymnNumber": 0
 }
