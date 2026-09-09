@@ -5568,6 +5568,88 @@
   },
   {
     "bookId": "xhosa",
+    "hymnNumber": 102,
+    "hymnCode": "X102",
+    "title": "Monwabisi oyiNgcwele",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Monwabisi oyiNgcwele,"
+          },
+          {
+            "primary": "Mthombo wazo izibele,"
+          },
+          {
+            "primary": "Hlis' umbethe wakho."
+          },
+          {
+            "primary": "Yiva ukukhanga kwethu,"
+          },
+          {
+            "primary": "Utyebis' umxhelo wethu,"
+          },
+          {
+            "primary": "Ngokunyela kwaKho.",
+            "translation": "Celebrate the Holy who enriches our hearts."
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Sonwabise thina sonke,"
+          },
+          {
+            "primary": "Usivis' uxolo lonke"
+          },
+          {
+            "primary": "Ngokunqhina kwaKho."
+          },
+          {
+            "primary": "Sikhokel' enyanisweni,"
+          },
+          {
+            "primary": "Usimise entandweni,"
+          },
+          {
+            "primary": "Ngokusiza kwaKho.",
+            "translation": "Rejoice as we come into His peaceful presence."
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Sothi, salathiswe nguWe,"
+          },
+          {
+            "primary": "Side sifikela kuYe"
+          },
+          {
+            "primary": "umSindisi wethu;"
+          },
+          {
+            "primary": "Sibubon' ubuso baKhe,"
+          },
+          {
+            "primary": "Ekhanyeni lethu. Amen",
+            "translation": "Through the saviour we come to him to see his face."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nMonwabisi oyiNgcwele,\nMthombo wazo izibele,\nHlis' umbethe wakho.\nYiva ukukhanga kwethu,\nUtyebis' umxhelo wethu,\nNgokunyela kwaKho.\nCelebrate the Holy who enriches our hearts.\n\nVERSE 2\nSonwabise thina sonke,\nUsivis' uxolo lonke\nNgokunqhina kwaKho.\nSikhokel' enyanisweni,\nUsimise entandweni,\nNgokusiza kwaKho.\nRejoice as we come into His peaceful presence.\n\nVERSE 3\nSothi, salathiswe nguWe,\nSide sifikela kuYe\numSindisi wethu;\nSibubon' ubuso baKhe,\nEkhanyeni lethu. Amen\nThrough the saviour we come to him to see his face.",
+    "amen": true,
+    "author": "Ingoma Yesiko",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
     "hymnNumber": 103,
     "hymnCode": "X103",
     "title": "Sakumthanda umSindisi",
@@ -15467,6 +15549,90 @@
   },
   {
     "bookId": "xhosa",
+    "hymnNumber": 310,
+    "hymnCode": "X310",
+    "title": "Ndincede so-bungcwele",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Ndincede so-bungcwele,"
+          },
+          {
+            "primary": "Onaw' amandla onke;"
+          },
+          {
+            "primary": "Ze ndilushamayele"
+          },
+          {
+            "primary": "Kwa semhlabeni wonke,"
+          },
+          {
+            "primary": "Udumo lomKhululi wethu,"
+          },
+          {
+            "primary": "Osusa zonk' izoono zethu..",
+            "translation": "Make me Holy"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Ngegama laKho, Yesu!"
+          },
+          {
+            "primary": "Kudamba ukoyikal"
+          },
+          {
+            "primary": "Ngofefe lwaKho, Yesu!"
+          },
+          {
+            "primary": "Uxolo luya fika;"
+          },
+          {
+            "primary": "Kuphel' iintlungu zeentliziyo,"
+          },
+          {
+            "primary": "Kuvuk' ubom' obuhleliyo.",
+            "translation": "Give me peace"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Wasiqhaw'lela, Yesu!"
+          },
+          {
+            "primary": "Kwimiphefumlo yethu,"
+          },
+          {
+            "primary": "Onk' amakhamandela"
+          },
+          {
+            "primary": "Anzima phezu kwethu;"
+          },
+          {
+            "primary": "Enguwe osisindisile,"
+          },
+          {
+            "primary": "Sihambe sikhululekile."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nNdincede so-bungcwele,\nOnaw' amandla onke;\nZe ndilushamayele\nKwa semhlabeni wonke,\nUdumo lomKhululi wethu,\nOsusa zonk' izoono zethu..\nMake me Holy\n\nVERSE 2\nNgegama laKho, Yesu!\nKudamba ukoyikal\nNgofefe lwaKho, Yesu!\nUxolo luya fika;\nKuphel' iintlungu zeentliziyo,\nKuvuk' ubom' obuhleliyo.\nGive me peace\n\nVERSE 3\nWasiqhaw'lela, Yesu!\nKwimiphefumlo yethu,\nOnk' amakhamandela\nAnzima phezu kwethu;\nEnguwe osisindisile,\nSihambe sikhululekile.",
+    "amen": true,
+    "author": "Ingoma Yesiko",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
     "hymnNumber": 311,
     "hymnCode": "X311",
     "title": "Olo kholo olukhulu",
@@ -15920,6 +16086,211 @@
       }
     ],
     "lyrics": "VERSE 1\nSingabazalwana, singabazalwana,\nWe are brothers & sisters in Christ\nLusapho lweNkosi enkulu;\nFamily of the Highest God\nSinge sithandana, singe sithandana,\nLet us love each other, let us love each other\nAwukho umona phezulu.\nThere is no jealousy in heaven\n\nVERSE 2\nSingabancedani, singabancedani,\nWe help each other, we help each other\nBakhonzi beNkosi enkulu;\n(We worship the Greatest God\nNge singahlukani, ngesingahlukani,\nLet us not be divided, let us not be divided\nAkwenjiwa njalo phezulu.\nThere is no division in heaven\n\nVERSE 3\nSisemkhosini mnye, sisemkhosini mnye,\nWe are one army, we are one army\nMakroti eNkosi enkulu;\nHeroes of the Highest God\nSinge siyilwela kwa ngantliziyo – nye,\nMay we fight for Him with one heart\nAkukho bugwala phezulu.\nThere is no cowardice in heaven\n\nVERSE 4\nEzulwini linye emvuyelelweni,\nIn heaven one day – with great joy\nSobong’ uKumkani omkhulu;\nWe will thank the King of Kings\nKungawo amandla avel’ eNkosini,\nIt is through the strength that Christ gives us\nEsoda sifike phezulu.\nThat we will reach heaven",
+    "amen": true,
+    "author": "Ingoma Yesiko",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
+    "hymnNumber": 317,
+    "hymnCode": "X317",
+    "title": "Phambili! Bafazi",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Phambili! bafazi,"
+          },
+          {
+            "primary": "Bokuthandaza;"
+          },
+          {
+            "primary": "Ikrusi kaYesu"
+          },
+          {
+            "primary": "Inkhokela;"
+          },
+          {
+            "primary": "NguYe oyintloko,"
+          },
+          {
+            "primary": "Nqhinani ngaYe;"
+          },
+          {
+            "primary": "Ngako ma nihambe,"
+          },
+          {
+            "primary": "NiluManyano.",
+            "translation": "Forward woman, with the cross of Jesus. Follow him in unity."
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Phambili makholwal"
+          },
+          {
+            "primary": "Niemkhosini,"
+          },
+          {
+            "primary": "Nilandel' ikrusi"
+          },
+          {
+            "primary": "Yomphathi wenu.",
+            "translation": "Move forward like an army. With the cross"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Ziyoyisw' iintshaba"
+          },
+          {
+            "primary": "Ngelizwi laKhe."
+          },
+          {
+            "primary": "Zodilik' iinqaba"
+          },
+          {
+            "primary": "Nakudumisa;"
+          },
+          {
+            "primary": "Funzani ke ngoko,"
+          },
+          {
+            "primary": "Niya kweyisa,"
+          },
+          {
+            "primary": "Ngegama lenKosi,"
+          },
+          {
+            "primary": "NiluManyano.",
+            "translation": "The word will defeat the enemy. Conquer in the name of the Lord."
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Phambili makholwal"
+          },
+          {
+            "primary": "Niemkhosini,"
+          },
+          {
+            "primary": "Nilandel' ikrusi"
+          },
+          {
+            "primary": "Yomphathi wenu.",
+            "translation": "Move forward like an army. With the cross"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Anahlukananga,"
+          },
+          {
+            "primary": "Ningumzim' omnye;"
+          },
+          {
+            "primary": "Nibanye ngenkonzo,"
+          },
+          {
+            "primary": "Kwa nangothoando."
+          },
+          {
+            "primary": "Qhubani ngomonde,"
+          },
+          {
+            "primary": "Nikhaliphile;"
+          },
+          {
+            "primary": "Nibonakalise,"
+          },
+          {
+            "primary": "NiluManyano.",
+            "translation": "In unity serve one another With love, patience and wisdom. Be united."
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "lines": [
+          {
+            "primary": "Phambili makholwal"
+          },
+          {
+            "primary": "Niemkhosini,"
+          },
+          {
+            "primary": "Nilandel' ikrusi"
+          },
+          {
+            "primary": "Yomphathi wenu.",
+            "translation": "Move forward like an army. With the cross"
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "lines": [
+          {
+            "primary": "Phambili ke nonke!"
+          },
+          {
+            "primary": "Ze ningoyiki,"
+          },
+          {
+            "primary": "Culani iingoma,"
+          },
+          {
+            "primary": "Zokudumisa."
+          },
+          {
+            "primary": "Aninakoyiswa"
+          },
+          {
+            "primary": "Xa ninoyesu;"
+          },
+          {
+            "primary": "Kodwa nomzukisa"
+          },
+          {
+            "primary": "NiluManyano.",
+            "translation": "Do not be afraid, Don't give up. United with him."
+          }
+        ]
+      },
+      {
+        "number": 8,
+        "lines": [
+          {
+            "primary": "Phambili makholwal"
+          },
+          {
+            "primary": "Niemkhosini,"
+          },
+          {
+            "primary": "Nilandel' ikrusi"
+          },
+          {
+            "primary": "Yomphathi wenu.",
+            "translation": "Move forward like an army. With the cross"
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nPhambili! bafazi,\nBokuthandaza;\nIkrusi kaYesu\nInkhokela;\nNguYe oyintloko,\nNqhinani ngaYe;\nNgako ma nihambe,\nNiluManyano.\nForward woman, with the cross of Jesus. Follow him in unity.\n\nVERSE 2\nPhambili makholwal\nNiemkhosini,\nNilandel' ikrusi\nYomphathi wenu.\nMove forward like an army. With the cross\n\nVERSE 3\nZiyoyisw' iintshaba\nNgelizwi laKhe.\nZodilik' iinqaba\nNakudumisa;\nFunzani ke ngoko,\nNiya kweyisa,\nNgegama lenKosi,\nNiluManyano.\nThe word will defeat the enemy. Conquer in the name of the Lord.\n\nVERSE 4\nPhambili makholwal\nNiemkhosini,\nNilandel' ikrusi\nYomphathi wenu.\nMove forward like an army. With the cross\n\nVERSE 5\nAnahlukananga,\nNingumzim' omnye;\nNibanye ngenkonzo,\nKwa nangothoando.\nQhubani ngomonde,\nNikhaliphile;\nNibonakalise,\nNiluManyano.\nIn unity serve one another With love, patience and wisdom. Be united.\n\nVERSE 6\nPhambili makholwal\nNiemkhosini,\nNilandel' ikrusi\nYomphathi wenu.\nMove forward like an army. With the cross\n\nVERSE 7\nPhambili ke nonke!\nZe ningoyiki,\nCulani iingoma,\nZokudumisa.\nAninakoyiswa\nXa ninoyesu;\nKodwa nomzukisa\nNiluManyano.\nDo not be afraid, Don't give up. United with him.\n\nVERSE 8\nPhambili makholwal\nNiemkhosini,\nNilandel' ikrusi\nYomphathi wenu.\nMove forward like an army. With the cross",
     "amen": true,
     "author": "Ingoma Yesiko",
     "category": "General Worship"
@@ -16561,6 +16932,109 @@
   },
   {
     "bookId": "xhosa",
+    "hymnNumber": 356,
+    "hymnCode": "X356",
+    "title": "Ndi' ndakulesesha loo mbali endala",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Ndi' ndakulesesha loo mbali endala"
+          },
+          {
+            "primary": "KaYesu esesebantwini"
+          },
+          {
+            "primary": "Ebiz' abantwana nje ngathi ziimvana"
+          },
+          {
+            "primary": "Akwaba nda ndikho loo mini."
+          },
+          {
+            "primary": "Akwaba ndaziva izandla entloko,"
+          },
+          {
+            "primary": "Kwa nokusingathwa ngeengalo,"
+          },
+          {
+            "primary": "Nobuso buncuma, esithi ngofefe,"
+          },
+          {
+            "primary": "Ma kuze usapho kwa nalo.",
+            "translation": "Remember when Jesus walked in joy with children"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Kusemthandazweni endingasondela,"
+          },
+          {
+            "primary": "Ndicel' ukwabelwa kwa nami;"
+          },
+          {
+            "primary": "Naxo ndmfunile ngenene ngaphantsi,"
+          },
+          {
+            "primary": "Ndombona phezulu ngokwami."
+          },
+          {
+            "primary": "Kulapho alungiselel' angangcwele,"
+          },
+          {
+            "primary": "Indawo yobuihl' obukhulu;"
+          },
+          {
+            "primary": "Zininzi iintsaph' ezibuthene khona,"
+          },
+          {
+            "primary": "Zezobukumkani bezulu.",
+            "translation": "In prayer, I want to be there. With him in that holy place."
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Kuloko iintsapho zininzi kakhulu"
+          },
+          {
+            "primary": "Ezingazivang' ezi ndaba;"
+          },
+          {
+            "primary": "Zidungudeliswa, zisebumfameni,"
+          },
+          {
+            "primary": "Nasebunyameni bomhlaba."
+          },
+          {
+            "primary": "Akwaba zabaz' ububanzi bekhaya,"
+          },
+          {
+            "primary": "Nelizw' elivel' enKosini,"
+          },
+          {
+            "primary": "Ukuze zivele kumazwe ngamazwe,"
+          },
+          {
+            "primary": "Zingen' enyhwebe' ezulwini.",
+            "translation": "Help us to know the joy of hearing your good news."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nNdi' ndakulesesha loo mbali endala\nKaYesu esesebantwini\nEbiz' abantwana nje ngathi ziimvana\nAkwaba nda ndikho loo mini.\nAkwaba ndaziva izandla entloko,\nKwa nokusingathwa ngeengalo,\nNobuso buncuma, esithi ngofefe,\nMa kuze usapho kwa nalo.\nRemember when Jesus walked in joy with children\n\nVERSE 2\nKusemthandazweni endingasondela,\nNdicel' ukwabelwa kwa nami;\nNaxo ndmfunile ngenene ngaphantsi,\nNdombona phezulu ngokwami.\nKulapho alungiselel' angangcwele,\nIndawo yobuihl' obukhulu;\nZininzi iintsaph' ezibuthene khona,\nZezobukumkani bezulu.\nIn prayer, I want to be there. With him in that holy place.\n\nVERSE 3\nKuloko iintsapho zininzi kakhulu\nEzingazivang' ezi ndaba;\nZidungudeliswa, zisebumfameni,\nNasebunyameni bomhlaba.\nAkwaba zabaz' ububanzi bekhaya,\nNelizw' elivel' enKosini,\nUkuze zivele kumazwe ngamazwe,\nZingen' enyhwebe' ezulwini.\nHelp us to know the joy of hearing your good news.",
+    "amen": true,
+    "author": "Ingoma Yesiko",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
     "hymnNumber": 358,
     "hymnCode": "X358",
     "title": "Yesu! Mhlobo wabantwana",
@@ -16801,6 +17275,157 @@
       }
     ],
     "lyrics": "VERSE 1\nHlala nami! Litshonil’ ilanga,\nAbide with me, fast fall the eventide\nUbusuku bufikile, Nkosi;\nThe shadows of the evening fall\nMa ndingasali ndingenamncedi,\nMy desire is that I be not left alone\nNdenzel’ uncedo ngokuhlala nam.\nGrant me special favour Lord, abide with me\n\nVERSE 2\nBuya khaw’leza obu bomi bam,\nSwiftly, my earthly days fade away\nNdiya shiywa zezomhlab’ izinto;\nWorldly pleasures are too fat for me\nNdibona iinguquleko zodwa,\nI see change everywhere\nWen’ ongaguqukiyo: Hlala nam.\nYou, O Lord, who never changes, abide with me\n\nVERSE 3\nYiba soloko ukufuphi nam,\nBe always nearby\nUndigxothele zonk’ iintshaba zam;\nDrive all my enemies away\nNguWe Nkosi onokundigcina,\nYou are the only One that can protect me\nPhakathi kwentsunguzi: Hlala nam.\nIn the midst of darkness; abide with me\n\nVERSE 4\nAndinaxhala kukho Wena,\nI have no reason to worry when You are around\nIintlungu neentsizi azinani;\nPain and sorrow will not dishearten me\nLuphi uloyiso lwakho nchwaba?\nWhere is Your victory, o grave?\nNdiya koyisa xa uhleli nam.\nI will overcome if You abide with me\n\nVERSE 5\nZibonakalis’ emehlweni am,\nReveal Thyself before my closing eyes,\nUz’ undikhombise okwezulu;\nNdikhanyisele yonk’ indlela yam,\nShine through the darkness, and show me the way\nNasekufeni kwam uz’ ube nam.\nEven on my deathbed, abide with me",
+    "amen": true,
+    "author": "Ingoma Yesiko",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "xhosa",
+    "hymnNumber": 378,
+    "hymnCode": "X378",
+    "title": "Vumani kuYehova",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Vumani kuYehova"
+          },
+          {
+            "primary": "Nibong' igama laKhe;"
+          },
+          {
+            "primary": "Nilondolozwe nguYe,"
+          },
+          {
+            "primary": "Ma nenz' udumo IwaKhe.",
+            "translation": "Give thanks to God He has preserved us"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Kufik' umnyaka omtjha,"
+          },
+          {
+            "primary": "Omdala se umkile;"
+          },
+          {
+            "primary": "Sisekho ebomini,"
+          },
+          {
+            "primary": "Uninzi se lufile."
+          },
+          {
+            "primary": "Ma singazilibali",
+            "translation": "In this new year we are a new creation."
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Ezo nto sizamkele,"
+          },
+          {
+            "primary": "Ngomnyak' ogqithileyo,"
+          },
+          {
+            "primary": "NgobaKhe ububele."
+          },
+          {
+            "primary": "Nezoono soona ngazo,"
+          },
+          {
+            "primary": "Phakathi kwexa lawo;",
+            "translation": "Put away the sins of the past."
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          {
+            "primary": "Sicela uxolelo,"
+          },
+          {
+            "primary": "Zimkiswe kwa nje ngawo."
+          },
+          {
+            "primary": "Ngalo uvelileyo,"
+          },
+          {
+            "primary": "Kwa yonk' imihla yawo,"
+          },
+          {
+            "primary": "Ma senz' inkonzo yethu"
+          },
+          {
+            "primary": "Ilunge kuWe, Bawo.",
+            "translation": "Receive forgiveness and move on to serve the Lord"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "lines": [
+          {
+            "primary": "Ma singakuqumbisi"
+          },
+          {
+            "primary": "Ngokwenza sikwenzayo;"
+          },
+          {
+            "primary": "Ma singakudanisi"
+          },
+          {
+            "primary": "Ngezimvo sizivayo.",
+            "translation": "Let go of resentment"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "lines": [
+          {
+            "primary": "Sithemb' uthando IwaKho"
+          },
+          {
+            "primary": "Wasiph' uYesu ngalo;"
+          },
+          {
+            "primary": "Sincede ngenxa yaKhe"
+          },
+          {
+            "primary": "Ixesha sisenalo.",
+            "translation": "Trust in God's love Receive God's gift of time."
+          }
+        ]
+      },
+      {
+        "number": 7,
+        "lines": [
+          {
+            "primary": "Sandule, lakuphela,"
+          },
+          {
+            "primary": "Sicande emafini,"
+          },
+          {
+            "primary": "Sinyuke nomSindisi,"
+          },
+          {
+            "primary": "Sihlale ezulwini.",
+            "translation": "One day we will join him in the clouds of heaven."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nVumani kuYehova\nNibong' igama laKhe;\nNilondolozwe nguYe,\nMa nenz' udumo IwaKhe.\nGive thanks to God He has preserved us\n\nVERSE 2\nKufik' umnyaka omtjha,\nOmdala se umkile;\nSisekho ebomini,\nUninzi se lufile.\nMa singazilibali\nIn this new year we are a new creation.\n\nVERSE 3\nEzo nto sizamkele,\nNgomnyak' ogqithileyo,\nNgobaKhe ububele.\nNezoono soona ngazo,\nPhakathi kwexa lawo;\nPut away the sins of the past.\n\nVERSE 4\nSicela uxolelo,\nZimkiswe kwa nje ngawo.\nNgalo uvelileyo,\nKwa yonk' imihla yawo,\nMa senz' inkonzo yethu\nIlunge kuWe, Bawo.\nReceive forgiveness and move on to serve the Lord\n\nVERSE 5\nMa singakuqumbisi\nNgokwenza sikwenzayo;\nMa singakudanisi\nNgezimvo sizivayo.\nLet go of resentment\n\nVERSE 6\nSithemb' uthando IwaKho\nWasiph' uYesu ngalo;\nSincede ngenxa yaKhe\nIxesha sisenalo.\nTrust in God's love Receive God's gift of time.\n\nVERSE 7\nSandule, lakuphela,\nSicande emafini,\nSinyuke nomSindisi,\nSihlale ezulwini.\nOne day we will join him in the clouds of heaven.",
     "amen": true,
     "author": "Ingoma Yesiko",
     "category": "General Worship"

@@ -1364,6 +1364,73 @@
   },
   {
     "bookId": "sesotho",
+    "hymnNumber": 65,
+    "hymnCode": "S65",
+    "title": "Rapellang, Jerusalema",
+    "hasTranslations": true,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          {
+            "primary": "Rapellang, Jerusalema,"
+          },
+          {
+            "primary": "A abeloe khotso."
+          },
+          {
+            "primary": "Ba ratang Thaba Sione,"
+          },
+          {
+            "primary": "Ba tla ja leseho.",
+            "translation": "Pray for the peace of Jerusalem."
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          {
+            "primary": "Khotso e ke hlolehe,"
+          },
+          {
+            "primary": "E ate ho eona;"
+          },
+          {
+            "primary": "Nala e kholo e hlahe"
+          },
+          {
+            "primary": "Ka tlung ea Morena.",
+            "translation": "Peace upon all of us."
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          {
+            "primary": "Lumelang, bana ba Ntate,"
+          },
+          {
+            "primary": "Ba keneng tempeleng!"
+          },
+          {
+            "primary": "Molimo o le ruise"
+          },
+          {
+            "primary": "Molem'o sa feleng.",
+            "translation": "In faith we are God's children."
+          }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nRapellang, Jerusalema,\nA abeloe khotso.\nBa ratang Thaba Sione,\nBa tla ja leseho.\nPray for the peace of Jerusalem.\n\nVERSE 2\nKhotso e ke hlolehe,\nE ate ho eona;\nNala e kholo e hlahe\nKa tlung ea Morena.\nPeace upon all of us.\n\nVERSE 3\nLumelang, bana ba Ntate,\nBa keneng tempeleng!\nMolimo o le ruise\nMolem'o sa feleng.\nIn faith we are God's children.",
+    "amen": true,
+    "author": "Difela tsa Setso",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "sesotho",
     "hymnNumber": 68,
     "hymnCode": "S68",
     "title": "Se mphete uena ratehang",
