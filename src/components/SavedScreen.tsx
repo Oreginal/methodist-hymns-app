@@ -38,7 +38,7 @@ export const SavedScreen: React.FC = () => {
         <div className="w-12 h-1 bg-[#E53935] mb-2"></div>
         <h2 className="text-3xl font-bold tracking-tight text-[#111111] dark:text-white">Saved Favourites</h2>
         <p className="text-[#757575] dark:text-zinc-400 text-sm mt-1">
-          A personalized treasury of your favorite hymns and prayers, stored locally and ready for immediate sanctuary service.
+          A personalised treasury of your favourite hymns and prayers, stored locally and ready for immediate sanctuary service.
         </p>
       </div>
 

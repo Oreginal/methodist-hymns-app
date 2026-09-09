@@ -198,7 +198,7 @@ Be Thou still my Strength and Shield.`
     hymnNumber: 11,
     hymnCode: 'X11',
     title: 'Bulelani kuYehova (Bulelani kuYeho)',
-    author: 'Traditional Methodist',
+    author: 'Ingoma Yesiko',
     category: 'Umbulelo kunye nendumiso',
     lyrics: `VERSE 1
 Bulelani kuYehova,
@@ -223,7 +223,7 @@ Kude kube ngunaphakade.`
     hymnNumber: 1,
     hymnCode: 'X1',
     title: 'Vuthelani ixilongo',
-    author: 'Traditional Methodist',
+    author: 'Ingoma Yesiko',
     category: 'Isimemo senkonzo',
     lyrics: `VERSE 1
 Vuthelani ixilongo,
@@ -242,7 +242,7 @@ Ukuze asindise thina.`
     hymnNumber: 21,
     hymnCode: 'X21',
     title: 'Nkosi, Ndithembe Wena',
-    author: 'Methodist Wesley',
+    author: 'Ingoma Yesiko',
     category: 'Uthemba kunye noKhuseleko',
     lyrics: `VERSE 1
 Nkosi, ndithembe Wena,
@@ -261,7 +261,7 @@ Ukhanyise owam umendo.`
     hymnNumber: 1,
     hymnCode: 'S1',
     title: 'Re thabele Morena',
-    author: 'Sefela Sa-Methodist',
+    author: 'Sefela sa Setso',
     category: 'Tirelo ya maphelo',
     lyrics: `VERSE 1
 Re thabele Morena,
@@ -280,7 +280,7 @@ Le tumiswe go ralala lefatshe.`
     hymnNumber: 15,
     hymnCode: 'S15',
     title: 'Modimo re a go boka',
-    author: 'Sefela Sa-Methodist',
+    author: 'Sefela sa Setso',
     category: 'Tumishong le pako',
     lyrics: `VERSE 1
 Modimo re a go boka,
@@ -299,7 +299,7 @@ E e sa sweng e a tshela.`
     hymnNumber: 1,
     hymnCode: 'SO1',
     title: 'Ke busitswe ke Morena',
-    author: 'Difela Tsa-Methodist',
+    author: 'Difela tsa Setso',
     category: 'Tumiso',
     lyrics: `VERSE 1
 Ke busitswe ke Morena,
@@ -318,7 +318,7 @@ Tlas’a nji ea hae e molemo.`
     hymnNumber: 22,
     hymnCode: 'SO22',
     title: 'O, a re roriseng Jehova',
-    author: 'Difela Tsa-Methodist',
+    author: 'Difela tsa Setso',
     category: 'Mahlomola a rona',
     lyrics: `VERSE 1
 O, a re roriseng Jehova,

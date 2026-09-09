@@ -33,7 +33,7 @@ export const SettingsScreen: React.FC = () => {
         <div className="w-12 h-1 bg-[#E53935] mb-2"></div>
         <h2 className="text-3xl font-bold tracking-tight text-[#111111] dark:text-white">Settings</h2>
         <p className="text-[#757575] dark:text-zinc-400 text-sm mt-1">
-          Customize your reading experience, adjust contrast levels, and download hymnals for entire offline use.
+          Customise your reading experience, adjust contrast levels, and download hymnals for entire offline use.
         </p>
       </div>
 
@@ -185,7 +185,7 @@ export const SettingsScreen: React.FC = () => {
             Future-Ready Integrations
           </h3>
           <p className="text-xs text-[#757575] dark:text-zinc-400">
-            These upcoming enterprise features are mapped in our database blueprint and will sync automatically once church permissions are granted.
+            These features are still being built. They'll switch on automatically once your church sets them up.
           </p>
         </div>
 
@@ -196,7 +196,7 @@ export const SettingsScreen: React.FC = () => {
               <Tv size={14} /> Service Planning
             </h4>
             <p className="text-xs text-[#757575] dark:text-zinc-500 leading-normal">
-              Sync active service plans directly from your local parish bulletin. Church accounts can pre-load hymn order for the congregation.
+              Automatically load the hymn list for each week's service, so it's ready before you get to church.
             </p>
           </div>
 
@@ -206,17 +206,17 @@ export const SettingsScreen: React.FC = () => {
               <Book size={14} /> Holy Bible integration
             </h4>
             <p className="text-xs text-[#757575] dark:text-zinc-500 leading-normal">
-              Direct scriptural cross-referencing. Access standard Wesleyan Scripture readings mapped straight to chosen hymn chapters.
+              See the Bible verse linked to each hymn, without leaving the app.
             </p>
           </div>
 
           {/* Tithing & Donations */}
           <div className="p-4 border border-dashed border-gray-100 dark:border-zinc-800 rounded-xl space-y-2">
             <h4 className="font-bold text-[10px] text-[#757575] dark:text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-              <Landmark size={14} /> Liturgical Donations
+              <Landmark size={14} /> Church Giving
             </h4>
             <p className="text-xs text-[#757575] dark:text-zinc-500 leading-normal">
-              Support church missions and local parishes with secure mobile tithing, sanctuary offerings, and global building funds raising.
+              Give and support your church safely from your phone, whether it's a weekly offering or a special collection.
             </p>
           </div>
 
@@ -226,7 +226,7 @@ export const SettingsScreen: React.FC = () => {
               <Flame size={14} /> Cross-Language Link
             </h4>
             <p className="text-xs text-[#757575] dark:text-zinc-500 leading-normal">
-              Link parallel hymns between languages. Click a Xhosa hymn and locate the exact English translation counterpart MHB melody.
+              See the same hymn in another language. Open a hymn in one language and jump straight to its translation.
             </p>
           </div>
         </div>
