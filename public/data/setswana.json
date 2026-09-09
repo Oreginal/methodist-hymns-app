@@ -3,7 +3,7 @@
     "bookId": "setswana",
     "hymnNumber": 3,
     "hymnCode": "T3",
-    "title": "bogolo jwa bomodimo",
+    "title": "Bogolo jwa Bomodimo",
     "hasTranslations": true,
     "verses": [
       {
@@ -142,7 +142,7 @@
     "bookId": "setswana",
     "hymnNumber": 13,
     "hymnCode": "T13",
-    "title": "modimo wa boikanyo",
+    "title": "Modimo wa Boikanyo",
     "hasTranslations": true,
     "verses": [
       {
@@ -260,7 +260,7 @@
     "bookId": "setswana",
     "hymnNumber": 62,
     "hymnCode": "T62",
-    "title": "Tswana",
+    "title": "Fika ja Bosakhutleng",
     "hasTranslations": false,
     "verses": [
       {
