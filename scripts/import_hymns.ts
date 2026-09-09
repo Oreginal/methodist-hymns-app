@@ -22,6 +22,15 @@ const BOOK_IDS: BookId[] = ['xhosa', 'english', 'setswana', 'sesotho'];
 // Per-book output file, e.g. public/data/xhosa.json.
 const outputPathForBook = (bookId: BookId) => path.join(OUTPUT_DATA_DIR, `${bookId}.json`);
 
+// Fallback author when a slide carries no attribution, in the book's own
+// language rather than defaulting to an unverified "Traditional Methodist".
+const DEFAULT_AUTHOR_BY_BOOK: Record<BookId, string> = {
+  xhosa: 'Ingoma Yesiko',
+  setswana: 'Sefela sa Setso',
+  sesotho: 'Difela tsa Setso',
+  english: 'Traditional'
+};
+
 // Structured line/verse shapes (mirror HymnLine / HymnVerse in src/types.ts).
 interface ParsedLine {
   primary: string;
@@ -843,7 +852,7 @@ function parsePptx(filePath: string, defaultBookId: BookId = 'xhosa'): ParsedHym
     lyrics: finalLyrics,
     verses,
     hasTranslations,
-    author: author || 'Traditional Methodist',
+    author: author || DEFAULT_AUTHOR_BY_BOOK[bookId],
     category: category || 'General Worship',
     scripture,
     hasAmen,
