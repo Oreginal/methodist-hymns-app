@@ -10,6 +10,7 @@ import {
 } from '../types';
 import { hymnsDatabase, hymnBooks } from '../data/hymnsData';
 import { prayersDatabase } from '../data/prayersData';
+import { useAndroidBackButton } from '../hooks/useAndroidBackButton';
 
 export type AppTab = 'home' | 'hymns' | 'prayers' | 'saved' | 'settings';
 export type BookLoadStatus = 'idle' | 'loading' | 'loaded' | 'error';
@@ -17,6 +18,10 @@ export type BookLoadStatus = 'idle' | 'loading' | 'loaded' | 'error';
 interface AppContextType {
   activeTab: AppTab;
   setActiveTab: (tab: AppTab) => void;
+  // True for a couple of seconds after a hardware back press / swipe-back
+  // gesture at the root screen with nothing else open, so the UI can show a
+  // "press back again to exit" prompt. Driven entirely by useAndroidBackButton.
+  showExitPrompt: boolean;
 
   // Hymn data source. `hymns` is the single source of truth consumed across
   // the app. It is seeded from the bundled hardcoded database (fallback) and
@@ -33,10 +38,12 @@ interface AppContextType {
   activeHymn: Hymn | null;
   openHymn: (bookId: BookId, hymnNumber: number) => void;
   closeHymn: () => void;
+  showShareModal: boolean;
+  setShowShareModal: (show: boolean) => void;
   activePrayer: Prayer | null;
   openPrayer: (prayerId: string) => void;
   closePrayer: () => void;
-  
+
   // Search
   searchQuery: string;
   setSearchQuery: (query: string) => void;
@@ -81,8 +88,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [activeTab, setActiveTab] = useState<AppTab>('home');
   const [selectedBookId, setSelectedBookId] = useState<BookId | null>(null);
   const [activeHymn, setActiveHymn] = useState<Hymn | null>(null);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [activePrayer, setActivePrayer] = useState<Prayer | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showExitPrompt, setShowExitPrompt] = useState(false);
 
   // ---- Hymn data source -------------------------------------------------
   // Seeded from the bundled hardcoded database so every book has a working
@@ -261,6 +270,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const closeHymn = () => {
+    setShowShareModal(false);
     setActiveHymn(null);
   };
 
@@ -456,10 +466,33 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
   }, []);
 
+  // Makes the hardware back button / swipe-back gesture on the installed PWA
+  // navigate back through screens instead of closing the app.
+  useAndroidBackButton({
+    snapshot: {
+      reportTarget,
+      showShareModal,
+      activeHymn,
+      activePrayer,
+      selectedBookId,
+      searchQuery,
+      activeTab
+    },
+    closeReport,
+    setShowShareModal,
+    closeHymn,
+    closePrayer,
+    setSelectedBookId,
+    setSearchQuery,
+    setActiveTab,
+    setShowExitPrompt
+  });
+
   return (
     <AppContext.Provider value={{
       activeTab,
       setActiveTab,
+      showExitPrompt,
       hymns,
       bookStatus,
       bookError,
@@ -470,6 +503,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       activeHymn,
       openHymn,
       closeHymn,
+      showShareModal,
+      setShowShareModal,
       activePrayer,
       openPrayer,
       closePrayer,

@@ -18,10 +18,11 @@ export const HymnDetailScreen: React.FC = () => {
     darkMode,
     setDarkMode,
     openReport,
+    showShareModal,
+    setShowShareModal,
   } = useApp();
 
   const [copied, setCopied] = useState(false);
-  const [showShareModal, setShowShareModal] = useState(false);
 
   if (!activeHymn) return null;
 

@@ -14,6 +14,7 @@ import { SettingsScreen } from './components/SettingsScreen';
 import { HymnDetailScreen } from './components/HymnDetailScreen';
 import { LOGO_BASE64 } from './data/logo';
 import { ReportIssueSheet } from './components/ReportIssueSheet';
+import { ExitConfirmToast } from './components/ExitConfirmToast';
 
 const MainLayout: React.FC = () => {
   const { activeTab, activeHymn } = useApp();
@@ -84,6 +85,9 @@ const MainLayout: React.FC = () => {
 
       {/* Global report sheet — opened from any screen via openReport(). */}
       <ReportIssueSheet />
+
+      {/* "Press back again to exit" — shown by useAndroidBackButton. */}
+      <ExitConfirmToast />
     </div>
   );
 };

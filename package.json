@@ -10,7 +10,7 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "import:hymns": "tsx scripts/import_hymns.ts",
-    "test": "tsx --test scripts/import_hymns.test.ts"
+    "test": "tsx --test scripts/import_hymns.test.ts src/hooks/useAndroidBackButton.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
