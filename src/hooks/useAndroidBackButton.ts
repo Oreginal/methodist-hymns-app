@@ -6,15 +6,18 @@
 import { useEffect, useRef } from 'react';
 import type { AppTab } from '../context/AppContext';
 
-// A snapshot of everything the back-press priority chain needs. Kept as
-// `unknown | null` for the overlay fields so this stays decoupled from the
-// concrete Hymn/Prayer/BookId types — the chain only ever asks "is this set?".
+// A snapshot of everything the back-press priority chain needs. The overlay
+// fields are typed `unknown` (which already covers null/undefined) so this
+// stays decoupled from the concrete Hymn/Prayer/BookId types in AppContext —
+// the chain only ever asks "is this set?". If a new dismissible overlay is
+// added to AppContext, add it here AND to resolveBackAction below, or the
+// back button will silently skip over it instead of dismissing it first.
 export interface BackButtonSnapshot {
-  reportTarget: unknown | null;
+  reportTarget: unknown;
   showShareModal: boolean;
-  activeHymn: unknown | null;
-  activePrayer: unknown | null;
-  selectedBookId: unknown | null;
+  activeHymn: unknown;
+  activePrayer: unknown;
+  selectedBookId: unknown;
   searchQuery: string;
   activeTab: AppTab;
 }
@@ -49,6 +52,14 @@ export function resolveBackAction(s: BackButtonSnapshot): BackAction {
 // before it's forgotten and a fresh back press starts the warning over again.
 const EXIT_ARM_WINDOW_MS = 2000;
 
+// Caps the tab-visit stack so a long session of bouncing between tabs can't
+// grow it without bound. Losing the oldest entries only affects how far back
+// a very long chain of tab switches can be replayed — the common case (a
+// handful of visits) is unaffected.
+const MAX_TAB_STACK = 25;
+
+type BackPhase = 'idle' | 'armed' | 'exiting';
+
 export interface UseAndroidBackButtonArgs {
   snapshot: BackButtonSnapshot;
   closeReport: () => void;
@@ -59,6 +70,16 @@ export interface UseAndroidBackButtonArgs {
   setSearchQuery: (query: string) => void;
   setActiveTab: (tab: AppTab) => void;
   setShowExitPrompt: (show: boolean) => void;
+}
+
+// True only for an installed, standalone-launched PWA — a plain browser tab
+// (desktop or mobile) has its own real back button/gesture that must keep
+// working normally, so this hook is a no-op everywhere else.
+function isInstalledStandaloneApp(): boolean {
+  if (typeof window === 'undefined') return false;
+  const displayModeStandalone = window.matchMedia?.('(display-mode: standalone)').matches === true;
+  const iosStandalone = (window.navigator as { standalone?: boolean }).standalone === true;
+  return displayModeStandalone || iosStandalone;
 }
 
 /**
@@ -83,15 +104,16 @@ export function useAndroidBackButton(args: UseAndroidBackButtonArgs): void {
   const latest = useRef(args);
   latest.current = args;
 
-  const armedRef = useRef(false);
+  // Computed once — display mode doesn't change over an app's lifetime.
+  const standaloneRef = useRef<boolean | null>(null);
+  if (standaloneRef.current === null) {
+    standaloneRef.current = isInstalledStandaloneApp();
+  }
+
+  const phaseRef = useRef<BackPhase>('idle');
   const armTimeoutRef = useRef<number | undefined>(undefined);
-  // Set once the user has confirmed they want to exit (second root-level
-  // press). From then on this hook stops intercepting entirely, so every
-  // further back press behaves like an unmodified page — otherwise a
-  // press we let through would itself dispatch another popstate that this
-  // same handler would catch and re-arm, and the exit prompt would just
-  // keep reappearing forever instead of ever letting the app close.
-  const exitingRef = useRef(false);
+
+  const isAtRoot = resolveBackAction(args.snapshot) === 'at-root';
 
   // Tab-visit stack, purely for back-navigation bookkeeping — nothing outside
   // this hook needs to read it, so it stays as internal refs rather than
@@ -102,6 +124,7 @@ export function useAndroidBackButton(args: UseAndroidBackButtonArgs): void {
   const isBackTabChangeRef = useRef(false);
 
   useEffect(() => {
+    if (!standaloneRef.current) return;
     if (isBackTabChangeRef.current) {
       isBackTabChangeRef.current = false;
       return;
@@ -109,31 +132,48 @@ export function useAndroidBackButton(args: UseAndroidBackButtonArgs): void {
     const stack = tabStackRef.current;
     if (stack[stack.length - 1] !== args.snapshot.activeTab) {
       stack.push(args.snapshot.activeTab);
+      if (stack.length > MAX_TAB_STACK) stack.shift();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [args.snapshot.activeTab]);
 
+  // The exit prompt only makes sense while genuinely at the root with
+  // nothing else open. If the user leaves that state by any means OTHER
+  // than a back press — tapping a bottom-nav tab, opening a hymn from the
+  // home screen's "continue reading", etc. — disarm immediately rather than
+  // leaving a stale "armed" flag that would make an unrelated later back
+  // press at Home exit immediately instead of showing the prompt again.
   useEffect(() => {
+    if (!isAtRoot && phaseRef.current === 'armed') {
+      phaseRef.current = 'idle';
+      window.clearTimeout(armTimeoutRef.current);
+      args.setShowExitPrompt(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAtRoot]);
+
+  useEffect(() => {
+    if (!standaloneRef.current) return;
+
     history.pushState({ mhbGuard: true }, '', location.href);
 
     const onPopState = () => {
-      if (exitingRef.current) return; // let every further press through, untouched
+      if (phaseRef.current === 'exiting') return; // let every further press through, untouched
 
       const current = latest.current;
       const action = resolveBackAction(current.snapshot);
 
       if (action === 'at-root') {
-        if (armedRef.current) {
+        if (phaseRef.current === 'armed') {
           window.clearTimeout(armTimeoutRef.current);
-          armedRef.current = false;
-          exitingRef.current = true;
+          phaseRef.current = 'exiting';
           current.setShowExitPrompt(false);
           return; // Do not re-arm the guard — we're letting this exit through.
         }
-        armedRef.current = true;
+        phaseRef.current = 'armed';
         current.setShowExitPrompt(true);
         armTimeoutRef.current = window.setTimeout(() => {
-          armedRef.current = false;
+          phaseRef.current = 'idle';
           current.setShowExitPrompt(false);
         }, EXIT_ARM_WINDOW_MS);
       } else {

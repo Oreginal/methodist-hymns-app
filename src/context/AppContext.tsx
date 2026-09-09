@@ -72,6 +72,9 @@ interface AppContextType {
 
   // Session Authentication state & utilities
   // Issue reporting. `reportTarget` non-null means the report sheet is open.
+  // A new dismissible overlay added anywhere in this file must also be added
+  // to resolveBackAction in src/hooks/useAndroidBackButton.ts, or the
+  // hardware back button will skip over it instead of dismissing it first.
   reportTarget: ReportTarget | null;
   openReport: (target: ReportTarget) => void;
   closeReport: () => void;
