@@ -259,7 +259,7 @@ Ukhanyise owam umendo.`
   {
     bookId: 'setswana',
     hymnNumber: 1,
-    hymnCode: 'S1',
+    hymnCode: 'T1',
     title: 'Re thabele Morena',
     author: 'Sefela sa Setso',
     category: 'Tirelo ya maphelo',
@@ -278,7 +278,7 @@ Le tumiswe go ralala lefatshe.`
   {
     bookId: 'setswana',
     hymnNumber: 15,
-    hymnCode: 'S15',
+    hymnCode: 'T15',
     title: 'Modimo re a go boka',
     author: 'Sefela sa Setso',
     category: 'Tumishong le pako',
@@ -297,7 +297,7 @@ E e sa sweng e a tshela.`
   {
     bookId: 'sesotho',
     hymnNumber: 1,
-    hymnCode: 'SO1',
+    hymnCode: 'S1',
     title: 'Ke busitswe ke Morena',
     author: 'Difela tsa Setso',
     category: 'Tumiso',
@@ -316,7 +316,7 @@ Tlas’a nji ea hae e molemo.`
   {
     bookId: 'sesotho',
     hymnNumber: 22,
-    hymnCode: 'SO22',
+    hymnCode: 'S22',
     title: 'O, a re roriseng Jehova',
     author: 'Difela tsa Setso',
     category: 'Mahlomola a rona',

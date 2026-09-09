@@ -503,7 +503,7 @@ export function resolveIdentityFromFilename(
 }
 
 const bookCodeFor = (bookId: BookId): string =>
-  bookId === 'xhosa' ? 'X' : bookId === 'english' ? 'E' : bookId === 'setswana' ? 'T' : 'SO';
+  bookId === 'xhosa' ? 'X' : bookId === 'english' ? 'E' : bookId === 'setswana' ? 'T' : 'S';
 
 // A header line that carries the hymn number, e.g. "TSWANA 397", "XHOSA 11",
 // "HYMN 5". Shared by the metadata stripper and the number harvester so the two

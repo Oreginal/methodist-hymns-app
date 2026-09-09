@@ -2,7 +2,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 1,
-    "hymnCode": "SO1",
+    "hymnCode": "S1",
     "title": "Mphe maleme a sekete",
     "hasTranslations": true,
     "verses": [
@@ -156,7 +156,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 3,
-    "hymnCode": "SO3",
+    "hymnCode": "S3",
     "title": "Uhalalehile! Molimo moholo",
     "hasTranslations": false,
     "verses": [
@@ -237,7 +237,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 16,
-    "hymnCode": "SO16",
+    "hymnCode": "S16",
     "title": "Rea u boka Morena",
     "hasTranslations": true,
     "verses": [
@@ -331,7 +331,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 22,
-    "hymnCode": "SO22",
+    "hymnCode": "S22",
     "title": "Boholo ba Bomolimo",
     "hasTranslations": true,
     "verses": [
@@ -449,7 +449,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 24,
-    "hymnCode": "SO24",
+    "hymnCode": "S24",
     "title": "Morena, ke mona",
     "hasTranslations": true,
     "verses": [
@@ -541,7 +541,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 29,
-    "hymnCode": "SO29",
+    "hymnCode": "S29",
     "title": "Rorisang lipuo tsohle",
     "hasTranslations": false,
     "verses": [
@@ -715,7 +715,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 32,
-    "hymnCode": "SO32",
+    "hymnCode": "S32",
     "title": "Ka utloa ke thaba pelong",
     "hasTranslations": true,
     "verses": [
@@ -818,7 +818,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 38,
-    "hymnCode": "SO38",
+    "hymnCode": "S38",
     "title": "Molimo oa poloko",
     "hasTranslations": false,
     "verses": [
@@ -916,7 +916,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 40,
-    "hymnCode": "SO40",
+    "hymnCode": "S40",
     "title": "Bokang Molimo oa khanya",
     "hasTranslations": true,
     "verses": [
@@ -992,7 +992,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 43,
-    "hymnCode": "SO43",
+    "hymnCode": "S43",
     "title": "Pelo ke na le eona",
     "hasTranslations": false,
     "verses": [
@@ -1090,7 +1090,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 58,
-    "hymnCode": "SO58",
+    "hymnCode": "S58",
     "title": "Lula le rona, Morena",
     "hasTranslations": false,
     "verses": [
@@ -1188,7 +1188,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 63,
-    "hymnCode": "SO63",
+    "hymnCode": "S63",
     "title": "Pula tsa lehlohonolo",
     "hasTranslations": true,
     "verses": [
@@ -1365,7 +1365,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 68,
-    "hymnCode": "SO68",
+    "hymnCode": "S68",
     "title": "Se mphete uena ratehang",
     "hasTranslations": true,
     "verses": [
@@ -1627,7 +1627,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 70,
-    "hymnCode": "SO70",
+    "hymnCode": "S70",
     "title": "Ha khohola se nkuka, ke lebetse ke le mong",
     "hasTranslations": true,
     "verses": [
@@ -1691,7 +1691,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 87,
-    "hymnCode": "SO87",
+    "hymnCode": "S87",
     "title": "Morena,ka lentsoe lena",
     "hasTranslations": true,
     "verses": [
@@ -1888,7 +1888,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 95,
-    "hymnCode": "SO95",
+    "hymnCode": "S95",
     "title": "Lefifing le letsho-letsho",
     "hasTranslations": false,
     "verses": [
@@ -2037,7 +2037,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 97,
-    "hymnCode": "SO97",
+    "hymnCode": "S97",
     "title": "Tsamaea, itsebeletse",
     "hasTranslations": false,
     "verses": [
@@ -2152,7 +2152,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 100,
-    "hymnCode": "SO100",
+    "hymnCode": "S100",
     "title": "Nke ke behe litholoana",
     "hasTranslations": true,
     "verses": [
@@ -2254,7 +2254,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 103,
-    "hymnCode": "SO103",
+    "hymnCode": "S103",
     "title": "Ke batla Moea oa matla",
     "hasTranslations": true,
     "verses": [
@@ -2354,7 +2354,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 120,
-    "hymnCode": "SO120",
+    "hymnCode": "S120",
     "title": "Ha ke boha sefapano",
     "hasTranslations": true,
     "verses": [
@@ -2453,7 +2453,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 124,
-    "hymnCode": "SO124",
+    "hymnCode": "S124",
     "title": "Sefapanong ke boha",
     "hasTranslations": true,
     "verses": [
@@ -2585,7 +2585,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 126,
-    "hymnCode": "SO126",
+    "hymnCode": "S126",
     "title": "Bonang sefapanong",
     "hasTranslations": true,
     "verses": [
@@ -2780,7 +2780,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 129,
-    "hymnCode": "SO129",
+    "hymnCode": "S129",
     "title": "Ralla le teng le letala",
     "hasTranslations": true,
     "verses": [
@@ -2877,7 +2877,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 140,
-    "hymnCode": "SO140",
+    "hymnCode": "S140",
     "title": "Thabang, Jesu ke Morena",
     "hasTranslations": false,
     "verses": [
@@ -2982,7 +2982,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 143,
-    "hymnCode": "SO143",
+    "hymnCode": "S143",
     "title": "U jarile libe, Jesu",
     "hasTranslations": true,
     "verses": [
@@ -3075,7 +3075,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 146,
-    "hymnCode": "SO146",
+    "hymnCode": "S146",
     "title": "Bonang! Suna o fihlile",
     "hasTranslations": false,
     "verses": [
@@ -3292,7 +3292,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 149,
-    "hymnCode": "SO149",
+    "hymnCode": "S149",
     "title": "Re fumane mpho e kholo",
     "hasTranslations": true,
     "verses": [
@@ -3402,7 +3402,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 165,
-    "hymnCode": "SO165",
+    "hymnCode": "S165",
     "title": "Kenang bohle, baka se sa leteng",
     "hasTranslations": true,
     "verses": [
@@ -3571,7 +3571,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 170,
-    "hymnCode": "SO170",
+    "hymnCode": "S170",
     "title": "Hee! Ba nyoriloeng tlong, le tle metsing",
     "hasTranslations": true,
     "verses": [
@@ -3789,7 +3789,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 172,
-    "hymnCode": "SO172",
+    "hymnCode": "S172",
     "title": "Se teng seliba sa mali",
     "hasTranslations": true,
     "verses": [
@@ -3905,7 +3905,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 174,
-    "hymnCode": "SO174",
+    "hymnCode": "S174",
     "title": "Ha ke na se ke se qosang",
     "hasTranslations": true,
     "verses": [
@@ -4032,7 +4032,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 175,
-    "hymnCode": "SO175",
+    "hymnCode": "S175",
     "title": "Morena ke ngoana oa hao",
     "hasTranslations": true,
     "verses": [
@@ -4189,7 +4189,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 181,
-    "hymnCode": "SO181",
+    "hymnCode": "S181",
     "title": "'Mele, pelo, le moea",
     "hasTranslations": true,
     "verses": [
@@ -4517,7 +4517,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 183,
-    "hymnCode": "SO183",
+    "hymnCode": "S183",
     "title": "Joko ea hao e bobebe",
     "hasTranslations": true,
     "verses": [
@@ -4698,7 +4698,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 189,
-    "hymnCode": "SO189",
+    "hymnCode": "S189",
     "title": "Ke lumetse ho Morena",
     "hasTranslations": true,
     "verses": [
@@ -4827,7 +4827,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 191,
-    "hymnCode": "SO191",
+    "hymnCode": "S191",
     "title": "Ke sikiloe ke Jesu",
     "hasTranslations": true,
     "verses": [
@@ -4988,7 +4988,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 192,
-    "hymnCode": "SO192",
+    "hymnCode": "S192",
     "title": "Ha ke le tje, ke le mobe",
     "hasTranslations": true,
     "verses": [
@@ -5194,7 +5194,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 195,
-    "hymnCode": "SO195",
+    "hymnCode": "S195",
     "title": "Ha le mpotsa tsepo ea ka",
     "hasTranslations": true,
     "verses": [
@@ -5315,7 +5315,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 196,
-    "hymnCode": "SO196",
+    "hymnCode": "S196",
     "title": "Ka hlahlathela feelleng halelele",
     "hasTranslations": true,
     "verses": [
@@ -5476,7 +5476,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 200,
-    "hymnCode": "SO200",
+    "hymnCode": "S200",
     "title": "Ha le lakatsa ho tseba",
     "hasTranslations": true,
     "verses": [
@@ -5741,7 +5741,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 202,
-    "hymnCode": "SO202",
+    "hymnCode": "S202",
     "title": "Lona ba ratang ho phela",
     "hasTranslations": true,
     "verses": [
@@ -5854,7 +5854,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 204,
-    "hymnCode": "SO204",
+    "hymnCode": "S204",
     "title": "Seli la ka, mponesetse tsela",
     "hasTranslations": true,
     "verses": [
@@ -5918,7 +5918,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 206,
-    "hymnCode": "SO206",
+    "hymnCode": "S206",
     "title": "Tsietsing tsa letsoalo",
     "hasTranslations": true,
     "verses": [
@@ -6094,7 +6094,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 207,
-    "hymnCode": "SO207",
+    "hymnCode": "S207",
     "title": "Haufi le Morena Nearer my God",
     "hasTranslations": true,
     "verses": [
@@ -6242,7 +6242,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 210,
-    "hymnCode": "SO210",
+    "hymnCode": "S210",
     "title": "Khotso, khotso",
     "hasTranslations": true,
     "verses": [
@@ -6400,7 +6400,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 214,
-    "hymnCode": "SO214",
+    "hymnCode": "S214",
     "title": "Ke se ke utloile",
     "hasTranslations": true,
     "verses": [
@@ -6626,7 +6626,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 226,
-    "hymnCode": "SO226",
+    "hymnCode": "S226",
     "title": "Ukhetheloe tsatsi lena",
     "hasTranslations": true,
     "verses": [
@@ -6744,7 +6744,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 227,
-    "hymnCode": "SO227",
+    "hymnCode": "S227",
     "title": "Ke tsatsi la Sabbatha",
     "hasTranslations": false,
     "verses": [
@@ -6859,7 +6859,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 236,
-    "hymnCode": "SO236",
+    "hymnCode": "S236",
     "title": "Lala ho na, shoalane e oele",
     "hasTranslations": true,
     "verses": [
@@ -7018,7 +7018,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 237,
-    "hymnCode": "SO237",
+    "hymnCode": "S237",
     "title": "Jesu, ha u ile",
     "hasTranslations": true,
     "verses": [
@@ -7135,7 +7135,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 238,
-    "hymnCode": "SO238",
+    "hymnCode": "S238",
     "title": "Mona Morena, haufi le Uena",
     "hasTranslations": true,
     "verses": [
@@ -7228,7 +7228,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 239,
-    "hymnCode": "SO239",
+    "hymnCode": "S239",
     "title": "Lona ba nkileng lebitso",
     "hasTranslations": true,
     "verses": [
@@ -7336,7 +7336,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 241,
-    "hymnCode": "SO241",
+    "hymnCode": "S241",
     "title": "Ea re bilelitseng",
     "hasTranslations": true,
     "verses": [
@@ -7523,7 +7523,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 242,
-    "hymnCode": "SO242",
+    "hymnCode": "S242",
     "title": "Jehova o itse khale",
     "hasTranslations": true,
     "verses": [
@@ -7619,7 +7619,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 243,
-    "hymnCode": "SO243",
+    "hymnCode": "S243",
     "title": "Jesu, Molisa molemo",
     "hasTranslations": true,
     "verses": [
@@ -7706,7 +7706,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 255,
-    "hymnCode": "SO255",
+    "hymnCode": "S255",
     "title": "Jehova, Morena rona",
     "hasTranslations": true,
     "verses": [
@@ -7861,7 +7861,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 261,
-    "hymnCode": "SO261",
+    "hymnCode": "S261",
     "title": "Oho mphe mahlo ke talime",
     "hasTranslations": true,
     "verses": [
@@ -7969,7 +7969,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 262,
-    "hymnCode": "SO262",
+    "hymnCode": "S262",
     "title": "Na ke bomang mose lelibohong",
     "hasTranslations": false,
     "verses": [
@@ -8204,7 +8204,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 264,
-    "hymnCode": "SO264",
+    "hymnCode": "S264",
     "title": "Motse oo re o hlolohetsoeng",
     "hasTranslations": false,
     "verses": [
@@ -8307,7 +8307,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 267,
-    "hymnCode": "SO267",
+    "hymnCode": "S267",
     "title": "Jerusalema e mocha",
     "hasTranslations": true,
     "verses": [
@@ -8464,7 +8464,7 @@
   {
     "bookId": "sesotho",
     "hymnNumber": 302,
-    "hymnCode": "SO302",
+    "hymnCode": "S302",
     "title": "Ke na le Molisa",
     "hasTranslations": true,
     "verses": [
