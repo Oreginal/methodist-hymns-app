@@ -38,5 +38,18 @@
       "hasAmen": true,
       "versesSample": "VERSE 1\nBathandi benKosi, yizani,\nNazise olwenu uvuyo,\nNgomanyo lwetsholo vumani,\nEndlwini yenKos’ enikuyo.\nBangaala abangamaziyo\nOwethu uThixo omkhul..."
     }
+  },
+  {
+    "filename": "X313 Thetha, Nkosi, ndilindele,  Oko kuthethwayo kum..pptx",
+    "hymnCode": "X313",
+    "title": "Thetha, Nkosi, ndilindele, Oko kuthethwayo kum.",
+    "warnings": [
+      "Unable to detect scripture reference pattern."
+    ],
+    "partialParsedResult": {
+      "title": "Thetha, Nkosi, ndilindele, Oko kuthethwayo kum.",
+      "hasAmen": true,
+      "versesSample": "VERSE 1\nThetha, Nkosi, ndilindele, Oko kuthethwayo kum.\nMaster, speak, Your servant is waiting for Your gracious Word\nElo lizwi lenkuthazo, Ma livakal..."
+    }
   }
 ]
