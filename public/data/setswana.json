@@ -140,6 +140,63 @@
   },
   {
     "bookId": "setswana",
+    "hymnNumber": 6,
+    "hymnCode": "T6",
+    "title": "Bakang Modimo",
+    "hasTranslations": false,
+    "verses": [
+      {
+        "number": 1,
+        "lines": [
+          { "primary": "BAKANG Modimo, Morena," },
+          { "primary": "Ikokobetseng go êna" },
+          { "primary": "Motlhodi wa tsotlhe;" },
+          { "primary": "O botlhle, o molemô," },
+          { "primary": "O thata, ke Ratshiamô" },
+          { "primary": "Popô e mo tlotlê." }
+        ]
+      },
+      {
+        "number": 2,
+        "lines": [
+          { "primary": "Tumisang Modimo Morwa," },
+          { "primary": "Yo re bileng ra mo tlhora" },
+          { "primary": "Ka dibe tsa rona;" },
+          { "primary": "Lotlhe ba lo rekolotsweng," },
+          { "primary": "Tlotlang kwana e' re swetseng," },
+          { "primary": "Ke kgosi ya lona." }
+        ]
+      },
+      {
+        "number": 3,
+        "lines": [
+          { "primary": "Tumisang Modimo Môwa," },
+          { "primary": "Ka ôna re ka tsamaya" },
+          { "primary": "Tseleng ya botshelô;" },
+          { "primary": "Oa re gôga, oa re bontsha," },
+          { "primary": "Oa kgabisa, oa gomosa," },
+          { "primary": "O tlotleng ka pelo." }
+        ]
+      },
+      {
+        "number": 4,
+        "lines": [
+          { "primary": "Bakang, lona magodimô" },
+          { "primary": "Sephiri sa Bomodimo;" },
+          { "primary": "Rara, Morwa, Môwa," },
+          { "primary": "Oa galalêla gararo;" },
+          { "primary": "O tlotleng bana ba batho" },
+          { "primary": "Ka dialleluja." }
+        ]
+      }
+    ],
+    "lyrics": "VERSE 1\nBAKANG Modimo, Morena,\nIkokobetseng go êna\nMotlhodi wa tsotlhe;\nO botlhle, o molemô,\nO thata, ke Ratshiamô\nPopô e mo tlotlê.\n\nVERSE 2\nTumisang Modimo Morwa,\nYo re bileng ra mo tlhora\nKa dibe tsa rona;\nLotlhe ba lo rekolotsweng,\nTlotlang kwana e' re swetseng,\nKe kgosi ya lona.\n\nVERSE 3\nTumisang Modimo Môwa,\nKa ôna re ka tsamaya\nTseleng ya botshelô;\nOa re gôga, oa re bontsha,\nOa kgabisa, oa gomosa,\nO tlotleng ka pelo.\n\nVERSE 4\nBakang, lona magodimô\nSephiri sa Bomodimo;\nRara, Morwa, Môwa,\nOa galalêla gararo;\nO tlotleng bana ba batho\nKa dialleluja.",
+    "amen": true,
+    "author": "Traditional Methodist",
+    "category": "General Worship"
+  },
+  {
+    "bookId": "setswana",
     "hymnNumber": 13,
     "hymnCode": "T13",
     "title": "Modimo wa Boikanyo",
