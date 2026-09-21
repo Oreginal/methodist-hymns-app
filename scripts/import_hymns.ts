@@ -622,7 +622,11 @@ function parsePptx(filePath: string, defaultBookId: BookId = 'xhosa'): ParsedHym
     const byMatch = /^by\s+(.+)$/i.exec(line);
     if (byMatch) {
       const words = byMatch[1].trim().split(/\s+/);
-      return words.length <= 4 && words.every(w => /^[A-Z][a-zA-Z.'-]*$/.test(w));
+      // Require 2-4 words: a real attribution reads "By <First> <Last>" or
+      // "By <Initial>. <Last>". A single capitalised word after "By" (e.g.
+      // "By Jesus.") is just as likely to be a short lyric line as a surname,
+      // and a lone-surname author ("By Wesley") is still caught below.
+      return words.length >= 2 && words.length <= 4 && words.every(w => /^[A-Z][a-zA-Z.'-]*$/.test(w));
     }
     return /wesley/i.test(line) || /traditional/i.test(line) || /^[A-Z]\.\s*[A-Za-z]+/.test(line);
   };

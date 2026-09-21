@@ -465,6 +465,19 @@ test('a real "By <Name>" attribution line is still recognised as the author', ()
   assert.equal(hymn.author, 'Charles Wesley');
 });
 
+test('a single-word "By <Word>." lyric line is kept as a lyric, not mistaken for a surname', () => {
+  const file = makePptx('X996 Peace hymn', [
+    ['Native opening line,', 'By Jesus.', 'Native closing line.']
+  ]);
+  const hymn = parsePptx(file, 'xhosa');
+  assert.deepEqual(primaries(hymn), [
+    'Native opening line,',
+    'By Jesus.',
+    'Native closing line.'
+  ]);
+  assert.equal(hymn.author, 'Ingoma Yesiko');
+});
+
 // --------------------------------------------------------------------------
 // Fallback: unmarked decks keep the original heuristic behaviour
 // --------------------------------------------------------------------------
