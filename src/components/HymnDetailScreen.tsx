@@ -114,7 +114,7 @@ export const HymnDetailScreen: React.FC = () => {
 
       {/* Main Reading area */}
       <main className="max-w-2xl mx-auto px-6 py-8 space-y-8 pb-36">
-        {/* Title & Author */}
+        {/* Title */}
         <div className="text-center space-y-2">
           <p className="text-[#E53935] uppercase tracking-widest text-xs font-bold leading-normal">
             Hymnal
@@ -122,11 +122,6 @@ export const HymnDetailScreen: React.FC = () => {
           <h1 className="font-headline-xl text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
             {activeHymn.title}
           </h1>
-          {activeHymn.author && (
-            <p className="text-gray-400 dark:text-zinc-500 font-medium text-sm uppercase tracking-wide">
-              {activeHymn.author}
-            </p>
-          )}
         </div>
 
         {/* Quick Verse Anchors (only shown in regular reading mode) */}

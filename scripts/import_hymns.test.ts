@@ -438,6 +438,34 @@ test('deck whose only red runs are pointing glyphs keeps its lines whole', () =>
 });
 
 // --------------------------------------------------------------------------
+// isAuthorLine — a leading "By" must read like a name, not a lyric sentence
+// --------------------------------------------------------------------------
+
+test('a lyric line beginning with "By" is kept as a lyric, not mistaken for an attribution', () => {
+  const file = makePptx('X999 Test hymn', [
+    ['Native opening line,', 'By Your wounds we are healed, forgiven', 'Native closing line.']
+  ]);
+  const hymn = parsePptx(file, 'xhosa');
+  assert.deepEqual(primaries(hymn), [
+    'Native opening line,',
+    'By Your wounds we are healed, forgiven',
+    'Native closing line.'
+  ]);
+  // No genuine attribution was found, so it falls back to the book default
+  // rather than the stray lyric sentence.
+  assert.equal(hymn.author, 'Ingoma Yesiko');
+});
+
+test('a real "By <Name>" attribution line is still recognised as the author', () => {
+  const file = makePptx('X998 Another hymn', [
+    ['Native opening line,', 'By Charles Wesley', 'Native closing line.']
+  ]);
+  const hymn = parsePptx(file, 'xhosa');
+  assert.deepEqual(primaries(hymn), ['Native opening line,', 'Native closing line.']);
+  assert.equal(hymn.author, 'Charles Wesley');
+});
+
+// --------------------------------------------------------------------------
 // Fallback: unmarked decks keep the original heuristic behaviour
 // --------------------------------------------------------------------------
 
