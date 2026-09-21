@@ -614,9 +614,21 @@ function parsePptx(filePath: string, defaultBookId: BookId = 'xhosa'): ParsedHym
   // harvester above so both agree on what a header line looks like.)
   const isAuthorLine = (line: string): boolean => {
     // Must be a genuine attribution, not a lyric line that merely contains "by"
-    // (e.g. "Were crafted by You" must NOT be treated as an author). Accept a
-    // leading "By <Name>", a known author keyword, or an initialed name ("C. Wesley").
-    return /^by\s+[A-Za-z]/i.test(line) || /wesley/i.test(line) || /traditional/i.test(line) || /^[A-Z]\.\s*[A-Za-z]+/.test(line);
+    // (e.g. "Were crafted by You" must NOT be treated as an author). A leading
+    // "By ..." is only treated as attribution when what follows READS like a
+    // name — short, and every word capitalised (or an initial) — because English
+    // lyric translations routinely start a real sentence with "By" (e.g. "By
+    // Your wounds we are healed", after Isaiah 53:5), which is not an author.
+    const byMatch = /^by\s+(.+)$/i.exec(line);
+    if (byMatch) {
+      const words = byMatch[1].trim().split(/\s+/);
+      // Require 2-4 words: a real attribution reads "By <First> <Last>" or
+      // "By <Initial>. <Last>". A single capitalised word after "By" (e.g.
+      // "By Jesus.") is just as likely to be a short lyric line as a surname,
+      // and a lone-surname author ("By Wesley") is still caught below.
+      return words.length >= 2 && words.length <= 4 && words.every(w => /^[A-Z][a-zA-Z.'-]*$/.test(w));
+    }
+    return /wesley/i.test(line) || /traditional/i.test(line) || /^[A-Z]\.\s*[A-Za-z]+/.test(line);
   };
   const cleanScripture = (line: string): string =>
     line.replace(/^[^\p{L}\p{N}]+/u, '').replace(/[^\p{L}\p{N}]+$/u, '').replace(/\s+/g, ' ').trim();

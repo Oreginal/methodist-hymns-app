@@ -379,11 +379,6 @@ export const BookScreen: React.FC = () => {
                   <h3 className="font-bold text-[#111111] dark:text-white text-base leading-snug truncate group-hover:text-[#E53935]">
                     {hymn.title}
                   </h3>
-                  {hymn.author && (
-                    <p className="text-[#757575] dark:text-zinc-500 text-[10px] mt-0.5 truncate uppercase tracking-widest">
-                      {hymn.author}
-                    </p>
-                  )}
                 </div>
 
                 {/* Bookmark Toggle Button */}
